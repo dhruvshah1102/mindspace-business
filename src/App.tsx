@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { TenantProvider } from '@/app/TenantContext';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster } from 'sonner';
 import { AdminLayout } from '@/admin/AdminLayout';
 import { OverviewPage } from '@/admin/pages/OverviewPage';
 import { CohortHeatmapPage } from '@/admin/pages/CohortHeatmapPage';
@@ -11,6 +12,7 @@ export default function App() {
   return (
     <TenantProvider>
       <TooltipProvider>
+        <Toaster richColors position="top-right" />
         <Routes>
           <Route path="/" element={<Navigate to="/admin" replace />} />
           <Route path="/admin" element={<AdminLayout />}>
