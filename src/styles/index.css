@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Eucalyptus & Oat Design System ──
+   Brand tokens are CSS variables so a tenant's palette can be swapped
+   at runtime (one Firestore write, no rebuild) — see lib/tenant-theme.ts */
+@layer base {
+  :root {
+    --ds-page: #FAF7F0;
+    --ds-tint: #EDE7DA;
+    --ds-soft: #C7D6C9;
+    --ds-mid: #8FA894;
+    --ds-deep: #4F6B57;
+    --ds-deep-hover: #3A5243;
+    --ds-base: #2C3A30;
+    --ds-dark: #1F2B23;
+    --ds-mint: #A9CBAE;
+    --ds-danger: #E4574C;
+    --ds-online: #6FBE7A;
+
+    --background: 42 50% 96%;
+    --foreground: 137 14% 20%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 137 14% 20%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 137 14% 20%;
+
+    --primary: 137 15% 36%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 129 25% 73%;
+
+    --secondary: 41 35% 89%;
+    --secondary-foreground: 137 14% 20%;
+
+    --muted: 41 35% 89%;
+    --muted-foreground: 132 13% 61%;
+
+    --accent: 129 25% 73%;
+    --accent-foreground: 137 14% 20%;
+
+    --success: 127 37% 59%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 137 14% 20%;
+
+    --destructive: 4 74% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 41 28% 86%;
+    --input: 41 35% 89%;
+    --ring: 137 15% 36%;
+
+    --gradient-primary: linear-gradient(172deg, #9FB79A 0%, #7F9C7C 26%, #6A8A6A 46%, #567557 64%, #46644A 82%, #3A5540 100%);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 42 50% 96%;
+    --sidebar-foreground: 137 14% 20%;
+    --sidebar-primary: 137 15% 36%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 41 35% 89%;
+    --sidebar-accent-foreground: 137 14% 20%;
+    --sidebar-border: 41 28% 86%;
+    --sidebar-ring: 137 15% 36%;
+
+    /* Severity bands — categorical, always reinforced with a text label
+       (the ochre alone is below 3:1 contrast on cream). Colorblind-validated. */
+    --viz-low: #2F7F4C;
+    --viz-moderate: #D19B12;
+    --viz-high: #B23227;
+
+    /* Severity magnitude — single-hue clay ramp. Never green: green means
+       "good" in this brand, so it cannot also mean "more severe". */
+    --viz-sev-1: #F1DDCE;
+    --viz-sev-2: #E3BB9C;
+    --viz-sev-3: #CE9468;
+    --viz-sev-4: #AD6B3E;
+    --viz-sev-5: #7C4423;
+
+    /* Deltas — diverging eucalyptus (improving) ↔ clay (worsening), grey midpoint */
+    --viz-up: #4F6B57;
+    --viz-down: #AD6B3E;
+    --viz-flat: #9AA39C;
+  }
+
+  /* Dark admin surface — same hues, inverted lightness. Toggle via [data-admin-theme="dark"] on <html>. */
+  html[data-admin-theme="dark"] {
+    --ds-page: #1B241D;
+    --ds-tint: #232E26;
+    --ds-soft: #33423A;
+    --ds-mid: #6E8874;
+    --ds-deep: #A9CBAE;
+    --ds-deep-hover: #C0DBC4;
+    --ds-base: #E9F0EA;
+    --ds-dark: #F5F8F5;
+    --ds-mint: #A9CBAE;
+    --ds-danger: #F0776D;
+    --ds-online: #6FBE7A;
+
+    --background: 137 18% 11%;
+    --foreground: 137 20% 92%;
+
+    --card: 137 16% 14%;
+    --card-foreground: 137 20% 92%;
+
+    --popover: 137 16% 14%;
+    --popover-foreground: 137 20% 92%;
+
+    --primary: 129 25% 73%;
+    --primary-foreground: 137 18% 11%;
+    --primary-glow: 137 15% 36%;
+
+    --secondary: 137 14% 18%;
+    --secondary-foreground: 137 20% 92%;
+
+    --muted: 137 14% 18%;
+    --muted-foreground: 132 10% 64%;
+
+    --accent: 137 15% 36%;
+    --accent-foreground: 137 20% 92%;
+
+    --border: 137 12% 22%;
+    --input: 137 14% 18%;
+    --ring: 129 25% 73%;
+
+    --sidebar-background: 137 20% 9%;
+    --sidebar-foreground: 137 20% 92%;
+    --sidebar-primary: 129 25% 73%;
+    --sidebar-primary-foreground: 137 18% 11%;
+    --sidebar-accent: 137 14% 18%;
+    --sidebar-accent-foreground: 137 20% 92%;
+    --sidebar-border: 137 12% 22%;
+    --sidebar-ring: 129 25% 73%;
+
+    /* Severity/delta hues lifted for dark-surface contrast */
+    --viz-low: #309B7C;
+    --viz-moderate: #B8881B;
+    --viz-high: #CE4A55;
+
+    --viz-sev-1: #3A2E22;
+    --viz-sev-2: #5C4530;
+    --viz-sev-3: #8A6440;
+    --viz-sev-4: #B98858;
+    --viz-sev-5: #E3B27E;
+
+    --viz-up: #A9CBAE;
+    --viz-down: #D19A6C;
+    --viz-flat: #6E8874;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    background: var(--ds-page);
+    color: var(--ds-base);
+    font-family: 'Fira Sans', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100%;
+    width: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--ds-page);
+    color: var(--ds-base);
+    min-height: 100dvh;
+    width: 100%;
+    margin: 0;
+  }
+
+  #root {
+    min-height: 100dvh;
+    width: 100%;
+  }
+}
+
+@layer utilities {
+  .ds-card {
+    @apply rounded-card bg-card text-card-foreground shadow-card;
+  }
+  .ds-pill {
+    @apply rounded-full bg-ds-deep text-white hover:bg-ds-deep-hover transition-colors;
+  }
+  .ds-icon-circle {
+    @apply flex items-center justify-center rounded-full bg-ds-tint;
+  }
+}

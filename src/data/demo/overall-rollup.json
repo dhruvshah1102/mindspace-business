@@ -1,0 +1,3441 @@
+{
+  "orgId": "demo-acme",
+  "grain": "month",
+  "periodId": "2026-08",
+  "headcount": 480,
+  "participants": 474,
+  "participationRate": 0.988,
+  "indices": {
+    "owi": 49,
+    "burnout": 58,
+    "focus": 56.9,
+    "absenceRisk": 73,
+    "riskDensity": 17.9
+  },
+  "byDomain": {
+    "anxiety": {
+      "mean": 51.4,
+      "median": 50,
+      "p90": 75,
+      "bands": {
+        "low": 0.128,
+        "moderate": 0.731,
+        "high": 0.141
+      },
+      "n": 312,
+      "delta": null
+    },
+    "depression": {
+      "mean": 54.2,
+      "median": 50,
+      "p90": 75,
+      "bands": {
+        "low": 0.141,
+        "moderate": 0.68,
+        "high": 0.179
+      },
+      "n": 291,
+      "delta": null
+    },
+    "stress": {
+      "mean": 48.5,
+      "median": 50,
+      "p90": 75,
+      "bands": {
+        "low": 0.185,
+        "moderate": 0.681,
+        "high": 0.135
+      },
+      "n": 260,
+      "delta": null
+    },
+    "ptsd": {
+      "mean": 50.3,
+      "median": 50,
+      "p90": 75,
+      "bands": {
+        "low": 0.131,
+        "moderate": 0.727,
+        "high": 0.142
+      },
+      "n": 282,
+      "delta": null
+    },
+    "relationship": {
+      "mean": 49.9,
+      "median": 50,
+      "p90": 75,
+      "bands": {
+        "low": 0.164,
+        "moderate": 0.696,
+        "high": 0.14
+      },
+      "n": 250,
+      "delta": null
+    },
+    "ocd": {
+      "mean": 49.5,
+      "median": 50,
+      "p90": 75,
+      "bands": {
+        "low": 0.229,
+        "moderate": 0.621,
+        "high": 0.15
+      },
+      "n": 280,
+      "delta": null
+    }
+  },
+  "byCohort": {
+    "department:Engineering": {
+      "anxiety": {
+        "mean": 51.9,
+        "n": 58,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 55,
+        "n": 56,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 51.1,
+        "n": 45,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 51.1,
+        "n": 46,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 52.6,
+        "n": 45,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 51.8,
+        "n": 53,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "location:Pune": {
+      "anxiety": {
+        "mean": 50.8,
+        "n": 71,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 55.2,
+        "n": 60,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 49.4,
+        "n": 70,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 51.1,
+        "n": 77,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 50,
+        "n": 64,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 51.3,
+        "n": 70,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "tenureBand:5y+": {
+      "anxiety": {
+        "mean": 49.4,
+        "n": 62,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 50.9,
+        "n": 52,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 48.5,
+        "n": 55,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 52.5,
+        "n": 50,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 47.3,
+        "n": 45,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 48,
+        "n": 52,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "level:IC": {
+      "anxiety": {
+        "mean": 51.8,
+        "n": 128,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 54.7,
+        "n": 116,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 47.8,
+        "n": 112,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 51,
+        "n": 116,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 51.4,
+        "n": 108,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 48.2,
+        "n": 114,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "location:Remote": {
+      "anxiety": {
+        "mean": 51.4,
+        "n": 87,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 54.4,
+        "n": 85,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 47.1,
+        "n": 68,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 50,
+        "n": 81,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 49.5,
+        "n": 61,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 48.1,
+        "n": 80,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "level:Lead": {
+      "anxiety": {
+        "mean": 50.4,
+        "n": 78,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 53,
+        "n": 66,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 50.4,
+        "n": 55,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 48.3,
+        "n": 68,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 46.7,
+        "n": 48,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 49.3,
+        "n": 64,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "location:Bengaluru": {
+      "anxiety": {
+        "mean": 51.8,
+        "n": 90,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 53.4,
+        "n": 77,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 49.3,
+        "n": 64,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 49.9,
+        "n": 58,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 50.1,
+        "n": 67,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 49.3,
+        "n": 65,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "tenureBand:<1y": {
+      "anxiety": {
+        "mean": 49.8,
+        "n": 49,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 55.2,
+        "n": 56,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 48.5,
+        "n": 49,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 48.5,
+        "n": 50,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 51.5,
+        "n": 44,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 49.9,
+        "n": 45,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "tenureBand:3-5y": {
+      "anxiety": {
+        "mean": 50.8,
+        "n": 76,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 52,
+        "n": 58,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 47.6,
+        "n": 54,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 49.4,
+        "n": 67,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 49.1,
+        "n": 54,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 46.2,
+        "n": 56,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "tenureBand:1-3y": {
+      "anxiety": {
+        "mean": 55.8,
+        "n": 61,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 58.5,
+        "n": 56,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 49.8,
+        "n": 44,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 51.4,
+        "n": 49,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 51.5,
+        "n": 49,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 53.2,
+        "n": 62,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "level:Manager": {
+      "anxiety": {
+        "mean": 51.5,
+        "n": 42,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 54.8,
+        "n": 40,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 48.4,
+        "n": 35,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 52.4,
+        "n": 32,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 49.6,
+        "n": 36,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 54.1,
+        "n": 37,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "department:Operations": {
+      "anxiety": {
+        "mean": 69.5,
+        "n": 41,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 71.9,
+        "n": 44,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 64.1,
+        "n": 36,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 63.6,
+        "n": 48,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 64,
+        "n": 34,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 63.1,
+        "n": 44,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "department:Sales": {
+      "anxiety": {
+        "mean": 43.7,
+        "n": 33,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 39.3,
+        "n": 32,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 39.8,
+        "n": 30,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 41.9,
+        "n": 30,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 41.9,
+        "n": 23,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 41.3,
+        "n": 27,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "department:Support": {
+      "anxiety": {
+        "mean": 55.8,
+        "n": 32,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 60.4,
+        "n": 24,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 51.1,
+        "n": 25,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 51.5,
+        "n": 27,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 52.1,
+        "n": 23,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 51.8,
+        "n": 25,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "department:Finance": {
+      "anxiety": {
+        "mean": 35.7,
+        "n": 13,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 31.5,
+        "n": 12,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 34.4,
+        "n": 14,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 36.6,
+        "n": 17,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 32.5,
+        "n": 17,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 31.4,
+        "n": 14,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "department:HR": {
+      "anxiety": {
+        "mean": 34.8,
+        "n": 13,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 34.1,
+        "n": 8,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 32.6,
+        "n": 12,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 29.2,
+        "n": 8,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 31.9,
+        "n": 10,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 27.5,
+        "n": 12,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "department:Marketing": {
+      "anxiety": {
+        "mean": 40.8,
+        "n": 21,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 38.4,
+        "n": 18,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 44.2,
+        "n": 13,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 43.7,
+        "n": 16,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 47.4,
+        "n": 15,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 40.1,
+        "n": 14,
+        "masked": false,
+        "delta": null
+      }
+    },
+    "department:Logistics": {
+      "anxiety": {
+        "mean": 52.3,
+        "n": 37,
+        "masked": false,
+        "delta": null
+      },
+      "depression": {
+        "mean": 59.1,
+        "n": 28,
+        "masked": false,
+        "delta": null
+      },
+      "stress": {
+        "mean": 51.6,
+        "n": 27,
+        "masked": false,
+        "delta": null
+      },
+      "ptsd": {
+        "mean": 51.2,
+        "n": 24,
+        "masked": false,
+        "delta": null
+      },
+      "relationship": {
+        "mean": 50.6,
+        "n": 25,
+        "masked": false,
+        "delta": null
+      },
+      "ocd": {
+        "mean": 51,
+        "n": 26,
+        "masked": false,
+        "delta": null
+      }
+    }
+  },
+  "byItem": {
+    "anxiety:1": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:2": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:3": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:4": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:5": {
+      "mean": 2.8,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:6": {
+      "mean": 2.6,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:7": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:8": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:9": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 312
+    },
+    "anxiety:10": {
+      "mean": 2.6,
+      "delta": null,
+      "n": 312
+    },
+    "depression:1": {
+      "mean": 2.9,
+      "delta": null,
+      "n": 291
+    },
+    "depression:2": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 291
+    },
+    "depression:3": {
+      "mean": 2.9,
+      "delta": null,
+      "n": 291
+    },
+    "depression:4": {
+      "mean": 2.9,
+      "delta": null,
+      "n": 291
+    },
+    "depression:5": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 291
+    },
+    "depression:6": {
+      "mean": 2.9,
+      "delta": null,
+      "n": 291
+    },
+    "depression:7": {
+      "mean": 2.9,
+      "delta": null,
+      "n": 291
+    },
+    "depression:8": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 291
+    },
+    "depression:9": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 291
+    },
+    "depression:10": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 291
+    },
+    "stress:1": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:2": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:3": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:4": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:5": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:6": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:7": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:8": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:9": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "stress:10": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 260
+    },
+    "ptsd:1": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:2": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:3": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:4": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:5": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:6": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:7": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:8": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:9": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "ptsd:10": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 282
+    },
+    "relationship:1": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:2": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:3": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:4": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:5": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:6": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:7": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:8": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:9": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "relationship:10": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 250
+    },
+    "ocd:1": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:2": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:3": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:4": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:5": {
+      "mean": 2.4,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:6": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:7": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:8": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:9": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    },
+    "ocd:10": {
+      "mean": 2.5,
+      "delta": null,
+      "n": 280
+    }
+  },
+  "byTheme": {
+    "workload": {
+      "count": 563,
+      "share": 0.247,
+      "delta": null,
+      "severityMean": 42.2
+    },
+    "long_hours": {
+      "count": 375,
+      "share": 0.165,
+      "delta": null,
+      "severityMean": 42.9
+    },
+    "manager_relationship": {
+      "count": 194,
+      "share": 0.085,
+      "delta": null,
+      "severityMean": 46.5
+    },
+    "role_clarity": {
+      "count": 199,
+      "share": 0.087,
+      "delta": null,
+      "severityMean": 28.4
+    },
+    "career_growth": {
+      "count": 184,
+      "share": 0.081,
+      "delta": null,
+      "severityMean": 28.3
+    },
+    "recognition": {
+      "count": 239,
+      "share": 0.105,
+      "delta": null,
+      "severityMean": 31
+    },
+    "compensation_stress": {
+      "count": 216,
+      "share": 0.095,
+      "delta": null,
+      "severityMean": 31.5
+    },
+    "job_insecurity": {
+      "count": 138,
+      "share": 0.061,
+      "delta": null,
+      "severityMean": 38.9
+    },
+    "interpersonal_conflict": {
+      "count": 164,
+      "share": 0.072,
+      "delta": null,
+      "severityMean": 38.3
+    },
+    "discrimination_or_harassment": {
+      "count": 61,
+      "share": 0.027,
+      "delta": null,
+      "severityMean": 38.9
+    },
+    "work_life_balance": {
+      "count": 110,
+      "share": 0.048,
+      "delta": null,
+      "severityMean": 27.7
+    },
+    "remote_isolation": {
+      "count": 67,
+      "share": 0.029,
+      "delta": null,
+      "severityMean": 35
+    },
+    "commute": {
+      "count": 134,
+      "share": 0.059,
+      "delta": null,
+      "severityMean": 40.7
+    },
+    "sleep": {
+      "count": 249,
+      "share": 0.109,
+      "delta": null,
+      "severityMean": 37.3
+    },
+    "physical_health": {
+      "count": 145,
+      "share": 0.064,
+      "delta": null,
+      "severityMean": 39
+    },
+    "financial_stress": {
+      "count": 133,
+      "share": 0.058,
+      "delta": null,
+      "severityMean": 27.7
+    },
+    "family_caregiving": {
+      "count": 56,
+      "share": 0.025,
+      "delta": null,
+      "severityMean": 39.9
+    },
+    "bereavement": {
+      "count": 54,
+      "share": 0.024,
+      "delta": null,
+      "severityMean": 40.7
+    },
+    "substance": {
+      "count": 59,
+      "share": 0.026,
+      "delta": null,
+      "severityMean": 38.2
+    },
+    "self_esteem": {
+      "count": 66,
+      "share": 0.029,
+      "delta": null,
+      "severityMean": 36.1
+    }
+  },
+  "byCohortTheme": {
+    "department:Engineering": {
+      "workload": {
+        "count": 187,
+        "share": 0.351,
+        "severityMean": 39.3
+      },
+      "long_hours": {
+        "count": 188,
+        "share": 0.353,
+        "severityMean": 39.3
+      },
+      "manager_relationship": {
+        "count": 13,
+        "share": 0.024,
+        "severityMean": 39.2
+      },
+      "role_clarity": {
+        "count": 13,
+        "share": 0.024,
+        "severityMean": 41.5
+      },
+      "career_growth": {
+        "count": 10,
+        "share": 0.019,
+        "severityMean": 34.1
+      },
+      "recognition": {
+        "count": 20,
+        "share": 0.038,
+        "severityMean": 40.6
+      },
+      "compensation_stress": {
+        "count": 10,
+        "share": 0.019,
+        "severityMean": 37.8
+      },
+      "job_insecurity": {
+        "count": 6,
+        "share": 0.011,
+        "severityMean": 42.4
+      },
+      "interpersonal_conflict": {
+        "count": 18,
+        "share": 0.034,
+        "severityMean": 41.1
+      },
+      "discrimination_or_harassment": {
+        "count": 13,
+        "share": 0.024,
+        "severityMean": 40
+      },
+      "work_life_balance": {
+        "count": 11,
+        "share": 0.021,
+        "severityMean": 39.5
+      },
+      "remote_isolation": {
+        "count": 19,
+        "share": 0.036,
+        "severityMean": 33.5
+      },
+      "commute": {
+        "count": 16,
+        "share": 0.03,
+        "severityMean": 46.1
+      },
+      "sleep": {
+        "count": 202,
+        "share": 0.379,
+        "severityMean": 37.9
+      },
+      "physical_health": {
+        "count": 7,
+        "share": 0.013,
+        "severityMean": 36
+      },
+      "financial_stress": {
+        "count": 7,
+        "share": 0.013,
+        "severityMean": 37.5
+      },
+      "family_caregiving": {
+        "count": 20,
+        "share": 0.038,
+        "severityMean": 39.8
+      },
+      "bereavement": {
+        "count": 12,
+        "share": 0.023,
+        "severityMean": 38.7
+      },
+      "substance": {
+        "count": 15,
+        "share": 0.028,
+        "severityMean": 35
+      },
+      "self_esteem": {
+        "count": 17,
+        "share": 0.032,
+        "severityMean": 33.2
+      }
+    },
+    "location:Remote": {
+      "workload": {
+        "count": 194,
+        "share": 0.234,
+        "severityMean": 43.1
+      },
+      "long_hours": {
+        "count": 153,
+        "share": 0.185,
+        "severityMean": 41.9
+      },
+      "manager_relationship": {
+        "count": 72,
+        "share": 0.087,
+        "severityMean": 45.6
+      },
+      "role_clarity": {
+        "count": 72,
+        "share": 0.087,
+        "severityMean": 24.8
+      },
+      "career_growth": {
+        "count": 53,
+        "share": 0.064,
+        "severityMean": 30.2
+      },
+      "recognition": {
+        "count": 92,
+        "share": 0.111,
+        "severityMean": 31.8
+      },
+      "compensation_stress": {
+        "count": 74,
+        "share": 0.089,
+        "severityMean": 30.8
+      },
+      "job_insecurity": {
+        "count": 55,
+        "share": 0.066,
+        "severityMean": 37.8
+      },
+      "interpersonal_conflict": {
+        "count": 67,
+        "share": 0.081,
+        "severityMean": 39.5
+      },
+      "discrimination_or_harassment": {
+        "count": 23,
+        "share": 0.028,
+        "severityMean": 36.3
+      },
+      "work_life_balance": {
+        "count": 38,
+        "share": 0.046,
+        "severityMean": 27.9
+      },
+      "remote_isolation": {
+        "count": 25,
+        "share": 0.03,
+        "severityMean": 35.5
+      },
+      "commute": {
+        "count": 33,
+        "share": 0.04,
+        "severityMean": 41.9
+      },
+      "sleep": {
+        "count": 111,
+        "share": 0.134,
+        "severityMean": 37.2
+      },
+      "physical_health": {
+        "count": 35,
+        "share": 0.042,
+        "severityMean": 36.7
+      },
+      "financial_stress": {
+        "count": 49,
+        "share": 0.059,
+        "severityMean": 26
+      },
+      "family_caregiving": {
+        "count": 21,
+        "share": 0.025,
+        "severityMean": 38.6
+      },
+      "bereavement": {
+        "count": 22,
+        "share": 0.027,
+        "severityMean": 37.7
+      },
+      "substance": {
+        "count": 22,
+        "share": 0.027,
+        "severityMean": 37.3
+      },
+      "self_esteem": {
+        "count": 27,
+        "share": 0.033,
+        "severityMean": 35.2
+      }
+    },
+    "tenureBand:<1y": {
+      "workload": {
+        "count": 138,
+        "share": 0.262,
+        "severityMean": 40.3
+      },
+      "long_hours": {
+        "count": 100,
+        "share": 0.19,
+        "severityMean": 41.7
+      },
+      "manager_relationship": {
+        "count": 43,
+        "share": 0.082,
+        "severityMean": 45.4
+      },
+      "role_clarity": {
+        "count": 47,
+        "share": 0.089,
+        "severityMean": 26
+      },
+      "career_growth": {
+        "count": 44,
+        "share": 0.083,
+        "severityMean": 26
+      },
+      "recognition": {
+        "count": 59,
+        "share": 0.112,
+        "severityMean": 32.1
+      },
+      "compensation_stress": {
+        "count": 40,
+        "share": 0.076,
+        "severityMean": 33.2
+      },
+      "job_insecurity": {
+        "count": 16,
+        "share": 0.03,
+        "severityMean": 41.7
+      },
+      "interpersonal_conflict": {
+        "count": 21,
+        "share": 0.04,
+        "severityMean": 37.6
+      },
+      "discrimination_or_harassment": {
+        "count": 14,
+        "share": 0.027,
+        "severityMean": 40.7
+      },
+      "work_life_balance": {
+        "count": 25,
+        "share": 0.047,
+        "severityMean": 31.4
+      },
+      "remote_isolation": {
+        "count": 16,
+        "share": 0.03,
+        "severityMean": 40.2
+      },
+      "commute": {
+        "count": 40,
+        "share": 0.076,
+        "severityMean": 38
+      },
+      "sleep": {
+        "count": 52,
+        "share": 0.099,
+        "severityMean": 36.8
+      },
+      "physical_health": {
+        "count": 35,
+        "share": 0.066,
+        "severityMean": 38.9
+      },
+      "financial_stress": {
+        "count": 31,
+        "share": 0.059,
+        "severityMean": 27.3
+      },
+      "family_caregiving": {
+        "count": 10,
+        "share": 0.019,
+        "severityMean": 39.5
+      },
+      "bereavement": {
+        "count": 14,
+        "share": 0.027,
+        "severityMean": 39
+      },
+      "substance": {
+        "count": 16,
+        "share": 0.03,
+        "severityMean": 32.2
+      },
+      "self_esteem": {
+        "count": 15,
+        "share": 0.028,
+        "severityMean": 32.2
+      }
+    },
+    "level:Lead": {
+      "workload": {
+        "count": 168,
+        "share": 0.256,
+        "severityMean": 40.8
+      },
+      "long_hours": {
+        "count": 116,
+        "share": 0.177,
+        "severityMean": 40.9
+      },
+      "manager_relationship": {
+        "count": 49,
+        "share": 0.075,
+        "severityMean": 48.4
+      },
+      "role_clarity": {
+        "count": 57,
+        "share": 0.087,
+        "severityMean": 27.4
+      },
+      "career_growth": {
+        "count": 47,
+        "share": 0.072,
+        "severityMean": 28.3
+      },
+      "recognition": {
+        "count": 61,
+        "share": 0.093,
+        "severityMean": 28.7
+      },
+      "compensation_stress": {
+        "count": 64,
+        "share": 0.098,
+        "severityMean": 29.3
+      },
+      "job_insecurity": {
+        "count": 47,
+        "share": 0.072,
+        "severityMean": 38.3
+      },
+      "interpersonal_conflict": {
+        "count": 56,
+        "share": 0.085,
+        "severityMean": 35.6
+      },
+      "discrimination_or_harassment": {
+        "count": 16,
+        "share": 0.024,
+        "severityMean": 37.9
+      },
+      "work_life_balance": {
+        "count": 32,
+        "share": 0.049,
+        "severityMean": 25.6
+      },
+      "remote_isolation": {
+        "count": 22,
+        "share": 0.034,
+        "severityMean": 33.9
+      },
+      "commute": {
+        "count": 41,
+        "share": 0.063,
+        "severityMean": 40
+      },
+      "sleep": {
+        "count": 68,
+        "share": 0.104,
+        "severityMean": 36
+      },
+      "physical_health": {
+        "count": 30,
+        "share": 0.046,
+        "severityMean": 37.1
+      },
+      "financial_stress": {
+        "count": 41,
+        "share": 0.063,
+        "severityMean": 25.5
+      },
+      "family_caregiving": {
+        "count": 10,
+        "share": 0.015,
+        "severityMean": 38.2
+      },
+      "bereavement": {
+        "count": 15,
+        "share": 0.023,
+        "severityMean": 38.8
+      },
+      "substance": {
+        "count": 19,
+        "share": 0.029,
+        "severityMean": 41.4
+      },
+      "self_esteem": {
+        "count": 21,
+        "share": 0.032,
+        "severityMean": 35.1
+      }
+    },
+    "location:Pune": {
+      "workload": {
+        "count": 181,
+        "share": 0.255,
+        "severityMean": 42.9
+      },
+      "long_hours": {
+        "count": 123,
+        "share": 0.173,
+        "severityMean": 43.4
+      },
+      "manager_relationship": {
+        "count": 77,
+        "share": 0.109,
+        "severityMean": 47
+      },
+      "role_clarity": {
+        "count": 67,
+        "share": 0.094,
+        "severityMean": 29
+      },
+      "career_growth": {
+        "count": 61,
+        "share": 0.086,
+        "severityMean": 25.7
+      },
+      "recognition": {
+        "count": 70,
+        "share": 0.099,
+        "severityMean": 30.1
+      },
+      "compensation_stress": {
+        "count": 57,
+        "share": 0.08,
+        "severityMean": 29.8
+      },
+      "job_insecurity": {
+        "count": 38,
+        "share": 0.054,
+        "severityMean": 40.9
+      },
+      "interpersonal_conflict": {
+        "count": 50,
+        "share": 0.071,
+        "severityMean": 38.5
+      },
+      "discrimination_or_harassment": {
+        "count": 17,
+        "share": 0.024,
+        "severityMean": 39.3
+      },
+      "work_life_balance": {
+        "count": 29,
+        "share": 0.041,
+        "severityMean": 29.8
+      },
+      "remote_isolation": {
+        "count": 16,
+        "share": 0.023,
+        "severityMean": 31.1
+      },
+      "commute": {
+        "count": 45,
+        "share": 0.063,
+        "severityMean": 40.8
+      },
+      "sleep": {
+        "count": 72,
+        "share": 0.102,
+        "severityMean": 36.9
+      },
+      "physical_health": {
+        "count": 45,
+        "share": 0.063,
+        "severityMean": 38.3
+      },
+      "financial_stress": {
+        "count": 43,
+        "share": 0.061,
+        "severityMean": 30.7
+      },
+      "family_caregiving": {
+        "count": 11,
+        "share": 0.016,
+        "severityMean": 41.2
+      },
+      "bereavement": {
+        "count": 16,
+        "share": 0.023,
+        "severityMean": 45.8
+      },
+      "substance": {
+        "count": 14,
+        "share": 0.02,
+        "severityMean": 37.1
+      },
+      "self_esteem": {
+        "count": 22,
+        "share": 0.031,
+        "severityMean": 39.2
+      }
+    },
+    "tenureBand:1-3y": {
+      "workload": {
+        "count": 151,
+        "share": 0.271,
+        "severityMean": 45.3
+      },
+      "long_hours": {
+        "count": 105,
+        "share": 0.188,
+        "severityMean": 44.7
+      },
+      "manager_relationship": {
+        "count": 45,
+        "share": 0.081,
+        "severityMean": 45.7
+      },
+      "role_clarity": {
+        "count": 51,
+        "share": 0.091,
+        "severityMean": 28.5
+      },
+      "career_growth": {
+        "count": 44,
+        "share": 0.079,
+        "severityMean": 25.8
+      },
+      "recognition": {
+        "count": 33,
+        "share": 0.059,
+        "severityMean": 30.5
+      },
+      "compensation_stress": {
+        "count": 33,
+        "share": 0.059,
+        "severityMean": 31.7
+      },
+      "job_insecurity": {
+        "count": 35,
+        "share": 0.063,
+        "severityMean": 40.8
+      },
+      "interpersonal_conflict": {
+        "count": 47,
+        "share": 0.084,
+        "severityMean": 40
+      },
+      "discrimination_or_harassment": {
+        "count": 14,
+        "share": 0.025,
+        "severityMean": 43.1
+      },
+      "work_life_balance": {
+        "count": 32,
+        "share": 0.057,
+        "severityMean": 26.6
+      },
+      "remote_isolation": {
+        "count": 15,
+        "share": 0.027,
+        "severityMean": 33.7
+      },
+      "commute": {
+        "count": 32,
+        "share": 0.057,
+        "severityMean": 40.1
+      },
+      "sleep": {
+        "count": 72,
+        "share": 0.129,
+        "severityMean": 39.7
+      },
+      "physical_health": {
+        "count": 44,
+        "share": 0.079,
+        "severityMean": 39.8
+      },
+      "financial_stress": {
+        "count": 33,
+        "share": 0.059,
+        "severityMean": 27.3
+      },
+      "family_caregiving": {
+        "count": 14,
+        "share": 0.025,
+        "severityMean": 40.8
+      },
+      "bereavement": {
+        "count": 14,
+        "share": 0.025,
+        "severityMean": 40.6
+      },
+      "substance": {
+        "count": 16,
+        "share": 0.029,
+        "severityMean": 45.4
+      },
+      "self_esteem": {
+        "count": 12,
+        "share": 0.022,
+        "severityMean": 33.6
+      }
+    },
+    "level:IC": {
+      "workload": {
+        "count": 321,
+        "share": 0.252,
+        "severityMean": 42.4
+      },
+      "long_hours": {
+        "count": 198,
+        "share": 0.155,
+        "severityMean": 43.3
+      },
+      "manager_relationship": {
+        "count": 113,
+        "share": 0.089,
+        "severityMean": 45.2
+      },
+      "role_clarity": {
+        "count": 111,
+        "share": 0.087,
+        "severityMean": 30.1
+      },
+      "career_growth": {
+        "count": 117,
+        "share": 0.092,
+        "severityMean": 28.2
+      },
+      "recognition": {
+        "count": 133,
+        "share": 0.104,
+        "severityMean": 32.4
+      },
+      "compensation_stress": {
+        "count": 113,
+        "share": 0.089,
+        "severityMean": 32.6
+      },
+      "job_insecurity": {
+        "count": 73,
+        "share": 0.057,
+        "severityMean": 39.2
+      },
+      "interpersonal_conflict": {
+        "count": 79,
+        "share": 0.062,
+        "severityMean": 39.3
+      },
+      "discrimination_or_harassment": {
+        "count": 37,
+        "share": 0.029,
+        "severityMean": 39.8
+      },
+      "work_life_balance": {
+        "count": 57,
+        "share": 0.045,
+        "severityMean": 27.4
+      },
+      "remote_isolation": {
+        "count": 38,
+        "share": 0.03,
+        "severityMean": 34.9
+      },
+      "commute": {
+        "count": 74,
+        "share": 0.058,
+        "severityMean": 40.8
+      },
+      "sleep": {
+        "count": 142,
+        "share": 0.111,
+        "severityMean": 38.1
+      },
+      "physical_health": {
+        "count": 96,
+        "share": 0.075,
+        "severityMean": 39.2
+      },
+      "financial_stress": {
+        "count": 64,
+        "share": 0.05,
+        "severityMean": 28.7
+      },
+      "family_caregiving": {
+        "count": 42,
+        "share": 0.033,
+        "severityMean": 40.7
+      },
+      "bereavement": {
+        "count": 29,
+        "share": 0.023,
+        "severityMean": 40
+      },
+      "substance": {
+        "count": 30,
+        "share": 0.024,
+        "severityMean": 40
+      },
+      "self_esteem": {
+        "count": 37,
+        "share": 0.029,
+        "severityMean": 36.5
+      }
+    },
+    "level:Manager": {
+      "workload": {
+        "count": 74,
+        "share": 0.213,
+        "severityMean": 44.4
+      },
+      "long_hours": {
+        "count": 61,
+        "share": 0.175,
+        "severityMean": 45.5
+      },
+      "manager_relationship": {
+        "count": 32,
+        "share": 0.092,
+        "severityMean": 47.9
+      },
+      "role_clarity": {
+        "count": 31,
+        "share": 0.089,
+        "severityMean": 24.3
+      },
+      "career_growth": {
+        "count": 20,
+        "share": 0.057,
+        "severityMean": 28.9
+      },
+      "recognition": {
+        "count": 45,
+        "share": 0.129,
+        "severityMean": 30.1
+      },
+      "compensation_stress": {
+        "count": 39,
+        "share": 0.112,
+        "severityMean": 32.1
+      },
+      "job_insecurity": {
+        "count": 18,
+        "share": 0.052,
+        "severityMean": 39.5
+      },
+      "interpersonal_conflict": {
+        "count": 29,
+        "share": 0.083,
+        "severityMean": 40.6
+      },
+      "discrimination_or_harassment": {
+        "count": 8,
+        "share": 0.023,
+        "severityMean": 36.8
+      },
+      "work_life_balance": {
+        "count": 21,
+        "share": 0.06,
+        "severityMean": 31.8
+      },
+      "remote_isolation": {
+        "count": 7,
+        "share": 0.02,
+        "severityMean": 39.2
+      },
+      "commute": {
+        "count": 19,
+        "share": 0.055,
+        "severityMean": 41.5
+      },
+      "sleep": {
+        "count": 39,
+        "share": 0.112,
+        "severityMean": 36.8
+      },
+      "physical_health": {
+        "count": 19,
+        "share": 0.055,
+        "severityMean": 41.1
+      },
+      "financial_stress": {
+        "count": 28,
+        "share": 0.08,
+        "severityMean": 28.4
+      },
+      "family_caregiving": {
+        "count": 4,
+        "share": 0.011,
+        "severityMean": 35.4
+      },
+      "bereavement": {
+        "count": 10,
+        "share": 0.029,
+        "severityMean": 45.5
+      },
+      "substance": {
+        "count": 10,
+        "share": 0.029,
+        "severityMean": 26.8
+      },
+      "self_esteem": {
+        "count": 8,
+        "share": 0.023,
+        "severityMean": 37.1
+      }
+    },
+    "tenureBand:3-5y": {
+      "workload": {
+        "count": 163,
+        "share": 0.237,
+        "severityMean": 40.5
+      },
+      "long_hours": {
+        "count": 92,
+        "share": 0.134,
+        "severityMean": 43.5
+      },
+      "manager_relationship": {
+        "count": 56,
+        "share": 0.082,
+        "severityMean": 46.6
+      },
+      "role_clarity": {
+        "count": 51,
+        "share": 0.074,
+        "severityMean": 30.5
+      },
+      "career_growth": {
+        "count": 55,
+        "share": 0.08,
+        "severityMean": 28.7
+      },
+      "recognition": {
+        "count": 91,
+        "share": 0.132,
+        "severityMean": 30.9
+      },
+      "compensation_stress": {
+        "count": 91,
+        "share": 0.132,
+        "severityMean": 32.1
+      },
+      "job_insecurity": {
+        "count": 49,
+        "share": 0.071,
+        "severityMean": 35.2
+      },
+      "interpersonal_conflict": {
+        "count": 55,
+        "share": 0.08,
+        "severityMean": 35.4
+      },
+      "discrimination_or_harassment": {
+        "count": 17,
+        "share": 0.025,
+        "severityMean": 34.9
+      },
+      "work_life_balance": {
+        "count": 28,
+        "share": 0.041,
+        "severityMean": 25.1
+      },
+      "remote_isolation": {
+        "count": 21,
+        "share": 0.031,
+        "severityMean": 35
+      },
+      "commute": {
+        "count": 41,
+        "share": 0.06,
+        "severityMean": 42.5
+      },
+      "sleep": {
+        "count": 72,
+        "share": 0.105,
+        "severityMean": 37.8
+      },
+      "physical_health": {
+        "count": 44,
+        "share": 0.064,
+        "severityMean": 37.8
+      },
+      "financial_stress": {
+        "count": 40,
+        "share": 0.058,
+        "severityMean": 32.7
+      },
+      "family_caregiving": {
+        "count": 18,
+        "share": 0.026,
+        "severityMean": 40.3
+      },
+      "bereavement": {
+        "count": 18,
+        "share": 0.026,
+        "severityMean": 43.8
+      },
+      "substance": {
+        "count": 16,
+        "share": 0.023,
+        "severityMean": 40.9
+      },
+      "self_esteem": {
+        "count": 17,
+        "share": 0.025,
+        "severityMean": 41.2
+      }
+    },
+    "tenureBand:5y+": {
+      "workload": {
+        "count": 111,
+        "share": 0.219,
+        "severityMean": 42.7
+      },
+      "long_hours": {
+        "count": 78,
+        "share": 0.154,
+        "severityMean": 41.2
+      },
+      "manager_relationship": {
+        "count": 50,
+        "share": 0.099,
+        "severityMean": 47.9
+      },
+      "role_clarity": {
+        "count": 50,
+        "share": 0.099,
+        "severityMean": 28.4
+      },
+      "career_growth": {
+        "count": 41,
+        "share": 0.081,
+        "severityMean": 32.8
+      },
+      "recognition": {
+        "count": 56,
+        "share": 0.11,
+        "severityMean": 30.2
+      },
+      "compensation_stress": {
+        "count": 52,
+        "share": 0.103,
+        "severityMean": 29.1
+      },
+      "job_insecurity": {
+        "count": 38,
+        "share": 0.075,
+        "severityMean": 41
+      },
+      "interpersonal_conflict": {
+        "count": 41,
+        "share": 0.081,
+        "severityMean": 40.4
+      },
+      "discrimination_or_harassment": {
+        "count": 16,
+        "share": 0.032,
+        "severityMean": 37.8
+      },
+      "work_life_balance": {
+        "count": 25,
+        "share": 0.049,
+        "severityMean": 28.4
+      },
+      "remote_isolation": {
+        "count": 15,
+        "share": 0.03,
+        "severityMean": 30.8
+      },
+      "commute": {
+        "count": 21,
+        "share": 0.041,
+        "severityMean": 43.1
+      },
+      "sleep": {
+        "count": 53,
+        "share": 0.105,
+        "severityMean": 34
+      },
+      "physical_health": {
+        "count": 22,
+        "share": 0.043,
+        "severityMean": 39.8
+      },
+      "financial_stress": {
+        "count": 29,
+        "share": 0.057,
+        "severityMean": 21.5
+      },
+      "family_caregiving": {
+        "count": 14,
+        "share": 0.028,
+        "severityMean": 38.7
+      },
+      "bereavement": {
+        "count": 8,
+        "share": 0.016,
+        "severityMean": 36.6
+      },
+      "substance": {
+        "count": 11,
+        "share": 0.022,
+        "severityMean": 32.5
+      },
+      "self_esteem": {
+        "count": 22,
+        "share": 0.043,
+        "severityMean": 36.3
+      }
+    },
+    "location:Bengaluru": {
+      "workload": {
+        "count": 188,
+        "share": 0.253,
+        "severityMean": 40.6
+      },
+      "long_hours": {
+        "count": 99,
+        "share": 0.133,
+        "severityMean": 43.8
+      },
+      "manager_relationship": {
+        "count": 45,
+        "share": 0.061,
+        "severityMean": 46.9
+      },
+      "role_clarity": {
+        "count": 60,
+        "share": 0.081,
+        "severityMean": 31.9
+      },
+      "career_growth": {
+        "count": 70,
+        "share": 0.094,
+        "severityMean": 29.1
+      },
+      "recognition": {
+        "count": 77,
+        "share": 0.104,
+        "severityMean": 30.8
+      },
+      "compensation_stress": {
+        "count": 85,
+        "share": 0.115,
+        "severityMean": 33.3
+      },
+      "job_insecurity": {
+        "count": 45,
+        "share": 0.061,
+        "severityMean": 38.6
+      },
+      "interpersonal_conflict": {
+        "count": 47,
+        "share": 0.063,
+        "severityMean": 36.3
+      },
+      "discrimination_or_harassment": {
+        "count": 21,
+        "share": 0.028,
+        "severityMean": 41.4
+      },
+      "work_life_balance": {
+        "count": 43,
+        "share": 0.058,
+        "severityMean": 26.2
+      },
+      "remote_isolation": {
+        "count": 26,
+        "share": 0.035,
+        "severityMean": 36.9
+      },
+      "commute": {
+        "count": 56,
+        "share": 0.075,
+        "severityMean": 39.9
+      },
+      "sleep": {
+        "count": 66,
+        "share": 0.089,
+        "severityMean": 37.9
+      },
+      "physical_health": {
+        "count": 65,
+        "share": 0.088,
+        "severityMean": 40.7
+      },
+      "financial_stress": {
+        "count": 41,
+        "share": 0.055,
+        "severityMean": 26.4
+      },
+      "family_caregiving": {
+        "count": 24,
+        "share": 0.032,
+        "severityMean": 40.4
+      },
+      "bereavement": {
+        "count": 16,
+        "share": 0.022,
+        "severityMean": 39.7
+      },
+      "substance": {
+        "count": 23,
+        "share": 0.031,
+        "severityMean": 39.7
+      },
+      "self_esteem": {
+        "count": 17,
+        "share": 0.023,
+        "severityMean": 33.7
+      }
+    },
+    "department:Operations": {
+      "workload": {
+        "count": 166,
+        "share": 0.383,
+        "severityMean": 52.8
+      },
+      "long_hours": {
+        "count": 151,
+        "share": 0.349,
+        "severityMean": 51.1
+      },
+      "manager_relationship": {
+        "count": 148,
+        "share": 0.342,
+        "severityMean": 51.1
+      },
+      "role_clarity": {
+        "count": 14,
+        "share": 0.032,
+        "severityMean": 46.5
+      },
+      "career_growth": {
+        "count": 9,
+        "share": 0.021,
+        "severityMean": 47.6
+      },
+      "recognition": {
+        "count": 11,
+        "share": 0.025,
+        "severityMean": 46.6
+      },
+      "compensation_stress": {
+        "count": 8,
+        "share": 0.018,
+        "severityMean": 54.6
+      },
+      "job_insecurity": {
+        "count": 10,
+        "share": 0.023,
+        "severityMean": 49.9
+      },
+      "interpersonal_conflict": {
+        "count": 10,
+        "share": 0.023,
+        "severityMean": 51.1
+      },
+      "discrimination_or_harassment": {
+        "count": 16,
+        "share": 0.037,
+        "severityMean": 49.3
+      },
+      "work_life_balance": {
+        "count": 8,
+        "share": 0.018,
+        "severityMean": 51.3
+      },
+      "remote_isolation": {
+        "count": 8,
+        "share": 0.018,
+        "severityMean": 51.1
+      },
+      "commute": {
+        "count": 13,
+        "share": 0.03,
+        "severityMean": 53.8
+      },
+      "sleep": {
+        "count": 7,
+        "share": 0.016,
+        "severityMean": 49.9
+      },
+      "physical_health": {
+        "count": 8,
+        "share": 0.018,
+        "severityMean": 42.4
+      },
+      "financial_stress": {
+        "count": 16,
+        "share": 0.037,
+        "severityMean": 52.8
+      },
+      "family_caregiving": {
+        "count": 9,
+        "share": 0.021,
+        "severityMean": 51.8
+      },
+      "bereavement": {
+        "count": 13,
+        "share": 0.03,
+        "severityMean": 49.8
+      },
+      "substance": {
+        "count": 12,
+        "share": 0.028,
+        "severityMean": 53.9
+      },
+      "self_esteem": {
+        "count": 8,
+        "share": 0.018,
+        "severityMean": 61.3
+      }
+    },
+    "department:Sales": {
+      "workload": {
+        "count": 8,
+        "share": 0.023,
+        "severityMean": 20.7
+      },
+      "long_hours": {
+        "count": 6,
+        "share": 0.018,
+        "severityMean": 28.3
+      },
+      "manager_relationship": {
+        "count": 10,
+        "share": 0.029,
+        "severityMean": 25.8
+      },
+      "role_clarity": {
+        "count": 10,
+        "share": 0.029,
+        "severityMean": 30.7
+      },
+      "career_growth": {
+        "count": 8,
+        "share": 0.023,
+        "severityMean": 32.3
+      },
+      "recognition": {
+        "count": 177,
+        "share": 0.519,
+        "severityMean": 29.3
+      },
+      "compensation_stress": {
+        "count": 177,
+        "share": 0.519,
+        "severityMean": 30.4
+      },
+      "job_insecurity": {
+        "count": 5,
+        "share": 0.015,
+        "severityMean": 34
+      },
+      "interpersonal_conflict": {
+        "count": 14,
+        "share": 0.041,
+        "severityMean": 31.8
+      },
+      "discrimination_or_harassment": {
+        "count": 6,
+        "share": 0.018,
+        "severityMean": 30
+      },
+      "work_life_balance": {
+        "count": 13,
+        "share": 0.038,
+        "severityMean": 26.5
+      },
+      "remote_isolation": {
+        "count": 10,
+        "share": 0.029,
+        "severityMean": 28.6
+      },
+      "commute": {
+        "count": 7,
+        "share": 0.021,
+        "severityMean": 31.8
+      },
+      "sleep": {
+        "count": 10,
+        "share": 0.029,
+        "severityMean": 30.4
+      },
+      "physical_health": {
+        "count": 5,
+        "share": 0.015,
+        "severityMean": 29.7
+      },
+      "financial_stress": {
+        "count": 9,
+        "share": 0.026,
+        "severityMean": 24.2
+      },
+      "family_caregiving": {
+        "count": 5,
+        "share": 0.015,
+        "severityMean": 30.5
+      },
+      "bereavement": {
+        "count": 10,
+        "share": 0.029,
+        "severityMean": 31
+      },
+      "substance": {
+        "count": 6,
+        "share": 0.018,
+        "severityMean": 34.3
+      },
+      "self_esteem": {
+        "count": 12,
+        "share": 0.035,
+        "severityMean": 28.8
+      }
+    },
+    "department:Support": {
+      "workload": {
+        "count": 86,
+        "share": 0.327,
+        "severityMean": 38.6
+      },
+      "long_hours": {
+        "count": 6,
+        "share": 0.023,
+        "severityMean": 39.1
+      },
+      "manager_relationship": {
+        "count": 5,
+        "share": 0.019,
+        "severityMean": 36.9
+      },
+      "role_clarity": {
+        "count": 5,
+        "share": 0.019,
+        "severityMean": 34.7
+      },
+      "career_growth": {
+        "count": 6,
+        "share": 0.023,
+        "severityMean": 42.4
+      },
+      "recognition": {
+        "count": 4,
+        "share": 0.015,
+        "severityMean": 44.1
+      },
+      "compensation_stress": {
+        "count": 4,
+        "share": 0.015,
+        "severityMean": 35.1
+      },
+      "job_insecurity": {
+        "count": 96,
+        "share": 0.365,
+        "severityMean": 39.5
+      },
+      "interpersonal_conflict": {
+        "count": 104,
+        "share": 0.395,
+        "severityMean": 39.2
+      },
+      "discrimination_or_harassment": {
+        "count": 5,
+        "share": 0.019,
+        "severityMean": 42.8
+      },
+      "work_life_balance": {
+        "count": 7,
+        "share": 0.027,
+        "severityMean": 38.5
+      },
+      "remote_isolation": {
+        "count": 7,
+        "share": 0.027,
+        "severityMean": 34.5
+      },
+      "commute": {
+        "count": 6,
+        "share": 0.023,
+        "severityMean": 42.8
+      },
+      "sleep": {
+        "count": 11,
+        "share": 0.042,
+        "severityMean": 38.9
+      },
+      "physical_health": {
+        "count": 6,
+        "share": 0.023,
+        "severityMean": 42.9
+      },
+      "financial_stress": {
+        "count": 3,
+        "share": 0.011,
+        "severityMean": 32.2
+      },
+      "family_caregiving": {
+        "count": 6,
+        "share": 0.023,
+        "severityMean": 39.5
+      },
+      "bereavement": {
+        "count": 5,
+        "share": 0.019,
+        "severityMean": 44.5
+      },
+      "substance": {
+        "count": 5,
+        "share": 0.019,
+        "severityMean": 49.4
+      },
+      "self_esteem": {
+        "count": 7,
+        "share": 0.027,
+        "severityMean": 39.3
+      }
+    },
+    "department:Finance": {
+      "workload": {
+        "count": 6,
+        "share": 0.042,
+        "severityMean": 22.7
+      },
+      "long_hours": {
+        "count": 6,
+        "share": 0.042,
+        "severityMean": 19.7
+      },
+      "manager_relationship": {
+        "count": 4,
+        "share": 0.028,
+        "severityMean": 21.4
+      },
+      "role_clarity": {
+        "count": 71,
+        "share": 0.493,
+        "severityMean": 21.5
+      },
+      "career_growth": {
+        "count": 4,
+        "share": 0.028,
+        "severityMean": 23.2
+      },
+      "recognition": {
+        "count": 6,
+        "share": 0.042,
+        "severityMean": 19.7
+      },
+      "compensation_stress": {
+        "count": 4,
+        "share": 0.028,
+        "severityMean": 13.1
+      },
+      "job_insecurity": {
+        "count": 3,
+        "share": 0.021,
+        "severityMean": 20.8
+      },
+      "interpersonal_conflict": {
+        "count": 4,
+        "share": 0.028,
+        "severityMean": 16
+      },
+      "discrimination_or_harassment": {
+        "count": 1,
+        "share": 0.007,
+        "severityMean": 17.7
+      },
+      "work_life_balance": {
+        "count": 7,
+        "share": 0.049,
+        "severityMean": 25.6
+      },
+      "remote_isolation": {
+        "count": 6,
+        "share": 0.042,
+        "severityMean": 26.1
+      },
+      "commute": {
+        "count": 2,
+        "share": 0.014,
+        "severityMean": 20.6
+      },
+      "sleep": {
+        "count": 5,
+        "share": 0.035,
+        "severityMean": 17.2
+      },
+      "physical_health": {
+        "count": 2,
+        "share": 0.014,
+        "severityMean": 20.4
+      },
+      "financial_stress": {
+        "count": 84,
+        "share": 0.583,
+        "severityMean": 21.5
+      },
+      "family_caregiving": {
+        "count": 1,
+        "share": 0.007,
+        "severityMean": 38.2
+      },
+      "bereavement": {
+        "count": 2,
+        "share": 0.014,
+        "severityMean": 26.6
+      },
+      "substance": {
+        "count": 7,
+        "share": 0.049,
+        "severityMean": 18.7
+      },
+      "self_esteem": {
+        "count": 5,
+        "share": 0.035,
+        "severityMean": 27.6
+      }
+    },
+    "department:HR": {
+      "workload": {
+        "count": 4,
+        "share": 0.033,
+        "severityMean": 15.2
+      },
+      "long_hours": {
+        "count": 6,
+        "share": 0.049,
+        "severityMean": 18.1
+      },
+      "manager_relationship": {
+        "count": 3,
+        "share": 0.024,
+        "severityMean": 12.4
+      },
+      "role_clarity": {
+        "count": 2,
+        "share": 0.016,
+        "severityMean": 25.4
+      },
+      "career_growth": {
+        "count": 62,
+        "share": 0.504,
+        "severityMean": 19.9
+      },
+      "recognition": {
+        "count": 8,
+        "share": 0.065,
+        "severityMean": 19
+      },
+      "compensation_stress": {
+        "count": 2,
+        "share": 0.016,
+        "severityMean": 10.6
+      },
+      "job_insecurity": {
+        "count": 5,
+        "share": 0.041,
+        "severityMean": 22
+      },
+      "interpersonal_conflict": {
+        "count": 4,
+        "share": 0.033,
+        "severityMean": 16.6
+      },
+      "discrimination_or_harassment": {
+        "count": 4,
+        "share": 0.033,
+        "severityMean": 25.8
+      },
+      "work_life_balance": {
+        "count": 56,
+        "share": 0.455,
+        "severityMean": 19.7
+      },
+      "remote_isolation": {
+        "count": 2,
+        "share": 0.016,
+        "severityMean": 14.4
+      },
+      "commute": {
+        "count": 2,
+        "share": 0.016,
+        "severityMean": 15.1
+      },
+      "sleep": {
+        "count": 1,
+        "share": 0.008,
+        "severityMean": 26.7
+      },
+      "physical_health": {
+        "count": 5,
+        "share": 0.041,
+        "severityMean": 15.6
+      },
+      "financial_stress": {
+        "count": 3,
+        "share": 0.024,
+        "severityMean": 13.2
+      },
+      "family_caregiving": {
+        "count": 1,
+        "share": 0.008,
+        "severityMean": 10
+      },
+      "bereavement": {
+        "count": 1,
+        "share": 0.008,
+        "severityMean": 27.4
+      },
+      "substance": {
+        "count": 2,
+        "share": 0.016,
+        "severityMean": 28.2
+      },
+      "self_esteem": {
+        "count": 4,
+        "share": 0.033,
+        "severityMean": 20.9
+      }
+    },
+    "department:Marketing": {
+      "workload": {
+        "count": 5,
+        "share": 0.03,
+        "severityMean": 26.7
+      },
+      "long_hours": {
+        "count": 8,
+        "share": 0.048,
+        "severityMean": 24.6
+      },
+      "manager_relationship": {
+        "count": 5,
+        "share": 0.03,
+        "severityMean": 27
+      },
+      "role_clarity": {
+        "count": 78,
+        "share": 0.473,
+        "severityMean": 28.3
+      },
+      "career_growth": {
+        "count": 82,
+        "share": 0.497,
+        "severityMean": 30
+      },
+      "recognition": {
+        "count": 3,
+        "share": 0.018,
+        "severityMean": 26
+      },
+      "compensation_stress": {
+        "count": 2,
+        "share": 0.012,
+        "severityMean": 19.6
+      },
+      "job_insecurity": {
+        "count": 3,
+        "share": 0.018,
+        "severityMean": 32.3
+      },
+      "interpersonal_conflict": {
+        "count": 2,
+        "share": 0.012,
+        "severityMean": 30.1
+      },
+      "discrimination_or_harassment": {
+        "count": 5,
+        "share": 0.03,
+        "severityMean": 26.6
+      },
+      "work_life_balance": {
+        "count": 2,
+        "share": 0.012,
+        "severityMean": 41.3
+      },
+      "remote_isolation": {
+        "count": 5,
+        "share": 0.03,
+        "severityMean": 32.7
+      },
+      "commute": {
+        "count": 2,
+        "share": 0.012,
+        "severityMean": 18.4
+      },
+      "sleep": {
+        "count": 5,
+        "share": 0.03,
+        "severityMean": 25.1
+      },
+      "physical_health": {
+        "count": 4,
+        "share": 0.024,
+        "severityMean": 36.9
+      },
+      "financial_stress": {
+        "count": 5,
+        "share": 0.03,
+        "severityMean": 28.2
+      },
+      "family_caregiving": {
+        "count": 8,
+        "share": 0.048,
+        "severityMean": 34.7
+      },
+      "bereavement": {
+        "count": 3,
+        "share": 0.018,
+        "severityMean": 32.3
+      },
+      "substance": {
+        "count": 4,
+        "share": 0.024,
+        "severityMean": 33.5
+      },
+      "self_esteem": {
+        "count": 5,
+        "share": 0.03,
+        "severityMean": 35
+      }
+    },
+    "department:Logistics": {
+      "workload": {
+        "count": 101,
+        "share": 0.365,
+        "severityMean": 37.9
+      },
+      "long_hours": {
+        "count": 4,
+        "share": 0.014,
+        "severityMean": 37.7
+      },
+      "manager_relationship": {
+        "count": 6,
+        "share": 0.022,
+        "severityMean": 40.7
+      },
+      "role_clarity": {
+        "count": 6,
+        "share": 0.022,
+        "severityMean": 32.8
+      },
+      "career_growth": {
+        "count": 3,
+        "share": 0.011,
+        "severityMean": 46.4
+      },
+      "recognition": {
+        "count": 10,
+        "share": 0.036,
+        "severityMean": 38
+      },
+      "compensation_stress": {
+        "count": 9,
+        "share": 0.032,
+        "severityMean": 39.3
+      },
+      "job_insecurity": {
+        "count": 10,
+        "share": 0.036,
+        "severityMean": 39.4
+      },
+      "interpersonal_conflict": {
+        "count": 8,
+        "share": 0.029,
+        "severityMean": 38.7
+      },
+      "discrimination_or_harassment": {
+        "count": 11,
+        "share": 0.04,
+        "severityMean": 37.7
+      },
+      "work_life_balance": {
+        "count": 6,
+        "share": 0.022,
+        "severityMean": 37.4
+      },
+      "remote_isolation": {
+        "count": 10,
+        "share": 0.036,
+        "severityMean": 42.3
+      },
+      "commute": {
+        "count": 86,
+        "share": 0.31,
+        "severityMean": 39.8
+      },
+      "sleep": {
+        "count": 8,
+        "share": 0.029,
+        "severityMean": 39.5
+      },
+      "physical_health": {
+        "count": 108,
+        "share": 0.39,
+        "severityMean": 40.7
+      },
+      "financial_stress": {
+        "count": 6,
+        "share": 0.022,
+        "severityMean": 44.4
+      },
+      "family_caregiving": {
+        "count": 6,
+        "share": 0.022,
+        "severityMean": 43
+      },
+      "bereavement": {
+        "count": 8,
+        "share": 0.029,
+        "severityMean": 46.9
+      },
+      "substance": {
+        "count": 8,
+        "share": 0.029,
+        "severityMean": 38.5
+      },
+      "self_esteem": {
+        "count": 8,
+        "share": 0.029,
+        "severityMean": 39.2
+      }
+    }
+  },
+  "drivers": [
+    {
+      "cohortKey": "department:Support",
+      "domain": "relationship",
+      "driver": "interpersonal_conflict",
+      "strength": 0.398,
+      "direction": "positive",
+      "n": 24
+    },
+    {
+      "cohortKey": "department:Logistics",
+      "domain": "ptsd",
+      "driver": "remote_isolation",
+      "strength": 0.332,
+      "direction": "positive",
+      "n": 29
+    },
+    {
+      "cohortKey": "department:Finance",
+      "domain": "relationship",
+      "driver": "financial_stress",
+      "strength": 0.223,
+      "direction": "positive",
+      "n": 21
+    },
+    {
+      "cohortKey": "department:Finance",
+      "domain": "stress",
+      "driver": "role_clarity",
+      "strength": 0.221,
+      "direction": "positive",
+      "n": 21
+    },
+    {
+      "cohortKey": "department:Logistics",
+      "domain": "ptsd",
+      "driver": "physical_health",
+      "strength": 0.211,
+      "direction": "positive",
+      "n": 29
+    },
+    {
+      "cohortKey": "department:Support",
+      "domain": "ocd",
+      "driver": "manager_relationship",
+      "strength": 0.202,
+      "direction": "negative",
+      "n": 35
+    },
+    {
+      "cohortKey": "department:Operations",
+      "domain": "stress",
+      "driver": "role_clarity",
+      "strength": 0.196,
+      "direction": "negative",
+      "n": 42
+    },
+    {
+      "cohortKey": "tenureBand:<1y",
+      "domain": "depression",
+      "driver": "workload",
+      "strength": 0.168,
+      "direction": "positive",
+      "n": 71
+    },
+    {
+      "cohortKey": "department:Logistics",
+      "domain": "relationship",
+      "driver": "self_esteem",
+      "strength": 0.162,
+      "direction": "negative",
+      "n": 33
+    },
+    {
+      "cohortKey": "department:Support",
+      "domain": "relationship",
+      "driver": "career_growth",
+      "strength": 0.147,
+      "direction": "positive",
+      "n": 24
+    },
+    {
+      "cohortKey": "department:Logistics",
+      "domain": "stress",
+      "driver": "substance",
+      "strength": 0.144,
+      "direction": "positive",
+      "n": 34
+    },
+    {
+      "cohortKey": "tenureBand:1-3y",
+      "domain": "relationship",
+      "driver": "work_life_balance",
+      "strength": 0.137,
+      "direction": "negative",
+      "n": 63
+    },
+    {
+      "cohortKey": "department:Finance",
+      "domain": "relationship",
+      "driver": "manager_relationship",
+      "strength": 0.137,
+      "direction": "positive",
+      "n": 21
+    },
+    {
+      "cohortKey": "tenureBand:5y+",
+      "domain": "depression",
+      "driver": "financial_stress",
+      "strength": 0.133,
+      "direction": "negative",
+      "n": 67
+    },
+    {
+      "cohortKey": "tenureBand:1-3y",
+      "domain": "ptsd",
+      "driver": "long_hours",
+      "strength": 0.129,
+      "direction": "positive",
+      "n": 64
+    },
+    {
+      "cohortKey": "level:Manager",
+      "domain": "ptsd",
+      "driver": "interpersonal_conflict",
+      "strength": 0.128,
+      "direction": "positive",
+      "n": 39
+    },
+    {
+      "cohortKey": "location:Remote",
+      "domain": "depression",
+      "driver": "workload",
+      "strength": 0.126,
+      "direction": "positive",
+      "n": 119
+    },
+    {
+      "cohortKey": "department:Logistics",
+      "domain": "anxiety",
+      "driver": "workload",
+      "strength": 0.124,
+      "direction": "positive",
+      "n": 50
+    },
+    {
+      "cohortKey": "department:Marketing",
+      "domain": "ptsd",
+      "driver": "remote_isolation",
+      "strength": 0.123,
+      "direction": "negative",
+      "n": 21
+    },
+    {
+      "cohortKey": "location:Remote",
+      "domain": "ptsd",
+      "driver": "interpersonal_conflict",
+      "strength": 0.121,
+      "direction": "positive",
+      "n": 104
+    },
+    {
+      "cohortKey": "tenureBand:5y+",
+      "domain": "ptsd",
+      "driver": "manager_relationship",
+      "strength": 0.118,
+      "direction": "positive",
+      "n": 62
+    },
+    {
+      "cohortKey": "level:Lead",
+      "domain": "depression",
+      "driver": "workload",
+      "strength": 0.118,
+      "direction": "positive",
+      "n": 87
+    },
+    {
+      "cohortKey": "tenureBand:3-5y",
+      "domain": "stress",
+      "driver": "work_life_balance",
+      "strength": 0.118,
+      "direction": "negative",
+      "n": 68
+    },
+    {
+      "cohortKey": "department:Logistics",
+      "domain": "depression",
+      "driver": "physical_health",
+      "strength": 0.115,
+      "direction": "positive",
+      "n": 34
+    },
+    {
+      "cohortKey": "tenureBand:5y+",
+      "domain": "relationship",
+      "driver": "role_clarity",
+      "strength": 0.114,
+      "direction": "negative",
+      "n": 54
+    },
+    {
+      "cohortKey": "department:Support",
+      "domain": "relationship",
+      "driver": "long_hours",
+      "strength": 0.114,
+      "direction": "positive",
+      "n": 24
+    },
+    {
+      "cohortKey": "department:Sales",
+      "domain": "anxiety",
+      "driver": "family_caregiving",
+      "strength": 0.113,
+      "direction": "negative",
+      "n": 52
+    },
+    {
+      "cohortKey": "tenureBand:<1y",
+      "domain": "anxiety",
+      "driver": "long_hours",
+      "strength": 0.108,
+      "direction": "positive",
+      "n": 63
+    },
+    {
+      "cohortKey": "location:Remote",
+      "domain": "relationship",
+      "driver": "interpersonal_conflict",
+      "strength": 0.106,
+      "direction": "positive",
+      "n": 74
+    },
+    {
+      "cohortKey": "department:Sales",
+      "domain": "depression",
+      "driver": "recognition",
+      "strength": 0.105,
+      "direction": "positive",
+      "n": 42
+    },
+    {
+      "cohortKey": "department:Finance",
+      "domain": "stress",
+      "driver": "recognition",
+      "strength": 0.105,
+      "direction": "positive",
+      "n": 21
+    },
+    {
+      "cohortKey": "department:Engineering",
+      "domain": "ptsd",
+      "driver": "interpersonal_conflict",
+      "strength": 0.104,
+      "direction": "positive",
+      "n": 58
+    },
+    {
+      "cohortKey": "department:Engineering",
+      "domain": "anxiety",
+      "driver": "recognition",
+      "strength": 0.101,
+      "direction": "positive",
+      "n": 68
+    },
+    {
+      "cohortKey": "location:Pune",
+      "domain": "anxiety",
+      "driver": "manager_relationship",
+      "strength": 0.101,
+      "direction": "positive",
+      "n": 85
+    },
+    {
+      "cohortKey": "department:Engineering",
+      "domain": "ptsd",
+      "driver": "commute",
+      "strength": 0.099,
+      "direction": "positive",
+      "n": 58
+    },
+    {
+      "cohortKey": "level:Lead",
+      "domain": "ptsd",
+      "driver": "manager_relationship",
+      "strength": 0.099,
+      "direction": "positive",
+      "n": 90
+    },
+    {
+      "cohortKey": "level:IC",
+      "domain": "ptsd",
+      "driver": "long_hours",
+      "strength": 0.098,
+      "direction": "positive",
+      "n": 153
+    },
+    {
+      "cohortKey": "location:Pune",
+      "domain": "anxiety",
+      "driver": "self_esteem",
+      "strength": 0.094,
+      "direction": "positive",
+      "n": 85
+    },
+    {
+      "cohortKey": "tenureBand:<1y",
+      "domain": "ptsd",
+      "driver": "manager_relationship",
+      "strength": 0.093,
+      "direction": "positive",
+      "n": 65
+    },
+    {
+      "cohortKey": "department:Marketing",
+      "domain": "anxiety",
+      "driver": "commute",
+      "strength": 0.091,
+      "direction": "negative",
+      "n": 24
+    },
+    {
+      "cohortKey": "tenureBand:3-5y",
+      "domain": "anxiety",
+      "driver": "workload",
+      "strength": 0.089,
+      "direction": "positive",
+      "n": 105
+    },
+    {
+      "cohortKey": "department:Marketing",
+      "domain": "anxiety",
+      "driver": "role_clarity",
+      "strength": 0.089,
+      "direction": "positive",
+      "n": 24
+    },
+    {
+      "cohortKey": "department:Operations",
+      "domain": "ptsd",
+      "driver": "interpersonal_conflict",
+      "strength": 0.088,
+      "direction": "positive",
+      "n": 66
+    },
+    {
+      "cohortKey": "department:Engineering",
+      "domain": "anxiety",
+      "driver": "long_hours",
+      "strength": 0.087,
+      "direction": "positive",
+      "n": 68
+    },
+    {
+      "cohortKey": "department:Engineering",
+      "domain": "stress",
+      "driver": "career_growth",
+      "strength": 0.086,
+      "direction": "negative",
+      "n": 59
+    },
+    {
+      "cohortKey": "tenureBand:1-3y",
+      "domain": "relationship",
+      "driver": "workload",
+      "strength": 0.085,
+      "direction": "positive",
+      "n": 63
+    },
+    {
+      "cohortKey": "department:Support",
+      "domain": "anxiety",
+      "driver": "self_esteem",
+      "strength": 0.085,
+      "direction": "positive",
+      "n": 37
+    },
+    {
+      "cohortKey": "location:Pune",
+      "domain": "anxiety",
+      "driver": "workload",
+      "strength": 0.084,
+      "direction": "positive",
+      "n": 85
+    },
+    {
+      "cohortKey": "department:Engineering",
+      "domain": "ptsd",
+      "driver": "discrimination_or_harassment",
+      "strength": 0.083,
+      "direction": "positive",
+      "n": 58
+    },
+    {
+      "cohortKey": "level:Manager",
+      "domain": "depression",
+      "driver": "workload",
+      "strength": 0.082,
+      "direction": "positive",
+      "n": 51
+    }
+  ],
+  "computedAt": "2026-08-14T19:50:10.054Z",
+  "version": 1
+}

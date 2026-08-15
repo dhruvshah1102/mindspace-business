@@ -1,0 +1,39 @@
+{
+  "orgId": "demo-acme",
+  "name": "Acme Manufacturing",
+  "legalName": "Acme Manufacturing Pvt Ltd",
+  "primaryDomain": "acme",
+  "branding": {
+    "primary": "#4F6B57",
+    "accent": "#A9CBAE",
+    "surface": "#FAF7F0",
+    "appName": "Acme Wellness",
+    "supportEmail": "wellness@acme.example"
+  },
+  "plan": {
+    "tier": "pilot",
+    "seats": 480,
+    "contractStart": "2026-06-01",
+    "trial": true
+  },
+  "policy": {
+    "identityMode": "aggregate_only",
+    "kAnonymity": 5,
+    "escalationContact": "safety@acme.example",
+    "retentionDays": 730,
+    "allowedCohortDims": [
+      "department",
+      "location",
+      "tenureBand",
+      "level"
+    ]
+  },
+  "pricing": {
+    "groupSessionPaise": 50000,
+    "individualSessionPaise": 150000,
+    "payer": "split",
+    "splitPercent": 50
+  },
+  "status": "trial",
+  "createdAt": "2026-06-01T00:00:00.000Z"
+}
