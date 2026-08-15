@@ -1,14 +1,14 @@
 {
   "orgId": "demo-acme",
-  "name": "Acme Manufacturing",
-  "legalName": "Acme Manufacturing Pvt Ltd",
-  "primaryDomain": "acme",
+  "name": "MindSpace",
+  "legalName": "MindSpace Technologies Pvt Ltd",
+  "primaryDomain": "mindspace",
   "branding": {
     "primary": "#4F6B57",
     "accent": "#A9CBAE",
     "surface": "#FAF7F0",
-    "appName": "Acme Wellness",
-    "supportEmail": "wellness@acme.example"
+    "appName": "MindSpace",
+    "supportEmail": "wellness@mindspace.example"
   },
   "plan": {
     "tier": "pilot",
@@ -19,7 +19,7 @@
   "policy": {
     "identityMode": "aggregate_only",
     "kAnonymity": 5,
-    "escalationContact": "safety@acme.example",
+    "escalationContact": "safety@mindspace.example",
     "retentionDays": 730,
     "allowedCohortDims": [
       "department",

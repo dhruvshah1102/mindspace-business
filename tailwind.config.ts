@@ -12,8 +12,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ["Fira Sans", "system-ui", "-apple-system", "sans-serif"],
-        sans: ["Fira Sans", "system-ui", "-apple-system", "sans-serif"],
+        serif: ["Newsreader", "Georgia", "serif"],
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
       },
       colors: {
         /* Eucalyptus & Oat design system — bg-ds-page, text-ds-base, etc. Overridable per-tenant via CSS vars. */
@@ -95,6 +95,13 @@ export default {
           up: "var(--viz-up)",
           down: "var(--viz-down)",
           flat: "var(--viz-flat)",
+        },
+        /* Mood tiers — ordered diverging ramp, always shipped with a text label */
+        tier: {
+          thriving: "var(--tier-thriving)",
+          steady: "var(--tier-steady)",
+          strained: "var(--tier-strained)",
+          struggling: "var(--tier-struggling)",
         },
       },
       borderRadius: {

@@ -85,6 +85,17 @@
     --viz-up: #4F6B57;
     --viz-down: #AD6B3E;
     --viz-flat: #9AA39C;
+
+    /* Mood tiers — an ordered *diverging* ramp (coping ↔ strained), not a
+       categorical set: eucalyptus family = coping, clay family = under strain.
+       Re-stepped until the adjacent steady↔strained pair cleared both the CVD
+       and normal-vision separation floors (ΔE 13.9 deutan / 18.7 normal on
+       cream). Steady sits below 3:1 on the page surface, so every segment that
+       uses these is direct-labelled — never colour alone. */
+    --tier-thriving: #2F7F4C;
+    --tier-steady: #93C39D;
+    --tier-strained: #C97E2A;
+    --tier-struggling: #7C4423;
   }
 
   /* Dark admin surface — same hues, inverted lightness. Toggle via [data-admin-theme="dark"] on <html>. */
@@ -150,6 +161,14 @@
     --viz-up: #A9CBAE;
     --viz-down: #D19A6C;
     --viz-flat: #6E8874;
+
+    /* Dark steps are *selected*, not flipped: the inner pair alternates
+       lightness so steady↔strained stays separable on the dark surface
+       (ΔE 12.6 protan / 18.4 normal, all four above 3:1). */
+    --tier-thriving: #86D5A2;
+    --tier-steady: #4E9A6B;
+    --tier-strained: #E5AE4A;
+    --tier-struggling: #B3603A;
   }
 }
 
@@ -161,7 +180,7 @@
   html {
     background: var(--ds-page);
     color: var(--ds-base);
-    font-family: 'Fira Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100%;
     width: 100%;
@@ -171,9 +190,14 @@
   body {
     background: var(--ds-page);
     color: var(--ds-base);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     min-height: 100dvh;
     width: 100%;
     margin: 0;
+  }
+
+  .font-serif {
+    font-family: 'Newsreader', Georgia, serif;
   }
 
   #root {
