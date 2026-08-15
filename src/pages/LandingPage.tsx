@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -14,11 +15,14 @@ import {
   Smile,
   Users2,
   Zap,
+  Menu,
+  X,
 } from 'lucide-react';
 import { useTenant } from '@/app/TenantContext';
 
 export function LandingPage() {
   const { organization } = useTenant();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] text-[#243327] flex flex-col justify-between selection:bg-[#E5ECE6] relative overflow-x-hidden font-sans">
@@ -35,7 +39,7 @@ export function LandingPage() {
       />
 
       {/* Top Navbar */}
-      <header className="sticky top-0 z-40 w-full border-b border-[#EAE4D9]/80 bg-[#FAF7F2]/90 backdrop-blur-md">
+      <header className="sticky top-0 z-40 w-full border-b border-[#EAE4D9]/80 bg-[#FAF7F2]/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
           {/* Brand Logo */}
           <Link to="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
@@ -47,15 +51,15 @@ export function LandingPage() {
             </span>
           </Link>
 
-          {/* Center Navigation Links */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center gap-8 text-xs font-medium text-[#56685A]">
             <a href="#features" className="hover:text-[#233226] transition-colors">Platform Features</a>
             <a href="#therapy" className="hover:text-[#233226] transition-colors">1:1 Therapy</a>
             <a href="#pricing" className="hover:text-[#233226] transition-colors">Enterprise Pricing</a>
           </nav>
 
-          {/* Right CTAs */}
-          <div className="flex items-center gap-3">
+          {/* Desktop Right CTAs */}
+          <div className="hidden sm:flex items-center gap-3">
             <Link
               to="/check-in"
               className="inline-flex items-center gap-1.5 rounded-full border border-[#D9D2C5] bg-white px-3.5 py-1.5 text-xs font-medium text-[#3E4F42] shadow-xs hover:bg-[#F3EFE8] transition-colors"
@@ -72,11 +76,71 @@ export function LandingPage() {
               <span>HR Login</span>
             </Link>
           </div>
+
+          {/* Mobile Right Controls: Clean & Uncluttered */}
+          <div className="flex sm:hidden items-center gap-2">
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-1 rounded-full bg-[#405445] text-white px-3 py-1.5 text-xs font-semibold shadow-xs"
+            >
+              <Lock className="h-3 w-3" />
+              <span>HR Login</span>
+            </Link>
+
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen((o) => !o)}
+              className="flex h-9 w-9 items-center justify-center rounded-xl bg-white border border-[#D9D2C5] text-[#233226] hover:bg-[#F3EFE8] transition-colors cursor-pointer"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Dropdown Sheet */}
+        {mobileMenuOpen && (
+          <div className="sm:hidden border-t border-[#EAE4D9] bg-white px-4 py-4 shadow-lg animate-in slide-in-from-top duration-200">
+            <nav className="flex flex-col gap-2">
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-xl px-3.5 py-2.5 text-xs font-medium text-[#233226] hover:bg-[#FAF7F2]"
+              >
+                Platform Features
+              </a>
+              <a
+                href="#therapy"
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-xl px-3.5 py-2.5 text-xs font-medium text-[#233226] hover:bg-[#FAF7F2]"
+              >
+                1:1 Confidential Therapy
+              </a>
+              <a
+                href="#pricing"
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-xl px-3.5 py-2.5 text-xs font-medium text-[#233226] hover:bg-[#FAF7F2]"
+              >
+                Enterprise Pricing
+              </a>
+            </nav>
+
+            <div className="mt-4 pt-3 border-t border-[#EAE4D9]/80 flex flex-col gap-2">
+              <Link
+                to="/check-in"
+                onClick={() => setMobileMenuOpen(false)}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#405445] text-white py-2.5 text-xs font-semibold shadow-xs"
+              >
+                <EyeOff className="h-3.5 w-3.5" />
+                <span>Start Employee Check-In</span>
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
 
-      {/* Hero Section: Original B2B Corporate Wellbeing Layout */}
-      <section className="relative pt-12 pb-16 sm:pt-16 sm:pb-24">
+      {/* Hero Section */}
+      <section className="relative pt-10 pb-14 sm:pt-16 sm:pb-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             {/* Left Content */}
@@ -86,20 +150,20 @@ export function LandingPage() {
                 <span className="font-medium">Workplace Mental Wellbeing & Sentiment Platform</span>
               </div>
 
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.4rem] font-normal tracking-tight text-[#233226] leading-[1.14]">
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-[3.4rem] font-normal tracking-tight text-[#233226] leading-[1.14]">
                 The wellbeing platform your employees will actually trust.
               </h1>
 
-              <p className="mt-5 text-sm sm:text-base leading-relaxed text-[#56685A] max-w-xl">
+              <p className="mt-4 sm:mt-5 text-xs sm:text-base leading-relaxed text-[#56685A] max-w-xl">
                 Bridge anonymous employee check-ins with plain-English executive reports, 
                 complimentary wellness rituals, and on-demand 1:1 confidential therapy at ₹500/session.
               </p>
 
               {/* Dual Action CTAs */}
-              <div className="mt-8 flex flex-wrap items-center gap-3.5">
+              <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
                 <Link
                   to="/check-in"
-                  className="inline-flex items-center gap-2.5 rounded-full bg-[#405445] hover:bg-[#334437] text-white px-7 py-3.5 text-xs sm:text-sm font-semibold shadow-md transition-all hover:scale-105"
+                  className="inline-flex items-center justify-center gap-2.5 rounded-full bg-[#405445] hover:bg-[#334437] text-white px-7 py-3.5 text-xs sm:text-sm font-semibold shadow-md transition-all hover:scale-105"
                 >
                   <span>Take Anonymous Check-in</span>
                   <ArrowRight className="h-4 w-4" />
@@ -107,7 +171,7 @@ export function LandingPage() {
 
                 <Link
                   to="/login"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#D9D2C5] bg-white hover:bg-[#F3EFE8] px-6 py-3.5 text-xs sm:text-sm font-medium text-[#3E4F42] shadow-xs transition-colors"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-[#D9D2C5] bg-white hover:bg-[#F3EFE8] px-6 py-3.5 text-xs sm:text-sm font-medium text-[#3E4F42] shadow-xs transition-colors"
                 >
                   <Building2 className="h-4 w-4 text-[#5A6D5E]" />
                   <span>HR Analytics Dashboard</span>
@@ -115,7 +179,7 @@ export function LandingPage() {
               </div>
 
               {/* Trust Badges */}
-              <div className="mt-10 pt-6 border-t border-[#E8E1D5] flex flex-wrap items-center gap-x-8 gap-y-2 text-xs text-[#657669]">
+              <div className="mt-8 sm:mt-10 pt-5 sm:pt-6 border-t border-[#E8E1D5] flex flex-wrap items-center gap-x-6 sm:gap-x-8 gap-y-2 text-xs text-[#657669]">
                 <span className="inline-flex items-center gap-1.5">
                   <ShieldCheck className="h-4 w-4 text-[#405445]" />
                   Zero PII Stored (k ≥ 5)
@@ -133,7 +197,7 @@ export function LandingPage() {
 
             {/* Right Hero Visual: Live Product Preview Card */}
             <div className="lg:col-span-5 flex justify-center lg:justify-end">
-              <div className="w-full max-w-md rounded-[28px] bg-white p-7 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.12)] border border-[#EAE4D9] flex flex-col gap-5">
+              <div className="w-full max-w-md rounded-[28px] bg-white p-6 sm:p-7 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.12)] border border-[#EAE4D9] flex flex-col gap-5">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-4">
                   <div className="flex items-center gap-2">
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#E8F0EA] text-[#405445]">
@@ -156,11 +220,11 @@ export function LandingPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-xl bg-[#FAF7F2] p-3 border border-[#EAE4D9]">
                     <p className="text-[10px] text-[#657669]">Participation</p>
-                    <p className="text-lg font-bold text-[#233226]">99% answered</p>
+                    <p className="text-base sm:text-lg font-bold text-[#233226]">99% answered</p>
                   </div>
                   <div className="rounded-xl bg-[#FAF7F2] p-3 border border-[#EAE4D9]">
                     <p className="text-[10px] text-[#657669]">1:1 Therapy</p>
-                    <p className="text-lg font-bold text-[#9E6B38]">₹500 / session</p>
+                    <p className="text-base sm:text-lg font-bold text-[#9E6B38]">₹500 / session</p>
                   </div>
                 </div>
 
@@ -178,17 +242,17 @@ export function LandingPage() {
       </section>
 
       {/* 3 Core Value Pillars */}
-      <section id="features" className="py-16 border-t border-[#EAE4D9]/80 bg-white/70 backdrop-blur-xs">
+      <section id="features" className="py-14 sm:py-16 border-t border-[#EAE4D9]/80 bg-white/70 backdrop-blur-xs">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-12">
+          <div className="text-center max-w-xl mx-auto mb-10 sm:mb-12">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">CORE CAPABILITIES</p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-2">
+            <h2 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-2">
               Three pillars for workplace wellbeing
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="rounded-[28px] bg-[#FAF7F2] p-7 border border-[#EAE4D9] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            <div className="rounded-[28px] bg-[#FAF7F2] p-6 sm:p-7 border border-[#EAE4D9] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
               <div>
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E2EAF8] text-[#2C3E30] mb-5">
                   <EyeOff className="h-5 w-5" />
@@ -204,7 +268,7 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="rounded-[28px] bg-[#FAF7F2] p-7 border border-[#EAE4D9] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="rounded-[28px] bg-[#FAF7F2] p-6 sm:p-7 border border-[#EAE4D9] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
               <div>
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F4EBE2] text-[#9E6B38] mb-5">
                   <HeartHandshake className="h-5 w-5" />
@@ -220,7 +284,7 @@ export function LandingPage() {
               </span>
             </div>
 
-            <div className="rounded-[28px] bg-[#FAF7F2] p-7 border border-[#EAE4D9] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+            <div className="rounded-[28px] bg-[#FAF7F2] p-6 sm:p-7 border border-[#EAE4D9] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
               <div>
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E8EFF0] text-[#3D5C5F] mb-5">
                   <BarChart3 className="h-5 w-5" />
@@ -240,16 +304,16 @@ export function LandingPage() {
       </section>
 
       {/* 1:1 Confidential Therapy Section */}
-      <section id="therapy" className="py-16 bg-[#FAF7F2]">
+      <section id="therapy" className="py-14 sm:py-16 bg-[#FAF7F2]">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded-[32px] bg-white p-8 sm:p-10 border border-[#EAE4D9] shadow-sm grid lg:grid-cols-12 gap-8 items-center">
+          <div className="rounded-[32px] bg-white p-7 sm:p-10 border border-[#EAE4D9] shadow-sm grid lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-7 flex flex-col gap-4">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-[#F3EEE5] px-3 py-1 text-xs font-semibold text-[#6E573B] self-start">
                 <HeartHandshake className="h-3.5 w-3.5 text-[#9E6B38]" />
                 CONFIDENTIAL THERAPY NETWORK
               </span>
 
-              <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] leading-tight">
+              <h2 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-[#233226] leading-tight">
                 Direct access to licensed psychologists at ₹500/session
               </h2>
 
@@ -259,21 +323,21 @@ export function LandingPage() {
 
               <div className="grid grid-cols-2 gap-3 mt-2">
                 <div className="rounded-2xl bg-[#FAF7F2] p-4 border border-[#EAE4D9]">
-                  <p className="font-serif text-xl font-bold text-[#233226]">₹500</p>
+                  <p className="font-serif text-lg sm:text-xl font-bold text-[#233226]">₹500</p>
                   <p className="text-[11px] text-[#657669] mt-0.5">Pay-as-you-use per employee</p>
                 </div>
 
                 <div className="rounded-2xl bg-[#FAF7F2] p-4 border border-[#EAE4D9]">
-                  <p className="font-serif text-xl font-bold text-[#233226]">100% Privacy</p>
+                  <p className="font-serif text-lg sm:text-xl font-bold text-[#233226]">100% Privacy</p>
                   <p className="text-[11px] text-[#657669] mt-0.5">Zero session logs shared with HR</p>
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-5 rounded-[24px] bg-gradient-to-br from-[#405445] to-[#2B3B2F] p-7 text-white flex flex-col justify-between min-h-[240px]">
+            <div className="lg:col-span-5 rounded-[24px] bg-gradient-to-br from-[#405445] to-[#2B3B2F] p-7 text-white flex flex-col justify-between min-h-[220px]">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">OCCUPATIONAL PSYCHOLOGY</p>
-                <p className="font-serif text-xl font-normal mt-2 leading-snug">
+                <p className="font-serif text-lg sm:text-xl font-normal mt-2 leading-snug">
                   “Support is not a dramatic crisis measure — it is a practical habit that protects performance.”
                 </p>
               </div>
@@ -288,11 +352,11 @@ export function LandingPage() {
       </section>
 
       {/* Transparent Pricing Section */}
-      <section id="pricing" className="py-16 border-t border-[#EAE4D9]/80 bg-white">
+      <section id="pricing" className="py-14 sm:py-16 border-t border-[#EAE4D9]/80 bg-white">
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div className="text-center max-w-xl mx-auto mb-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">SIMPLE PRICING</p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-1.5">
+            <h2 className="font-serif text-2xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-1.5">
               Transparent enterprise pricing
             </h2>
           </div>
@@ -305,7 +369,7 @@ export function LandingPage() {
               </span>
 
               <div>
-                <h3 className="font-serif text-2xl font-normal text-[#233226]">White-Label Platform</h3>
+                <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#233226]">White-Label Platform</h3>
                 <p className="text-xs text-[#657669] mt-0.5">Enterprise dashboard for up to 500 active employees.</p>
 
                 <div className="mt-4 flex items-baseline gap-1.5">
@@ -348,7 +412,7 @@ export function LandingPage() {
             {/* 1:1 Therapy Card */}
             <div className="rounded-[28px] bg-[#FAF7F2] p-7 sm:p-8 border border-[#EAE4D9] shadow-xs flex flex-col justify-between">
               <div>
-                <h3 className="font-serif text-2xl font-normal text-[#233226]">1:1 Private Therapy</h3>
+                <h3 className="font-serif text-xl sm:text-2xl font-normal text-[#233226]">1:1 Private Therapy</h3>
                 <p className="text-xs text-[#657669] mt-0.5">On-demand licensed clinical psychologist support.</p>
 
                 <div className="mt-4 flex items-baseline gap-1.5">

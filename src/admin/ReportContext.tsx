@@ -20,9 +20,11 @@ interface ReportContextValue {
 
 const ReportContext = createContext<ReportContextValue | null>(null);
 
-/** One report per session, shared by every console screen.
- * It does NOT make repeated API calls on page visits. It only calls Gemini
- * when the HR user explicitly clicks the Sync & Regenerate button. */
+/**
+ * One report per session, shared by every console screen.
+ * It does NOT make API calls when employees submit check-ins or when navigating pages.
+ * It ONLY calls Gemini when the HR user explicitly clicks the Sync & Regenerate button.
+ */
 export function ReportProvider({ children }: { children: ReactNode }) {
   const { organization } = useTenant();
   const [report, setReport] = useState<WellbeingReport | null>(null);
@@ -31,7 +33,7 @@ export function ReportProvider({ children }: { children: ReactNode }) {
   const [isSyncing, setIsSyncing] = useState(false);
   const [liveCount, setLiveCount] = useState(() => loadCheckIns().length);
 
-  // Initial load reads from cache or local writer (0 API spam)
+  // Initial load reads from cache or local writer (0 API calls to Gemini)
   useEffect(() => {
     let mounted = true;
     (async () => {
@@ -42,8 +44,9 @@ export function ReportProvider({ children }: { children: ReactNode }) {
         const nextSnapshot = await getFeelingSnapshotAsync(organization);
         if (mounted) {
           setSnapshot(nextSnapshot);
-          const cachedOrGenerated = await generateWellbeingReport(nextSnapshot, { force: false });
-          setReport(cachedOrGenerated);
+          // callGemini: false guarantees ZERO API requests on page load
+          const cachedOrLocal = await generateWellbeingReport(nextSnapshot, { callGemini: false });
+          setReport(cachedOrLocal);
         }
       } catch (err) {
         console.error('[mindspace] Initial report load error:', err);
@@ -57,11 +60,16 @@ export function ReportProvider({ children }: { children: ReactNode }) {
     };
   }, [organization]);
 
-  /** Explicitly triggered by HR click: loads Supabase check-ins, blends with demo data,
-   * calls Gemini, and refreshes the entire multi-page report. */
+  /**
+   * Explicitly triggered ONLY by HR click:
+   * 1. Pulls all fresh check-ins from Supabase.
+   * 2. Blends into aggregated snapshot.
+   * 3. Calls Gemini API with callGemini: true & force: true.
+   * 4. Updates all dashboard views in real-time.
+   */
   const syncAndRegenerate = useCallback(async () => {
     setIsSyncing(true);
-    toast.loading('Syncing latest check-ins from Supabase and synthesizing report...', { id: 'report-sync' });
+    toast.loading('Syncing latest check-ins from Supabase and synthesizing with Gemini...', { id: 'report-sync' });
 
     try {
       const liveItems = await loadCheckInsAsync(organization.orgId);
@@ -70,23 +78,24 @@ export function ReportProvider({ children }: { children: ReactNode }) {
       const nextSnapshot = await getFeelingSnapshotAsync(organization);
       setSnapshot(nextSnapshot);
 
-      const updatedReport = await generateWellbeingReport(nextSnapshot, { force: true });
+      // Explicitly trigger Gemini API synthesis
+      const updatedReport = await generateWellbeingReport(nextSnapshot, { force: true, callGemini: true });
       setReport(updatedReport);
 
       const writerName = updatedReport.meta.writtenBy === 'gemini' ? 'Gemini 2.5 Flash' : 'Built-in Rules Engine';
       toast.success(
-        `Report regenerated successfully (${writerName})! All 4 sections (Verdict, Feelings, Pressures, Actions) updated for ${nextSnapshot.responses} total responses.`,
+        `Report regenerated successfully (${writerName})! All 4 sections updated for ${nextSnapshot.responses} total responses.`,
         { id: 'report-sync' }
       );
     } catch (err) {
-      console.error('[mindspace] Report regeneration failed:', err);
-      toast.error('Failed to regenerate report. Using local synthesis fallback.', { id: 'report-sync' });
+      console.error('[mindspace] Sync and regenerate failed:', err);
+      toast.error('Could not regenerate report with Gemini. Showing cached report.', { id: 'report-sync' });
     } finally {
       setIsSyncing(false);
     }
   }, [organization]);
 
-  const value = useMemo(
+  const value = useMemo<ReportContextValue>(
     () => ({
       report,
       snapshot,

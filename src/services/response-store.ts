@@ -5,7 +5,7 @@ import { db, isFirebaseConfigured } from '@/lib/firebase';
 const KEY = 'mindspace.business.checkins.v1';
 
 /**
- * Loads check-ins from localStorage synchronously (used for initial fast render / fallback).
+ * Loads check-ins from localStorage synchronously (used for initial fast render / offline fallback).
  */
 export function loadCheckIns(): AnonymousCheckIn[] {
   try {
@@ -19,14 +19,12 @@ export function loadCheckIns(): AnonymousCheckIn[] {
 }
 
 /**
- * Asynchronously loads live check-ins from Supabase (if configured),
- * merging with any local check-ins stored on the client.
+ * Asynchronously loads live check-ins from Supabase (if configured).
+ * Supabase is treated as the primary source of truth.
  */
 export async function loadCheckInsAsync(orgId?: string): Promise<AnonymousCheckIn[]> {
-  const local = loadCheckIns();
-
   if (!isSupabaseConfigured || !supabase) {
-    return local;
+    return loadCheckIns();
   }
 
   try {
@@ -42,14 +40,10 @@ export async function loadCheckInsAsync(orgId?: string): Promise<AnonymousCheckI
     const { data, error } = await query;
     if (error) {
       console.warn('[mindspace] Supabase load error, using local fallback:', error);
-      return local;
+      return loadCheckIns();
     }
 
-    if (!data || data.length === 0) {
-      return local;
-    }
-
-    const remoteCheckIns: AnonymousCheckIn[] = data.map((row: any) => ({
+    const remoteCheckIns: AnonymousCheckIn[] = (data || []).map((row: any) => ({
       id: row.id,
       submittedAt: row.submitted_at,
       team: row.team,
@@ -60,21 +54,15 @@ export async function loadCheckInsAsync(orgId?: string): Promise<AnonymousCheckI
       note: row.note ?? '',
     }));
 
-    // Merge remote and local by id
-    const map = new Map<string, AnonymousCheckIn>();
-    for (const item of local) map.set(item.id, item);
-    for (const item of remoteCheckIns) map.set(item.id, item);
-
-    const merged = Array.from(map.values());
-    // Keep localStorage in sync
+    // Keep localStorage strictly synced to remote database state
     try {
-      localStorage.setItem(KEY, JSON.stringify(merged));
+      localStorage.setItem(KEY, JSON.stringify(remoteCheckIns));
     } catch {}
 
-    return merged;
+    return remoteCheckIns;
   } catch (err) {
     console.warn('[mindspace] Supabase fetch failed:', err);
-    return local;
+    return loadCheckIns();
   }
 }
 
@@ -99,27 +87,28 @@ export async function saveCheckIn(checkIn: AnonymousCheckIn, orgId: string): Pro
         team: checkIn.team,
         work_pattern: checkIn.workPattern,
         tenure_band: checkIn.tenureBand,
-        domains: checkIn.domains,
-        feelings: checkIn.feelings,
-        note: checkIn.note,
+        domains: JSON.stringify(checkIn.domains),
+        feelings: JSON.stringify(checkIn.feelings),
+        note: checkIn.note || '',
       });
       if (error) {
-        console.warn('[mindspace] Failed to insert into Supabase:', error);
+        console.warn('[mindspace] Supabase insert warning:', error);
       }
     } catch (err) {
-      console.warn('[mindspace] Supabase insert threw:', err);
+      console.warn('[mindspace] Supabase insert failed:', err);
     }
   }
 
-  // 2. Firebase persistence (if configured)
+  // 2. Firebase write-only fallback (if configured)
   if (isFirebaseConfigured && db) {
     try {
-      const { collection, addDoc } = await import('firebase/firestore');
-      await addDoc(collection(db, 'organizations', orgId, 'anonymous_checkins'), checkIn);
-    } catch {}
+      const { collection, doc, setDoc } = await import('firebase/firestore');
+      await setDoc(doc(collection(db, 'tenants', orgId, 'responses'), checkIn.id), {
+        ...checkIn,
+        orgId,
+      });
+    } catch (err) {
+      console.warn('[mindspace] Firebase insert failed:', err);
+    }
   }
-}
-
-export function clearCheckIns(): void {
-  localStorage.removeItem(KEY);
 }

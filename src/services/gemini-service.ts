@@ -7,11 +7,12 @@ import {
 
 const MODELS = ['gemini-2.5-flash', 'gemini-1.5-flash'];
 const CACHE_KEY = 'mindspace.business.report.v1';
+const LATEST_CACHE_KEY = 'mindspace.business.report.latest';
 
 /** Set in production so the key lives on the server, not in the bundle. */
 const proxyEndpoint = import.meta.env.VITE_REPORT_ENDPOINT as string | undefined;
 /** Dev/demo escape hatch — a browser-visible key. */
-const directKey = import.meta.env.VITE_GEMINI_API_KEY as string | undefined;
+const directKey = (import.meta.env.VITE_GEMINI_API_KEY || import.meta.env.GEMINI_API_KEY) as string | undefined;
 
 export const isGeminiConfigured = Boolean(proxyEndpoint || directKey);
 
@@ -49,22 +50,66 @@ ${JSON.stringify(
   1,
 )}
 
-Return ONLY a JSON object with exactly this shape:
+Return ONLY valid JSON matching this schema:
 {
   "mood": "good" | "okay" | "strained" | "struggling",
-  "moodLabel": "three-to-four word verdict",
-  "headline": "one sentence an executive could read alone and act on",
-  "summary": ["2-4 short paragraphs telling the story of this cycle"],
-  "whatThisMeans": "one paragraph interpreting what the picture implies for the business",
-  "goingWell": ["3 specific positives"],
-  "needsAttention": ["3 specific concerns"],
-  "howPeopleFeel": [{"tier":"thriving|steady|strained|struggling","label":"plain-English name for this group","peopleCount":number,"share":number,"description":"what life looks like for this group right now"}],
-  "inTheirWords": [{"quote":"an anonymous employee's own words","topic":"2-4 word topic"}],
-  "whatsWeighing": [{"title":"the pressure, in plain words","plainLanguage":"what it feels like day to day","affected":number,"share":number,"whoMostly":["team names, or empty"],"severity":"low|moderate|high","rootCause":"the likely underlying cause"}],
-  "teamPulse": [{"team":"name","mood":"good|okay|strained|struggling","headline":"short verdict","note":"one sentence of context","masked":boolean}],
-  "cultureChanges": [{"title":"the change","why":"why it addresses what the data shows","how":["2-4 concrete steps"],"effort":"low|medium|high","expected":"what should improve and roughly how fast"}],
-  "activities": [{"title":"name","format":"e.g. Therapist-led group session","who":"who it is for","description":"what happens in it","cadence":"duration and frequency","therapistLed":boolean,"outcome":"what it should achieve","cost":"optional"}],
-  "doThisFirst": ["3 actions to take this week, most important first"]
+  "moodLabel": string (e.g. "Doing well", "Holding steady", "Running on empty", "Needs real support"),
+  "headline": string (one sentence verdict, e.g. "The majority are coping, but operations carries strain from workload"),
+  "summary": string[] (2-3 paragraphs, plain English narrative of workforce sentiment),
+  "whatThisMeans": string (what executive leadership needs to understand),
+  "goingWell": string[] (3-4 specific positive signals),
+  "needsAttention": string[] (3-4 specific concerns),
+  "howPeopleFeel": [
+    {
+      "tier": "thriving" | "steady" | "strained" | "struggling",
+      "label": string,
+      "peopleCount": number,
+      "share": number,
+      "description": string
+    }
+  ],
+  "inTheirWords": [{ "quote": string, "topic": string }],
+  "whatsWeighing": [
+    {
+      "title": string,
+      "plainLanguage": string,
+      "affected": number,
+      "share": number,
+      "whoMostly": string[],
+      "severity": "low" | "moderate" | "high",
+      "rootCause": string
+    }
+  ],
+  "teamPulse": [
+    {
+      "team": string,
+      "mood": "good" | "okay" | "strained" | "struggling",
+      "headline": string,
+      "note": string,
+      "masked": boolean
+    }
+  ],
+  "cultureChanges": [
+    {
+      "title": string,
+      "why": string,
+      "how": string[],
+      "effort": "low" | "medium" | "high",
+      "expected": string
+    }
+  ],
+  "activities": [
+    {
+      "title": string,
+      "format": string,
+      "who": string,
+      "description": string,
+      "cadence": string,
+      "therapistLed": boolean,
+      "outcome": string
+    }
+  ],
+  "doThisFirst": string[] (top 3 immediate priorities for this week)
 }
 
 howPeopleFeel must contain one entry per tier in moodTiers, with the same counts and shares.
@@ -72,16 +117,17 @@ whatsWeighing must cover the top 4-5 pressures. cultureChanges: 3-4. activities:
 }
 
 interface GenerateOptions {
-  /** Ignore the cached report and regenerate. */
+  /**
+   * ONLY when true does this actually hit the Gemini API.
+   * If false or omitted, it reads from cache or uses the deterministic local writer.
+   */
+  callGemini?: boolean;
   force?: boolean;
 }
 
 /**
- * Produces the report HR reads. Tries Gemini (via a server proxy when
- * configured, otherwise directly), validates the response against the schema,
- * and falls back to the rule-based writer on any failure — a missing key, a
- * quota error and malformed JSON all degrade to a usable console rather than
- * an error screen. `meta.writtenBy` records which path produced the words.
+ * Produces the report HR reads.
+ * Guarantees ZERO API calls unless `callGemini: true` is explicitly provided.
  */
 export async function generateWellbeingReport(
   snapshot: FeelingSnapshot,
@@ -89,12 +135,37 @@ export async function generateWellbeingReport(
 ): Promise<WellbeingReport> {
   const fingerprint = snapshotFingerprint(snapshot);
 
+  // 1. If we have a cached report for this exact snapshot fingerprint, return it
   if (!options.force) {
     const cached = readCache(fingerprint);
     if (cached) return cached;
   }
 
-  if (!isGeminiConfigured) return writeLocalReport(snapshot);
+  // 2. If Gemini is not explicitly requested (e.g. initial page load or background check-in save),
+  // return existing cached report or generate local deterministic report (0 API calls!).
+  if (!options.callGemini) {
+    const latestCached = readLatestCache();
+    if (latestCached) {
+      // Update meta counts to match the live snapshot without hitting Gemini
+      return {
+        ...latestCached,
+        meta: {
+          ...latestCached.meta,
+          responses: snapshot.responses,
+          headcount: snapshot.headcount,
+          participationRate: snapshot.participationRate,
+        },
+      };
+    }
+    return writeLocalReport(snapshot);
+  }
+
+  // 3. Gemini is explicitly triggered by HR clicking "Sync & Regenerate"
+  if (!isGeminiConfigured) {
+    const local = writeLocalReport(snapshot);
+    writeCache(fingerprint, local);
+    return local;
+  }
 
   try {
     const { text, modelUsed } = proxyEndpoint
@@ -120,7 +191,9 @@ export async function generateWellbeingReport(
     return report;
   } catch (err) {
     console.warn('[mindspace] Gemini report generation failed, using local writer:', err);
-    return writeLocalReport(snapshot);
+    const fallback = writeLocalReport(snapshot);
+    writeCache(fingerprint, fallback);
+    return fallback;
   }
 }
 
@@ -138,71 +211,60 @@ async function callProxy(snapshot: FeelingSnapshot): Promise<string> {
 
 async function callGeminiDirect(snapshot: FeelingSnapshot): Promise<{ text: string; modelUsed: string }> {
   const prompt = buildPrompt(snapshot);
-  let lastError: Error | null = null;
+  const key = directKey;
+  if (!key) throw new Error('No Gemini key configured.');
 
+  let lastError: unknown = null;
   for (const model of MODELS) {
     try {
-      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
-      const res = await fetch(endpoint, {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+      const res = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-goog-api-key': directKey as string },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.4, responseMimeType: 'application/json', maxOutputTokens: 8192 },
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: {
+            temperature: 0.3,
+            responseMimeType: 'application/json',
+          },
         }),
       });
 
       if (!res.ok) {
-        throw new Error(`Gemini ${model} returned ${res.status}: ${await res.text()}`);
+        const errBody = await res.text();
+        throw new Error(`Gemini ${model} HTTP ${res.status}: ${errBody}`);
       }
 
-      const data = await res.json();
-      const text: string =
-        data?.candidates?.[0]?.content?.parts?.map((p: { text?: string }) => p.text ?? '').join('') ?? '';
-      if (!text) throw new Error(`Gemini ${model} returned an empty response`);
-
+      const json = await res.json();
+      const text = json.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!text) throw new Error(`Gemini ${model} returned empty response.`);
       return { text, modelUsed: model };
     } catch (err) {
-      lastError = err instanceof Error ? err : new Error(String(err));
-      console.warn(`[mindspace] Attempt with model ${model} failed, trying next...`, err);
+      lastError = err;
+      console.warn(`[mindspace] Model ${model} failed, trying next fallback:`, err);
     }
   }
 
-  throw lastError ?? new Error('All Gemini models failed');
+  throw lastError ?? new Error('All Gemini models failed.');
 }
 
-/** Models occasionally wrap JSON in a markdown fence despite the mime type. */
-function stripFences(text: string): string {
-  const trimmed = text.trim();
-  if (!trimmed.startsWith('```')) return trimmed;
-  return trimmed.replace(/^```(?:json)?\s*/i, '').replace(/```$/, '').trim();
-}
-
-/** Content hash — the report only needs regenerating when the aggregate
- * actually moves. */
-function snapshotFingerprint(snapshot: FeelingSnapshot): string {
-  const basis = JSON.stringify([
-    snapshot.source,
-    snapshot.responses,
-    snapshot.periodLabel,
-    snapshot.moodTiers.map((t) => t.count),
-    snapshot.themes.slice(0, 8).map((t) => [t.theme, t.mentions]),
-    snapshot.voices.length,
-  ]);
-  let hash = 0;
-  for (let i = 0; i < basis.length; i += 1) {
-    hash = (hash * 31 + basis.charCodeAt(i)) | 0;
-  }
-  return hash.toString(36);
+function snapshotFingerprint(s: FeelingSnapshot): string {
+  return `${s.orgName}:${s.periodLabel}:${s.responses}:${s.moodTiers.map((t) => `${t.tier}:${t.count}`).join(',')}`;
 }
 
 function readCache(fingerprint: string): WellbeingReport | null {
   try {
-    const raw = localStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as { fingerprint: string; report: WellbeingReport };
-    if (parsed.fingerprint !== fingerprint) return null;
-    return wellbeingReportSchema.parse(parsed.report) ? parsed.report : null;
+    const raw = localStorage.getItem(`${CACHE_KEY}:${fingerprint}`);
+    return raw ? (JSON.parse(raw) as WellbeingReport) : null;
+  } catch {
+    return null;
+  }
+}
+
+function readLatestCache(): WellbeingReport | null {
+  try {
+    const raw = localStorage.getItem(LATEST_CACHE_KEY);
+    return raw ? (JSON.parse(raw) as WellbeingReport) : null;
   } catch {
     return null;
   }
@@ -210,10 +272,13 @@ function readCache(fingerprint: string): WellbeingReport | null {
 
 function writeCache(fingerprint: string, report: WellbeingReport): void {
   try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ fingerprint, report }));
-  } catch {}
+    localStorage.setItem(`${CACHE_KEY}:${fingerprint}`, JSON.stringify(report));
+    localStorage.setItem(LATEST_CACHE_KEY, JSON.stringify(report));
+  } catch {
+    /* quota exceeded — safe to drop */
+  }
 }
 
-export function clearReportCache(): void {
-  localStorage.removeItem(CACHE_KEY);
+function stripFences(text: string): string {
+  return text.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
 }

@@ -34,7 +34,7 @@ export function ReportPage() {
             How your people are doing
           </h1>
           <p className="mt-1.5 text-xs sm:text-sm text-[#56685A] leading-relaxed">
-            Synthesized from {report.meta.responses} total responses ({liveCount} live from Supabase + {report.meta.headcount - liveCount} baseline). No names, no individual answers.
+            Synthesized from {report.meta.responses} total responses ({liveCount} live from Supabase + {Math.max(0, report.meta.responses - liveCount)} baseline). No names, no individual answers.
           </p>
         </div>
 
