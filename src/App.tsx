@@ -9,6 +9,7 @@ import { ReportPage } from '@/admin/pages/ReportPage';
 import { FeelingsPage } from '@/admin/pages/FeelingsPage';
 import { PressuresPage } from '@/admin/pages/PressuresPage';
 import { ActionsPage } from '@/admin/pages/ActionsPage';
+import { EngagementPage } from '@/admin/pages/EngagementPage';
 import { CohortHeatmapPage } from '@/admin/pages/CohortHeatmapPage';
 import { WellbeingExplorerPage } from '@/admin/pages/WellbeingExplorerPage';
 import { DriverAnalysisPage } from '@/admin/pages/DriverAnalysisPage';
@@ -45,6 +46,7 @@ export default function App() {
               <Route path="report" element={<ReportPage />} />
               <Route path="feelings" element={<FeelingsPage />} />
               <Route path="pressures" element={<PressuresPage />} />
+              <Route path="engagement" element={<EngagementPage />} />
               <Route path="actions" element={<ActionsPage />} />
 
               <Route path="data/heatmap" element={<CohortHeatmapPage />} />

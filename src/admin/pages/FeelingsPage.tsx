@@ -1,26 +1,62 @@
-import { ShieldCheck } from 'lucide-react';
+import { useMemo } from 'react';
 import { useReport } from '@/admin/ReportContext';
 import { ReportSkeleton } from '@/admin/widgets/PageHeading';
 import { PeopleGrid } from '@/admin/widgets/PeopleGrid';
-import { ProportionBar } from '@/admin/widgets/ProportionBar';
+import { ChartCard } from '@/admin/charts/ChartCard';
+import { StackedShareBar } from '@/admin/charts/StackedShareBar';
+import { RankedBarChart } from '@/admin/charts/RankedBarChart';
+import { SmallMultiples } from '@/admin/charts/TrendChart';
+import { TIER_VAR, pctLabel } from '@/admin/charts/chart-theme';
+import { getWellbeingTrend } from '@/services/trend-service';
 import { asFraction } from '@/domain/wellbeing-report';
+import { CHECK_IN_DOMAINS } from '@/domain/check-in';
+import { ASSESSMENT_METADATA } from '@/domain/assessments';
+import type { MoodTier } from '@/domain/snapshot';
 
-const DOT_COLORS: Record<string, string> = {
-  thriving: '#405445',
-  steady: '#7D9A83',
-  strained: '#D97724',
-  struggling: '#7C3426',
+const TIER_LABEL_INK: Record<MoodTier, 'light' | 'dark'> = {
+  thriving: 'light',
+  steady: 'dark',
+  strained: 'dark',
+  struggling: 'light',
 };
 
 export function FeelingsPage() {
   const { report, snapshot, loading } = useReport();
+  const trend = useMemo(() => getWellbeingTrend(), []);
+
   if (loading || !report || !snapshot) return <ReportSkeleton />;
 
-  const strainedGroups = report.howPeopleFeel.filter((t) => t.tier === 'strained' || t.tier === 'struggling');
-  const underStrain = strainedGroups.reduce((n, t) => n + t.peopleCount, 0);
+  const underStrain = report.howPeopleFeel
+    .filter((t) => t.tier === 'strained' || t.tier === 'struggling')
+    .reduce((n, t) => n + t.peopleCount, 0);
+
+  const segments = report.howPeopleFeel.map((t) => ({
+    key: t.tier,
+    label: t.label,
+    count: t.peopleCount,
+    share: t.share,
+    color: TIER_VAR[t.tier as MoodTier],
+    labelOnFill: TIER_LABEL_INK[t.tier as MoodTier],
+  }));
+
+  const visibleTeams = snapshot.teams.filter((t) => !t.masked);
+  const avgStrain =
+    visibleTeams.reduce((s, t) => s + t.strainShare, 0) / Math.max(1, visibleTeams.length);
+  const maskedTeams = snapshot.teams.length - visibleTeams.length;
+
+  // Per-domain severity over the quarter, faceted rather than drawn as three
+  // converging lines on one axis.
+  const domainPanels = CHECK_IN_DOMAINS.map((domain) => ({
+    key: domain,
+    title: ASSESSMENT_METADATA[domain].title.replace(' Assessment', ''),
+  }));
+  const domainSeries = trend.map((p) => ({
+    label: p.label,
+    ...Object.fromEntries(CHECK_IN_DOMAINS.map((d) => [d, Math.round(p.domainMeans[d] ?? 0)])),
+  }));
 
   return (
-    <div className="flex flex-col gap-10 pb-12">
+    <div className="flex flex-col gap-8 pb-12">
       {/* Header */}
       <header className="flex flex-col gap-1.5">
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">
@@ -30,24 +66,31 @@ export function FeelingsPage() {
           Four groups, not one average
         </h1>
         <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-          An average hides the people who are struggling behind the people who are fine. This page splits your workforce into the four states that actually need different responses from you.
+          <strong className="font-semibold text-[#233226]">{asFraction(underStrain / Math.max(1, report.meta.responses))}</strong> are
+          stretched or worse — {underStrain} of the {report.meta.responses} people who answered.
         </p>
       </header>
 
-      {/* 100-Figure Distribution Card */}
-      <section className="rounded-[28px] bg-white p-7 sm:p-10 border border-[#EAE4D9] shadow-xs flex flex-col gap-8">
-        <PeopleGrid segments={report.howPeopleFeel} />
-
-        <div className="border-t border-[#EAE4D9] pt-6 flex flex-col gap-3">
-          <ProportionBar segments={report.howPeopleFeel} />
-          <p className="text-xs sm:text-sm leading-relaxed text-[#56685A]">
-            <strong className="font-semibold text-[#233226]">{asFraction(underStrain / Math.max(1, report.meta.responses))}</strong> are stretched or worse — that's{' '}
-            <strong className="font-semibold text-[#233226]">{underStrain}</strong> of the {report.meta.responses} people who answered.
-          </p>
+      {/* Distribution */}
+      <ChartCard
+        title="Where everyone sits"
+        caption="Left to right: coping, then under strain. Each group needs a different response from you."
+        table={{
+          columns: ['Group', 'People', 'Share'],
+          rows: report.howPeopleFeel.map((t) => [t.label, t.peopleCount, `${Math.round(t.share * 100)}%`]),
+        }}
+      >
+        <div className="flex flex-col gap-7">
+          <StackedShareBar segments={segments} total={report.meta.responses} />
+          <div className="border-t border-[#EAE4D9] pt-6">
+            <PeopleGrid segments={report.howPeopleFeel} />
+            <p className="mt-3 text-[11px] text-[#78897B]">Each figure is one percent of everyone who answered.</p>
+          </div>
         </div>
-      </section>
+      </ChartCard>
 
-      {/* 4 Mood Tier Detail Cards */}
+      {/* Tier detail cards — the text that earns its place, because each group
+          needs a different action and a bar can't say what that is. */}
       <section className="grid gap-5 sm:grid-cols-2">
         {report.howPeopleFeel.map((t) => (
           <article
@@ -58,11 +101,12 @@ export function FeelingsPage() {
               <div className="flex items-center gap-2.5">
                 <span
                   className="h-3 w-3 rounded-full shrink-0"
-                  style={{ backgroundColor: DOT_COLORS[t.tier] ?? '#405445' }}
+                  style={{ backgroundColor: TIER_VAR[t.tier as MoodTier] }}
+                  aria-hidden
                 />
                 <h2 className="font-serif text-xl font-normal text-[#233226]">{t.label}</h2>
               </div>
-              <span className="font-serif text-2xl font-bold text-[#233226]">{Math.round(t.share * 100)}%</span>
+              <span className="text-2xl font-semibold text-[#233226]">{Math.round(t.share * 100)}%</span>
             </div>
 
             <p className="text-xs sm:text-sm text-[#56685A] leading-relaxed">{t.description}</p>
@@ -74,93 +118,73 @@ export function FeelingsPage() {
         ))}
       </section>
 
-      {/* Team Breakdown with Anonymity Guarantee */}
-      <section className="flex flex-col gap-4">
-        <div>
-          <h2 className="font-serif text-2xl font-normal tracking-tight text-[#233226]">
-            By team
-          </h2>
-          <p className="mt-1 text-xs text-[#78897B]">
-            Only teams with at least 5 respondents are shown. Others are masked for confidentiality.
-          </p>
-        </div>
+      {/* Team strain */}
+      <ChartCard
+        title="Strain by team"
+        caption="Share of each team stretched or worse. The dashed line is the company average — the teams to the right of it are carrying more than their share."
+        masked={{ k: 5, hiddenCount: maskedTeams }}
+        table={{
+          columns: ['Team', 'Responses', 'Under strain'],
+          rows: snapshot.teams.map((t) =>
+            t.masked ? [t.team, 'Withheld', 'Withheld'] : [t.team, t.responses, pctLabel(t.strainShare)],
+          ),
+        }}
+      >
+        <RankedBarChart
+          maxValue={1}
+          reference={{ value: avgStrain, label: `Company average, ${Math.round(avgStrain * 100)}%` }}
+          data={snapshot.teams.map((t) => ({
+            label: t.team,
+            value: t.strainShare,
+            display: pctLabel(t.strainShare),
+            masked: t.masked,
+            sub: t.masked
+              ? undefined
+              : `${t.responses} responses${t.topFeeling ? ` · mostly ${t.topFeeling.toLowerCase()}` : ''}`,
+          }))}
+        />
+      </ChartCard>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {snapshot.teams.map((tb) => (
-            <div
-              key={tb.team}
-              className="rounded-[24px] bg-white p-6 border border-[#EAE4D9] shadow-xs flex flex-col gap-4"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <span className="font-serif text-lg font-normal text-[#233226]">{tb.team}</span>
-                {tb.masked ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#FAF7F2] border border-[#D9D2C5] px-2 py-0.5 text-[10px] text-[#78897B]">
-                    <ShieldCheck className="h-3 w-3" />
-                    <span>&lt;5 responses</span>
-                  </span>
-                ) : (
-                  <span className="rounded-full bg-[#FAF7F2] border border-[#D9D2C5] px-2 py-0.5 text-[10px] text-[#56685A]">
-                    {tb.responses} people
-                  </span>
-                )}
-              </div>
+      {/* Domain trends */}
+      <ChartCard
+        title="Each domain over the quarter"
+        caption="Mean severity out of 100 for the three modules the check-in runs. Higher is worse."
+        table={{
+          columns: ['Week', ...domainPanels.map((p) => p.title)],
+          rows: domainSeries.map((row) => [
+            String(row.label),
+            ...domainPanels.map((p) => Number(row[p.key as keyof typeof row] ?? 0)),
+          ]),
+        }}
+      >
+        <SmallMultiples
+          panels={domainPanels}
+          data={domainSeries}
+          note="All three panels share one scale, so they are directly comparable."
+        />
+      </ChartCard>
 
-              {tb.masked ? (
-                <p className="text-xs text-[#78897B] leading-relaxed my-auto">
-                  Responses are grouped into the whole-company total to preserve team anonymity.
-                </p>
-              ) : (
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#56685A]">Overall state</span>
-                    <span className="font-semibold text-[#233226]">
-                      {tb.strainShare > 0.4 ? 'Under strain' : tb.strainShare > 0.2 ? 'Holding steady' : 'Looking well'}
-                    </span>
-                  </div>
-                  <div className="h-1.5 w-full rounded-full bg-[#EAE4D9] overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-[#405445]"
-                      style={{ width: `${Math.round((1 - tb.strainShare) * 100)}%` }}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Toughest Individual Items */}
-      {snapshot.toughestSignals && snapshot.toughestSignals.length > 0 && (
-        <section className="flex flex-col gap-4">
-          <div>
-            <h2 className="font-serif text-2xl font-normal tracking-tight text-[#233226]">
-              Hardest individual signals
-            </h2>
-            <p className="mt-1 text-xs text-[#78897B]">
-              Questions where the highest percentage of people answered “often” or “almost everyday”.
-            </p>
-          </div>
-
-          <div className="rounded-[28px] bg-white p-7 border border-[#EAE4D9] shadow-xs flex flex-col gap-4">
-            {snapshot.toughestSignals.map((item, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-4 py-3 border-b border-[#EAE4D9] last:border-0"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F3EEE5] text-xs font-semibold text-[#405445]">
-                    {i + 1}
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#233226] font-medium">{item.question}</span>
-                </div>
-                <span className="font-semibold text-xs sm:text-sm text-[#9E6B38] shrink-0">
-                  {Math.round(item.share * 100)}% struggling
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* Hardest items */}
+      {snapshot.toughestSignals.length > 0 && (
+        <ChartCard
+          title="The questions people answer worst"
+          caption="Share answering “often” or “almost everyday”. This is the layer that turns “morale is down” into “people aren't sleeping”."
+          table={{
+            columns: ['Question', 'Struggling'],
+            rows: snapshot.toughestSignals.map((s) => [s.question, pctLabel(s.share)]),
+          }}
+        >
+          <RankedBarChart
+            maxValue={1}
+            emphasiseFirst
+            data={snapshot.toughestSignals.map((s) => ({
+              label: s.question,
+              value: s.share,
+              display: pctLabel(s.share),
+              sub: ASSESSMENT_METADATA[s.domain]?.title.replace(' Assessment', ''),
+            }))}
+          />
+        </ChartCard>
       )}
     </div>
   );

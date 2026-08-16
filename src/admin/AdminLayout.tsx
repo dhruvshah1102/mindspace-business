@@ -37,6 +37,7 @@ const NAV_ITEMS = [
   { to: '/admin/report', label: 'Report' },
   { to: '/admin/feelings', label: 'Feelings' },
   { to: '/admin/pressures', label: 'Pressures' },
+  { to: '/admin/engagement', label: 'Engagement' },
   { to: '/admin/actions', label: 'Actions' },
 ];
 

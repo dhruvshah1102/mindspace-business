@@ -2,6 +2,9 @@ import { Lightbulb } from 'lucide-react';
 import { useReport } from '@/admin/ReportContext';
 import { ReportSkeleton } from '@/admin/widgets/PageHeading';
 import { MagnitudeBar } from '@/admin/widgets/ProportionBar';
+import { ChartCard } from '@/admin/charts/ChartCard';
+import { RankedBarChart } from '@/admin/charts/RankedBarChart';
+import { pctLabel } from '@/admin/charts/chart-theme';
 import { SEVERITY_COLOR, SEVERITY_LABEL } from '@/lib/tier';
 import { asFraction } from '@/domain/wellbeing-report';
 
@@ -10,7 +13,7 @@ export function PressuresPage() {
   if (loading || !report) return <ReportSkeleton />;
 
   return (
-    <div className="flex flex-col gap-10 pb-12">
+    <div className="flex flex-col gap-8 pb-12">
       {/* Header */}
       <header className="flex flex-col gap-1.5">
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">
@@ -20,9 +23,39 @@ export function PressuresPage() {
           The reasons behind the mood
         </h1>
         <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-          Ranked by how many people raised each pressure. Each includes the likely underlying cause, because you cannot fix a feeling — you can only fix the thing producing it.
+          Ranked by how many people raised each pressure. You cannot fix a feeling — you can only fix the thing
+          producing it, so each one carries its likely cause.
         </p>
       </header>
+
+      {/* The ranking, at a glance. Bar length is reach; colour is severity —
+          two independent facts, so colour isn't restating the bar. Severity
+          always ships with its label beside it, never as colour alone. */}
+      <ChartCard
+        title="Every pressure, ranked by reach"
+        caption="How much of the workforce raised each one. Colour marks how urgent it is, which is not the same question as how widespread."
+        table={{
+          columns: ['Pressure', 'Affected', 'Share', 'Urgency'],
+          rows: report.whatsWeighing.map((p) => [
+            p.title,
+            p.affected,
+            pctLabel(p.share),
+            SEVERITY_LABEL[p.severity],
+          ]),
+        }}
+      >
+        <RankedBarChart
+          maxValue={1}
+          data={report.whatsWeighing.map((p) => ({
+            label: p.title,
+            value: p.share,
+            display: `${Math.round(p.share * 100)}% · ~${p.affected}`,
+            color: SEVERITY_COLOR[p.severity],
+            status: SEVERITY_LABEL[p.severity],
+            sub: p.whoMostly.length > 0 ? `Most reported in ${p.whoMostly.join(', ')}` : undefined,
+          }))}
+        />
+      </ChartCard>
 
       {/* Ranked Pressure Cards */}
       <div className="flex flex-col gap-6">
