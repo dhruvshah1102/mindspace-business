@@ -14,6 +14,7 @@ import {
   ChevronRight,
   Smile,
   Users2,
+  UserCircle2,
   Zap,
   Menu,
   X,
@@ -61,11 +62,11 @@ export function LandingPage() {
           {/* Desktop Right CTAs */}
           <div className="hidden sm:flex items-center gap-3">
             <Link
-              to="/check-in"
+              to="/app/login"
               className="inline-flex items-center gap-1.5 rounded-full border border-[#D9D2C5] bg-white px-3.5 py-1.5 text-xs font-medium text-[#3E4F42] shadow-xs hover:bg-[#F3EFE8] transition-colors"
             >
-              <EyeOff className="h-3 w-3 text-[#5A6D5E]" />
-              <span>Employee Check-in</span>
+              <UserCircle2 className="h-3 w-3 text-[#5A6D5E]" />
+              <span>Employee Sign In</span>
             </Link>
 
             <Link
@@ -127,12 +128,12 @@ export function LandingPage() {
 
             <div className="mt-4 pt-3 border-t border-[#EAE4D9]/80 flex flex-col gap-2">
               <Link
-                to="/check-in"
+                to="/app/login"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#405445] text-white py-2.5 text-xs font-semibold shadow-xs"
               >
-                <EyeOff className="h-3.5 w-3.5" />
-                <span>Start Employee Check-In</span>
+                <UserCircle2 className="h-3.5 w-3.5" />
+                <span>Employee Sign In</span>
               </Link>
             </div>
           </div>
@@ -155,17 +156,17 @@ export function LandingPage() {
               </h1>
 
               <p className="mt-4 sm:mt-5 text-xs sm:text-base leading-relaxed text-[#56685A] max-w-xl">
-                Bridge anonymous employee check-ins with plain-English executive reports, 
-                complimentary wellness rituals, and on-demand 1:1 confidential therapy at ₹500/session.
+                Give employees their own private account for unlimited assessments, Tara, and 1:1 confidential
+                therapy at ₹500/session — and give HR a plain-English executive report, aggregate-only.
               </p>
 
               {/* Dual Action CTAs */}
               <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto">
                 <Link
-                  to="/check-in"
+                  to="/app/login"
                   className="inline-flex items-center justify-center gap-2.5 rounded-full bg-[#405445] hover:bg-[#334437] text-white px-7 py-3.5 text-xs sm:text-sm font-semibold shadow-md transition-all hover:scale-105"
                 >
-                  <span>Take Anonymous Check-in</span>
+                  <span>Sign In as an Employee</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
 
@@ -182,7 +183,7 @@ export function LandingPage() {
               <div className="mt-8 sm:mt-10 pt-5 sm:pt-6 border-t border-[#E8E1D5] flex flex-wrap items-center gap-x-6 sm:gap-x-8 gap-y-2 text-xs text-[#657669]">
                 <span className="inline-flex items-center gap-1.5">
                   <ShieldCheck className="h-4 w-4 text-[#405445]" />
-                  Zero PII Stored (k ≥ 5)
+                  Aggregate-Only for HR (k ≥ 5)
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <HeartHandshake className="h-4 w-4 text-[#405445]" />
@@ -190,7 +191,7 @@ export function LandingPage() {
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <Clock className="h-4 w-4 text-[#405445]" />
-                  5-Minute Check-in
+                  5-Minute Assessments
                 </span>
               </div>
             </div>
@@ -229,10 +230,10 @@ export function LandingPage() {
                 </div>
 
                 <Link
-                  to="/check-in"
+                  to="/app/login"
                   className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#405445] hover:bg-[#334437] text-white py-2.5 text-xs font-semibold shadow-xs transition-colors"
                 >
-                  <span>Experience Anonymous Check-In</span>
+                  <span>Sign In as an Employee</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
@@ -257,14 +258,15 @@ export function LandingPage() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#E2EAF8] text-[#2C3E30] mb-5">
                   <EyeOff className="h-5 w-5" />
                 </div>
-                <h3 className="font-serif text-xl font-normal text-[#233226]">Unlimited Check-Ins</h3>
+                <h3 className="font-serif text-xl font-normal text-[#233226]">Unlimited Assessments</h3>
                 <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                  5-minute clinical assessments for stress, anxiety, and burnout with 16 workplace pressure chips. No individual responses are ever recorded.
+                  5-minute clinical assessments for stress, anxiety, and burnout, from an employee's own private
+                  account. Individual scores are never shared with HR.
                 </p>
               </div>
               <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#405445] mt-6 pt-4 border-t border-[#EAE4D9]">
                 <ShieldCheck className="h-3.5 w-3.5" />
-                Zero PII stored
+                Aggregate-only for HR
               </span>
             </div>
 
@@ -318,7 +320,7 @@ export function LandingPage() {
               </h2>
 
               <p className="text-xs sm:text-sm text-[#56685A] leading-relaxed">
-                When employees need support, they can book a private 1:1 session right from their check-in reflection. Your organization only pays when employees actually use the service.
+                When employees need support, they can book a private 1:1 session right from their own account. Your organization only pays when employees actually use the service.
               </p>
 
               <div className="grid grid-cols-2 gap-3 mt-2">
@@ -381,7 +383,7 @@ export function LandingPage() {
                 <ul className="mt-5 flex flex-col gap-2.5 text-xs text-[#3E4F42] border-t border-[#EAE4D9] pt-4">
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-3.5 w-3.5 text-[#405445] shrink-0" />
-                    <span><strong>Unlimited Anonymous Check-Ins</strong></span>
+                    <span><strong>Unlimited Employee Assessments</strong></span>
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-3.5 w-3.5 text-[#405445]" />
@@ -436,17 +438,17 @@ export function LandingPage() {
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="h-3.5 w-3.5 text-[#405445]" />
-                    <span>Bookable right from private check-in reflection</span>
+                    <span>Bookable right from an employee's own account</span>
                   </li>
                 </ul>
               </div>
 
               <div className="mt-6 pt-4 border-t border-[#EAE4D9]">
                 <Link
-                  to="/check-in"
+                  to="/app/login"
                   className="w-full inline-flex items-center justify-center gap-1.5 rounded-full border border-[#D9D2C5] bg-white hover:bg-[#F3EFE8] text-[#3E4F42] py-3 text-xs font-semibold transition-colors"
                 >
-                  <span>Experience Employee Check-in</span>
+                  <span>Try the Employee App</span>
                   <ChevronRight className="h-3.5 w-3.5 text-[#5A6D5E]" />
                 </Link>
               </div>

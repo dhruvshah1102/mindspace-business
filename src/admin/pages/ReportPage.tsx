@@ -1,340 +1,296 @@
-import { useMemo } from 'react';
-import {
-  Check,
-  Quote,
-  RefreshCw,
-  TriangleAlert,
-  Loader2,
-  Database,
-  ShieldCheck,
-  Sparkles,
-  Smile,
-  Meh,
-  Frown,
-  ChevronRight,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useReport } from '@/admin/ReportContext';
+import { useEffect, useState } from 'react';
+import { ShieldCheck, UserPlus, ClipboardCheck, CalendarHeart } from 'lucide-react';
 import { useTenant } from '@/app/TenantContext';
-import { PeopleGrid } from '@/admin/widgets/PeopleGrid';
 import { ReportSkeleton } from '@/admin/widgets/PageHeading';
 import { ChartCard } from '@/admin/charts/ChartCard';
-import { StatTile } from '@/admin/charts/StatTile';
-import { StackedShareBar } from '@/admin/charts/StackedShareBar';
-import { TrendChart } from '@/admin/charts/TrendChart';
-import { TIER_VAR, pctLabel } from '@/admin/charts/chart-theme';
-import { getWellbeingTrend, trendDelta } from '@/services/trend-service';
-import { buildDemoEngagement } from '@/services/engagement-demo';
-import type { MoodTier } from '@/domain/snapshot';
+import { RankedBarChart } from '@/admin/charts/RankedBarChart';
+import { StackedShareBar, type ShareSegment } from '@/admin/charts/StackedShareBar';
+import { SmallMultiples } from '@/admin/charts/TrendChart';
+import { formatCount } from '@/admin/charts/chart-theme';
+import { bandColor } from '@/lib/viz-palette';
+import { ASSESSMENT_TYPES, ASSESSMENT_METADATA, type AssessmentType } from '@/domain/assessments';
+import { DEFAULT_K_ANONYMITY } from '@/domain/cohorts';
+import { getOrgEmployeeStats, type OrgEmployeeStats } from '@/services/org-stats-service';
+import {
+  getOrgAssessmentBreakdown,
+  getOrgBookingBreakdown,
+  getOrgWeeklyTrend,
+  type OrgAssessmentBreakdown,
+  type OrgBookingBreakdown,
+  type OrgWeeklyTrend,
+  type DomainBreakdown,
+  type BookingFormat,
+} from '@/services/org-analytics-service';
 
-/** Ink for the percentage printed inside each tier segment, picked against the fill. */
-const TIER_LABEL_INK: Record<MoodTier, 'light' | 'dark'> = {
-  thriving: 'light',
-  steady: 'dark',
-  strained: 'dark',
-  struggling: 'light',
-};
+const BOOKING_FORMATS: BookingFormat[] = ['group', '1:1'];
+const FORMAT_LABEL: Record<BookingFormat, string> = { group: 'Group sessions', '1:1': '1:1 sessions' };
 
+/**
+ * The HR landing screen — what your people are actually using, built entirely
+ * from the real employee schema (profiles, assessment_records,
+ * therapy_bookings). Every cut is a headcount; anything below k people is
+ * withheld at the database, never estimated.
+ */
 export function ReportPage() {
-  const { report, snapshot, loading, isSyncing, syncAndRegenerate, liveCount, aiConfigured } = useReport();
   const { organization } = useTenant();
+  const k = organization.policy.kAnonymity || DEFAULT_K_ANONYMITY;
 
-  const trend = useMemo(() => getWellbeingTrend(), []);
-  const engagement = useMemo(
-    () => (snapshot ? buildDemoEngagement(organization, snapshot) : null),
-    [organization, snapshot],
-  );
+  const [liveStats, setLiveStats] = useState<OrgEmployeeStats | null>(null);
+  const [assessments, setAssessments] = useState<OrgAssessmentBreakdown | null>(null);
+  const [bookings, setBookings] = useState<OrgBookingBreakdown | null>(null);
+  const [trend, setTrend] = useState<OrgWeeklyTrend | null>(null);
 
-  if (loading || !report || !snapshot) return <ReportSkeleton />;
+  useEffect(() => {
+    let cancelled = false;
+    Promise.all([
+      getOrgEmployeeStats(organization.orgId),
+      getOrgAssessmentBreakdown(organization.orgId, k),
+      getOrgBookingBreakdown(organization.orgId, k),
+      getOrgWeeklyTrend(organization.orgId, 8),
+    ]).then(([stats, assessmentBreakdown, bookingBreakdown, weeklyTrend]) => {
+      if (cancelled) return;
+      setLiveStats(stats);
+      setAssessments(assessmentBreakdown);
+      setBookings(bookingBreakdown);
+      setTrend(weeklyTrend);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [organization.orgId, k]);
 
-  const underStrain = report.howPeopleFeel
-    .filter((t) => t.tier === 'strained' || t.tier === 'struggling')
-    .reduce((n, t) => n + t.peopleCount, 0);
-  const strainShare = report.meta.responses ? underStrain / report.meta.responses : 0;
+  if (!liveStats || !assessments || !bookings || !trend) return <ReportSkeleton />;
 
-  const strainMove = trendDelta(trend, 'strainShare');
-  const segments = report.howPeopleFeel.map((t) => ({
-    key: t.tier,
-    label: t.label,
-    count: t.peopleCount,
-    share: t.share,
-    color: TIER_VAR[t.tier as MoodTier],
-    labelOnFill: TIER_LABEL_INK[t.tier as MoodTier],
+  const bookingRows = BOOKING_FORMATS.map((format) => {
+    const b = bookings.byFormat[format];
+    return {
+      label: FORMAT_LABEL[format],
+      value: b.total,
+      display: `${b.total} booked`,
+      sub: b.statusMasked
+        ? `Status withheld — fewer than ${k} bookings in this format`
+        : `${b.requested} requested · ${b.confirmed} confirmed · ${b.cancelled} cancelled`,
+    };
+  });
+
+  const weeklyData = trend.weeks.map((w) => ({
+    label: w.label,
+    signups: w.signups,
+    assessments: w.assessments,
+    bookings: w.bookings,
   }));
-
-  const MoodIcon = report.mood === 'good' ? Smile : report.mood === 'okay' ? Meh : Frown;
 
   return (
     <div className="flex flex-col gap-8 pb-12">
-      {/* Header */}
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="max-w-2xl">
-          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">
-            {report.meta.periodLabel.toUpperCase()} · {report.meta.orgName.toUpperCase()}
-          </p>
-          <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-2">
-            How your people are doing
-          </h1>
-          <p className="mt-1.5 text-xs sm:text-sm text-[#56685A] leading-relaxed">
-            {report.meta.responses} responses · no names, no individual answers.
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2.5 shrink-0">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#DCD5C8] bg-[#F3EEE5] px-3.5 py-1.5 text-xs font-normal text-[#526355]">
-            <Database className="h-3 w-3 text-[#78897B]" />
-            <span>{liveCount} live check-in{liveCount === 1 ? '' : 's'}</span>
-          </span>
-
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={isSyncing}
-            onClick={() => void syncAndRegenerate()}
-            className="rounded-full bg-white border border-[#D9D2C5] px-4 py-1.5 text-xs font-semibold text-[#3E4F42] shadow-xs hover:bg-[#F3EFE8] transition-colors cursor-pointer"
-          >
-            {isSyncing ? (
-              <>
-                <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin text-[#5A6D5E]" />
-                <span>Syncing…</span>
-              </>
-            ) : (
-              <>
-                <RefreshCw className="mr-1.5 h-3.5 w-3.5 text-[#5A6D5E]" />
-                <span>Sync & Regenerate</span>
-              </>
-            )}
-          </Button>
-        </div>
+      <header className="flex flex-col gap-1.5">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">
+          {organization.branding.appName.toUpperCase()} · OVERVIEW
+        </p>
+        <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-1">
+          What your people are actually using
+        </h1>
+        <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
+          Totals and shapes only — how many people signed up, took an assessment, or booked a session, and what
+          those assessments look like in aggregate. You can never see which person did what.
+        </p>
       </header>
 
-      {/* The verdict — one sentence, kept above the charts. */}
-      <section className="rounded-[28px] bg-white p-7 sm:p-9 border border-[#EAE4D9] shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs pb-5 border-b border-[#EAE4D9]/70">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D9D2C5] bg-[#FAF7F2] px-3 py-1 font-medium text-[#3E4F42]">
-            <MoodIcon className="h-3.5 w-3.5 text-[#5A6D5E]" aria-hidden />
-            <span>{report.moodLabel}</span>
-          </span>
-          <span className="inline-flex items-center gap-1.5 text-[#78897B]">
-            <ShieldCheck className="h-3.5 w-3.5" aria-hidden />
-            <span>Strictly anonymous (k ≥ 5)</span>
+      <section className="rounded-[28px] bg-white p-6 sm:p-7 border border-[#EAE4D9] shadow-xs">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="font-serif text-xl font-normal text-[#233226]">Employee app — live</h2>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#B7D3BC] bg-[#EAF3EB] px-3 py-1 text-[11px] font-medium text-[#2F7F4C]">
+            <ShieldCheck className="h-3 w-3" aria-hidden />
+            <span>{liveStats.live ? 'Live counts' : 'Not set up yet'}</span>
           </span>
         </div>
-
-        <h2 className="font-serif text-2xl sm:text-3xl text-[#233226] font-normal leading-snug tracking-tight mt-5">
-          {report.headline}
-        </h2>
-
-        <div className="mt-5 rounded-2xl bg-[#FAF7F2] p-5 border border-[#EAE4D9]">
-          <p className="text-[10px] font-bold uppercase tracking-widest text-[#78897B]">
-            WHAT THIS MEANS FOR LEADERSHIP
-          </p>
-          <p className="mt-1.5 text-xs sm:text-sm font-medium text-[#233226] leading-relaxed">
-            {report.whatThisMeans}
-          </p>
-        </div>
-      </section>
-
-      {/* Headline numbers */}
-      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatTile
-          label="People who answered"
-          value={String(report.meta.responses)}
-          sub={`${Math.round(report.meta.participationRate * 100)}% of the company`}
-          trend={trend.map((p) => p.participants)}
-        />
-        <StatTile
-          label="Stretched or worse"
-          value={pctLabel(strainShare)}
-          sub={`${underStrain} people`}
-          delta={Math.round(strainMove * 100)}
-          deltaLabel="pts vs 12 weeks ago"
-          upIsGood={false}
-          trend={trend.map((p) => Math.round(p.strainShare * 100))}
-        />
-        <StatTile
-          label="Needing real support"
-          value={String(report.howPeopleFeel.find((t) => t.tier === 'struggling')?.peopleCount ?? 0)}
-          sub="The group to act on first"
-        />
-        {engagement && (
-          <StatTile
-            label="Using MindSpace"
-            value={String(engagement.activeEmployees)}
-            sub={`${Math.round(engagement.activationRate * 100)}% signed in this cycle`}
-            delta={engagement.activeDelta}
-            deltaLabel="vs last cycle"
+        <p className="mt-1 text-xs text-[#78897B]">
+          The three numbers you're allowed to see about your employees' accounts — totals only, never a name.
+        </p>
+        <div className="mt-5 grid gap-4 sm:grid-cols-3">
+          <LiveStat icon={UserPlus} label="Total sign-ups" value={liveStats.totalSignups} live={liveStats.live} />
+          <LiveStat
+            icon={ClipboardCheck}
+            label="Assessments taken"
+            value={liveStats.totalAssessments}
+            live={liveStats.live}
           />
+          <LiveStat
+            icon={CalendarHeart}
+            label="Therapy sessions booked"
+            value={liveStats.totalBookings}
+            live={liveStats.live}
+          />
+        </div>
+        {!liveStats.live && (
+          <p className="mt-4 text-[11px] text-[#9E6B38]">
+            Run <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-employee.sql</code> and{' '}
+            <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-employee-analytics.sql</code> in your
+            Supabase project to turn this dashboard on.
+          </p>
         )}
       </section>
 
-      {/* Distribution — the chart that replaces four paragraphs */}
       <ChartCard
-        title="The workforce, split four ways"
-        caption="An average hides the people struggling behind the people who are fine. Left to right: coping, then under strain."
+        title="Assessments, by domain"
+        caption="How many people have taken each assessment. The low/moderate/high split is withheld for a domain fewer than 5 people have tried — the number taken is always shown."
         table={{
-          columns: ['Group', 'People', 'Share'],
-          rows: report.howPeopleFeel.map((t) => [t.label, t.peopleCount, `${Math.round(t.share * 100)}%`]),
+          columns: ['Assessment', 'Taken', 'Low', 'Moderate', 'High'],
+          rows: ASSESSMENT_TYPES.map((type) => {
+            const d = assessments.byDomain[type];
+            return d.levelMasked
+              ? [ASSESSMENT_METADATA[type].title, d.total, 'Withheld', 'Withheld', 'Withheld']
+              : [ASSESSMENT_METADATA[type].title, d.total, d.low, d.moderate, d.high];
+          }),
         }}
       >
-        <div className="flex flex-col gap-7">
-          <StackedShareBar segments={segments} total={report.meta.responses} />
-          <div className="border-t border-[#EAE4D9] pt-6">
-            <PeopleGrid segments={report.howPeopleFeel} />
-            <p className="mt-3 text-[11px] text-[#78897B]">
-              Each figure is one percent of everyone who answered.
-            </p>
-          </div>
-        </div>
-      </ChartCard>
-
-      {/* Trend */}
-      <ChartCard
-        title="Strain over the last twelve weeks"
-        caption={`Share of responses in the moderate or high band. ${
-          strainMove > 0.005
-            ? 'The line is climbing — this is a trend, not a bad week.'
-            : strainMove < -0.005
-              ? 'The line is falling — whatever changed recently is working.'
-              : 'Broadly flat across the quarter.'
-        }`}
-        table={{
-          columns: ['Week', 'Under strain', 'Participation', 'Responses'],
-          rows: trend.map((p) => [
-            p.label,
-            pctLabel(p.strainShare),
-            pctLabel(p.participationRate),
-            p.participants,
-          ]),
-        }}
-      >
-        <TrendChart
-          data={trend.map((p) => ({ label: p.label, strain: Math.round(p.strainShare * 100) }))}
-          valueKey="strain"
-          format={(v) => `${v}%`}
-          tooltipLabel="Under strain"
-        />
-      </ChartCard>
-
-      {/* What's working vs what needs attention */}
-      <section className="grid gap-6 md:grid-cols-2">
-        <div className="rounded-[28px] bg-white p-7 sm:p-8 border border-[#EAE4D9] shadow-xs flex flex-col gap-5">
-          <div className="flex items-center gap-3">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#405445] text-white">
-              <Check className="h-4 w-4" />
-            </span>
-            <h3 className="font-serif text-xl font-normal text-[#233226]">What's working</h3>
-          </div>
-          <ul className="flex flex-col gap-3.5">
-            {report.goingWell.map((item, i) => (
-              <li key={i} className="flex gap-3 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#405445]" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="rounded-[28px] bg-white p-7 sm:p-8 border border-[#EAE4D9] shadow-xs flex flex-col gap-5">
-          <div className="flex items-center gap-3">
-            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#9E6B38] text-white">
-              <TriangleAlert className="h-4 w-4" />
-            </span>
-            <h3 className="font-serif text-xl font-normal text-[#233226]">What needs attention</h3>
-          </div>
-          <ul className="flex flex-col gap-3.5">
-            {report.needsAttention.map((item, i) => (
-              <li key={i} className="flex gap-3 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#9E6B38]" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Three actions */}
-      <section className="rounded-[28px] bg-white p-8 sm:p-10 border border-[#EAE4D9] shadow-xs">
-        <h2 className="font-serif text-2xl font-normal tracking-tight text-[#233226]">
-          Start with these three actions
-        </h2>
-        <p className="mt-1 text-xs text-[#78897B]">
-          Immediate high-leverage steps for this week.
-        </p>
-
-        <ol className="mt-7 flex flex-col gap-4">
-          {report.doThisFirst.map((step, i) => (
-            <li key={i} className="flex items-start gap-4">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#405445] text-xs font-semibold text-white mt-0.5">
-                {i + 1}
-              </span>
-              <p className="text-xs sm:text-sm leading-relaxed text-[#3E4F42]">{step}</p>
-            </li>
+        <div className="flex flex-col gap-5">
+          <NotLiveNote live={assessments.live} />
+          {ASSESSMENT_TYPES.map((type) => (
+            <DomainSeverityRow key={type} type={type} breakdown={assessments.byDomain[type]} k={k} />
           ))}
-        </ol>
-      </section>
+        </div>
+      </ChartCard>
 
-      {/* The full narrative, available but no longer the first thing on the page. */}
-      {report.summary.length > 0 && (
-        <details className="group rounded-[28px] bg-white border border-[#EAE4D9] shadow-xs">
-          <summary className="flex cursor-pointer items-center justify-between gap-3 p-7 sm:p-8 list-none">
-            <div>
-              <h2 className="font-serif text-xl font-normal text-[#233226]">Read the full write-up</h2>
-              <p className="mt-1 text-xs text-[#78897B]">
-                The same cycle in prose — {report.summary.length} paragraphs, for the board pack.
-              </p>
-            </div>
-            <ChevronRight
-              className="h-4 w-4 shrink-0 text-[#78897B] transition-transform group-open:rotate-90"
-              aria-hidden
+      <ChartCard
+        title="Sessions booked, by format"
+        caption="How people are choosing to get support. The requested/confirmed/cancelled split is withheld for a format fewer than 5 people have booked — the number booked is always shown."
+        table={{
+          columns: ['Format', 'Booked', 'Requested', 'Confirmed', 'Cancelled'],
+          rows: BOOKING_FORMATS.map((format) => {
+            const b = bookings.byFormat[format];
+            return b.statusMasked
+              ? [FORMAT_LABEL[format], b.total, 'Withheld', 'Withheld', 'Withheld']
+              : [FORMAT_LABEL[format], b.total, b.requested, b.confirmed, b.cancelled];
+          }),
+        }}
+      >
+        <div className="flex flex-col gap-4">
+          <NotLiveNote live={bookings.live} />
+          <RankedBarChart data={bookingRows} />
+        </div>
+      </ChartCard>
+
+      <ChartCard
+        title="Last 8 weeks"
+        caption="New sign-ups, assessments taken and sessions booked, week by week."
+        table={{
+          columns: ['Week', 'Sign-ups', 'Assessments', 'Bookings'],
+          rows: trend.weeks.map((w) => [w.label, w.signups, w.assessments, w.bookings]),
+        }}
+      >
+        <div className="flex flex-col gap-4">
+          <NotLiveNote live={trend.live} />
+          {trend.live && weeklyData.length > 0 && (
+            <SmallMultiples
+              data={weeklyData}
+              panels={[
+                { key: 'signups', title: 'Sign-ups' },
+                { key: 'assessments', title: 'Assessments' },
+                { key: 'bookings', title: 'Bookings' },
+              ]}
             />
-          </summary>
-          <div className="flex flex-col gap-4 px-7 sm:px-8 pb-8 text-xs sm:text-sm leading-relaxed text-[#56685A] max-w-3xl">
-            {report.summary.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
-          </div>
-        </details>
-      )}
+          )}
+        </div>
+      </ChartCard>
 
-      {/* In their own words */}
-      {report.inTheirWords.length > 0 && (
-        <section className="flex flex-col gap-4">
-          <div>
-            <h2 className="font-serif text-2xl font-normal tracking-tight text-[#233226]">In their own words</h2>
-            <p className="mt-1 text-xs text-[#78897B]">
-              Direct quotes from employee notes, with no identity attached.
-            </p>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {report.inTheirWords.map((v, i) => (
-              <blockquote key={i} className="relative rounded-[24px] border border-[#EAE4D9] bg-white p-6 shadow-xs">
-                <Quote className="h-4 w-4 text-[#C5BDB0] mb-3" aria-hidden />
-                <p className="text-xs sm:text-sm leading-relaxed text-[#3E4F42]">“{v.quote}”</p>
-                <footer className="mt-3 text-[11px] font-medium text-[#78897B]">{v.topic}</footer>
-              </blockquote>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* Provenance */}
-      <footer className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-4 text-xs text-[#78897B]">
-        <Sparkles className="h-3.5 w-3.5" aria-hidden />
+      <footer className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-2 text-[11px] text-[#78897B]">
+        <ShieldCheck className="h-3.5 w-3.5" aria-hidden />
         <span>
-          {report.meta.writtenBy === 'gemini'
-            ? 'Written by Gemini 2.5 Flash from the blended aggregate.'
-            : aiConfigured
-              ? 'Gemini was unavailable, so this was synthesized by the built-in rules engine.'
-              : 'Written by the built-in rules engine.'}
+          Every number here is a headcount, never a name. Groups smaller than {k} are withheld everywhere on this
+          page.
         </span>
-        <span aria-hidden>·</span>
-        <span>{report.meta.source === 'live' ? 'Live check-ins blended with baseline' : 'Seeded demo dataset'}</span>
-        <span aria-hidden>·</span>
-        <time dateTime={report.meta.generatedAt}>
-          {new Date(report.meta.generatedAt).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}
-        </time>
       </footer>
+    </div>
+  );
+}
+
+/** Distinguishes "genuinely zero" from "this RPC hasn't been deployed yet" —
+ * without it the two look identical and read as a broken dashboard. */
+function NotLiveNote({ live }: { live: boolean }) {
+  if (live) return null;
+  return (
+    <p className="flex items-center gap-1.5 text-[11px] text-[#9E6B38]">
+      <ShieldCheck className="h-3 w-3 shrink-0" aria-hidden />
+      <span>
+        Not set up yet — run{' '}
+        <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-employee-analytics.sql</code> in your
+        Supabase project to turn this on.
+      </span>
+    </p>
+  );
+}
+
+function LiveStat({
+  icon: Icon,
+  label,
+  value,
+  live,
+}: {
+  icon: typeof UserPlus;
+  label: string;
+  value: number | undefined;
+  live: boolean | undefined;
+}) {
+  return (
+    <div className="rounded-[20px] bg-[#FAF7F2] border border-[#EAE4D9] p-5 flex items-start gap-3">
+      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8F0EA] text-[#405445]">
+        <Icon className="h-4 w-4" aria-hidden />
+      </span>
+      <div>
+        <p className="text-2xl font-semibold text-[#233226] tabular-nums">
+          {live === undefined ? '—' : formatCount(value ?? 0)}
+        </p>
+        <p className="text-xs text-[#78897B] mt-0.5">{label}</p>
+      </div>
+    </div>
+  );
+}
+
+function DomainSeverityRow({ type, breakdown, k }: { type: AssessmentType; breakdown: DomainBreakdown; k: number }) {
+  const meta = ASSESSMENT_METADATA[type];
+  const segments: ShareSegment[] = [
+    {
+      key: 'low',
+      label: 'Low',
+      count: breakdown.low,
+      share: breakdown.total ? breakdown.low / breakdown.total : 0,
+      color: bandColor('Low'),
+      labelOnFill: 'light',
+    },
+    {
+      key: 'moderate',
+      label: 'Moderate',
+      count: breakdown.moderate,
+      share: breakdown.total ? breakdown.moderate / breakdown.total : 0,
+      color: bandColor('Moderate'),
+      labelOnFill: 'dark',
+    },
+    {
+      key: 'high',
+      label: 'High',
+      count: breakdown.high,
+      share: breakdown.total ? breakdown.high / breakdown.total : 0,
+      color: bandColor('High'),
+      labelOnFill: 'light',
+    },
+  ];
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="text-sm font-medium text-[#233226]">{meta.title}</span>
+        <span className="text-[11px] text-[#78897B] tabular-nums">{formatCount(breakdown.total)} taken</span>
+      </div>
+      {breakdown.levelMasked ? (
+        <div className="flex items-center gap-1.5 h-11 rounded-lg border border-dashed border-[#D9D2C5] px-3 text-[11px] text-[#78897B]">
+          <ShieldCheck className="h-3 w-3 shrink-0" aria-hidden />
+          <span>Severity split withheld — fewer than {k} people have taken this.</span>
+        </div>
+      ) : breakdown.total === 0 ? (
+        <p className="text-[11px] text-[#9AA79C] italic py-2">No responses yet.</p>
+      ) : (
+        <StackedShareBar segments={segments} total={breakdown.total} />
+      )}
     </div>
   );
 }

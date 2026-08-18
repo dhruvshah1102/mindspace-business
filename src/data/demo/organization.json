@@ -30,7 +30,7 @@
   },
   "pricing": {
     "groupSessionPaise": 50000,
-    "individualSessionPaise": 150000,
+    "individualSessionPaise": 50000,
     "payer": "split",
     "splitPercent": 50
   },

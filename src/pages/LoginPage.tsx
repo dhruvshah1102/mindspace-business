@@ -178,10 +178,10 @@ export function LoginPage() {
             <div className="mt-6 flex flex-col items-start px-2">
               <p className="text-xs text-white/70">Not from the people team?</p>
               <Link
-                to="/check-in"
+                to="/app/login"
                 className="mt-1 inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-white hover:underline transition-all"
               >
-                <span>Take the anonymous check-in instead</span>
+                <span>Sign in as an employee instead</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
