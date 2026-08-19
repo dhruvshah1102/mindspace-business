@@ -30,43 +30,55 @@ export function EmployeeLoginPage() {
   }
 
   return (
-    <div className="relative min-h-screen w-full bg-[#526B59] bg-gradient-to-br from-[#5C7563] via-[#526B59] to-[#455B4C] text-white flex flex-col justify-between p-6 sm:p-10 lg:px-16 lg:py-12 selection:bg-white/20 font-sans">
-      <header className="w-full max-w-7xl mx-auto flex items-center">
+    <div className="relative min-h-screen w-full bg-[#FAF7F2] text-[#243327] flex flex-col justify-between p-6 sm:p-10 lg:px-16 lg:py-12 selection:bg-[#E5ECE6] overflow-x-hidden font-sans">
+      {/* Soft Ambient Botanical Glows — same treatment as the landing page */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -right-20 -top-20 h-[500px] w-[500px] opacity-25 blur-3xl rounded-full"
+        style={{ background: 'radial-gradient(circle, #8EA994 0%, #D4E0D6 50%, transparent 70%)' }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-20 top-[400px] h-[450px] w-[450px] opacity-20 blur-3xl rounded-full"
+        style={{ background: 'radial-gradient(circle, #C2D4C5 0%, #E8EFE9 50%, transparent 70%)' }}
+      />
+
+      <header className="relative w-full max-w-7xl mx-auto flex items-center">
         <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-sm font-bold text-white backdrop-blur-xs shadow-xs">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#4F6B57] text-sm font-bold text-white shadow-xs">
             {organization.branding.appName.slice(0, 1)}
           </div>
-          <span className="font-serif text-2xl font-medium tracking-tight text-white">
+          <span className="font-serif text-2xl font-medium tracking-tight text-[#233226]">
             {organization.branding.appName}
           </span>
         </Link>
       </header>
 
-      <main className="w-full max-w-7xl mx-auto my-auto grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center py-8 sm:py-12">
+      <main className="relative w-full max-w-7xl mx-auto my-auto grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center py-8 sm:py-12">
         {/* Left Column: Hero Narrative */}
         <div className="flex flex-col gap-6 lg:col-span-7 max-w-2xl">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/60">FOR YOU, PERSONALLY</p>
+          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#78897B]">FOR YOU, PERSONALLY</p>
 
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.65rem] font-normal leading-[1.12] tracking-tight text-white">
+          <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.65rem] font-normal leading-[1.12] tracking-tight text-[#233226]">
             A space that's just yours.
           </h1>
 
-          <p className="text-sm sm:text-base leading-relaxed text-white/85 max-w-xl">
+          <p className="text-sm sm:text-base leading-relaxed text-[#56685A] max-w-xl">
             Tara whenever you need to talk, unlimited assessments, and a therapist you can book directly — all under
             your own private account.
           </p>
 
-          <div className="border-l-2 border-white/40 pl-4 py-1 max-w-lg">
-            <p className="font-serif italic text-sm sm:text-base text-white/95 leading-snug">
+          <div className="border-l-2 border-[#4F6B57]/40 pl-4 py-1 max-w-lg">
+            <p className="font-serif italic text-sm sm:text-base text-[#233226] leading-snug">
               "This account is yours alone."
             </p>
-            <p className="text-xs text-white/60 mt-1">
+            <p className="text-xs text-[#78897B] mt-1">
               {organization.name} sees usage counts — never your name, your answers, or your conversations.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 pt-2 text-xs text-white/70">
-            <ShieldCheck className="h-4 w-4 shrink-0 text-white/80" />
+          <div className="flex items-center gap-2 pt-2 text-xs text-[#56685A]">
+            <ShieldCheck className="h-4 w-4 shrink-0 text-[#4F6B57]" />
             <span>Signed in with Google. Nothing here is ever linked to you on your employer's dashboard.</span>
           </div>
         </div>
@@ -74,7 +86,7 @@ export function EmployeeLoginPage() {
         {/* Right Column: Floating White Sign-in Card */}
         <div className="flex flex-col items-center lg:items-end lg:col-span-5">
           <div className="w-full max-w-[440px]">
-            <div className="rounded-[32px] bg-white p-8 sm:p-10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.35)] text-slate-900">
+            <div className="rounded-[32px] bg-white p-8 sm:p-10 border border-[#EAE4D9] shadow-[0_30px_60px_-15px_rgba(35,50,38,0.14)] text-slate-900">
               <h2 className="font-serif text-2xl sm:text-3xl font-normal tracking-tight text-slate-900">
                 Sign in to your account
               </h2>
@@ -108,9 +120,9 @@ export function EmployeeLoginPage() {
         </div>
       </main>
 
-      <footer className="w-full max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 pt-6 text-xs text-white/50">
+      <footer className="relative w-full max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 pt-6 text-xs text-[#78897B]">
         <p>© 2026 MindSpace. All rights reserved.</p>
-        <Link to="/login" className="hover:text-white/80 transition-colors">
+        <Link to="/login" className="hover:text-[#233226] transition-colors">
           I'm from the people team
         </Link>
       </footer>
