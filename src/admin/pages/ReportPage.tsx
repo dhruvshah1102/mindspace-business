@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
-import { ShieldCheck, UserPlus, ClipboardCheck, CalendarHeart } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { useTenant } from '@/app/TenantContext';
 import { ReportSkeleton } from '@/admin/widgets/PageHeading';
 import { ChartCard } from '@/admin/charts/ChartCard';
+import { StatTile } from '@/admin/charts/StatTile';
 import { RankedBarChart } from '@/admin/charts/RankedBarChart';
 import { StackedShareBar, type ShareSegment } from '@/admin/charts/StackedShareBar';
 import { SmallMultiples } from '@/admin/charts/TrendChart';
-import { formatCount } from '@/admin/charts/chart-theme';
+import { formatCount, pctLabel } from '@/admin/charts/chart-theme';
 import { bandColor } from '@/lib/viz-palette';
 import { ASSESSMENT_TYPES, ASSESSMENT_METADATA, type AssessmentType } from '@/domain/assessments';
 import { DEFAULT_K_ANONYMITY } from '@/domain/cohorts';
@@ -20,16 +21,24 @@ import {
   type OrgWeeklyTrend,
   type DomainBreakdown,
   type BookingFormat,
+  type WeeklyPoint,
 } from '@/services/org-analytics-service';
 
 const BOOKING_FORMATS: BookingFormat[] = ['group', '1:1'];
 const FORMAT_LABEL: Record<BookingFormat, string> = { group: 'Group sessions', '1:1': '1:1 sessions' };
 
+/** Short name for a tile value — "Anxiety Assessment" is too long for a KPI. */
+function shortDomain(type: AssessmentType): string {
+  return ASSESSMENT_METADATA[type].title.replace(' Assessment', '');
+}
+
 /**
- * The HR landing screen — what your people are actually using, built entirely
- * from the real employee schema (profiles, assessment_records,
- * therapy_bookings). Every cut is a headcount; anything below k people is
- * withheld at the database, never estimated.
+ * The HR landing screen — a key-metrics dashboard built entirely from the real
+ * employee schema (profiles, assessment_records, therapy_bookings).
+ *
+ * Numbers lead, prose stays out of the way: every headline is a tile with its
+ * own week-over-week movement, and every breakdown is a chart. Anything below
+ * k people is withheld at the database, never estimated.
  */
 export function ReportPage() {
   const { organization } = useTenant();
@@ -61,6 +70,44 @@ export function ReportPage() {
 
   if (!liveStats || !assessments || !bookings || !trend) return <ReportSkeleton />;
 
+  // ── Week-over-week movement, for the tile sparklines and deltas ────────────
+  const weeks = trend.weeks;
+  const last = weeks[weeks.length - 1];
+  const prev = weeks[weeks.length - 2];
+  const deltaOf = (key: keyof Omit<WeeklyPoint, 'label'>) =>
+    last && prev ? last[key] - prev[key] : undefined;
+  const sparkOf = (key: keyof Omit<WeeklyPoint, 'label'>) =>
+    weeks.length > 1 ? weeks.map((w) => w[key]) : undefined;
+
+  // ── Severity mix across every domain whose split is visible ────────────────
+  const mix = { low: 0, moderate: 0, high: 0 };
+  let scored = 0;
+  for (const type of ASSESSMENT_TYPES) {
+    const d = assessments.byDomain[type];
+    if (d.levelMasked) continue;
+    mix.low += d.low;
+    mix.moderate += d.moderate;
+    mix.high += d.high;
+    scored += d.total;
+  }
+  const elevated = mix.moderate + mix.high;
+  const elevatedShare = scored ? elevated / scored : 0;
+
+  const mixSegments: ShareSegment[] = [
+    { key: 'low', label: 'Low', count: mix.low, share: scored ? mix.low / scored : 0, color: bandColor('Low'), labelOnFill: 'light' },
+    { key: 'moderate', label: 'Moderate', count: mix.moderate, share: scored ? mix.moderate / scored : 0, color: bandColor('Moderate'), labelOnFill: 'dark' },
+    { key: 'high', label: 'High', count: mix.high, share: scored ? mix.high / scored : 0, color: bandColor('High'), labelOnFill: 'light' },
+  ];
+
+  // ── Ratios that turn raw counts into something a people team can act on ───
+  const perPerson = liveStats.totalSignups ? liveStats.totalAssessments / liveStats.totalSignups : 0;
+  const bookingRate = liveStats.totalSignups ? liveStats.totalBookings / liveStats.totalSignups : 0;
+
+  const ranked = ASSESSMENT_TYPES.map((type) => ({ type, total: assessments.byDomain[type].total })).sort(
+    (a, b) => b.total - a.total,
+  );
+  const topDomain = ranked[0];
+
   const bookingRows = BOOKING_FORMATS.map((format) => {
     const b = bookings.byFormat[format];
     return {
@@ -73,7 +120,7 @@ export function ReportPage() {
     };
   });
 
-  const weeklyData = trend.weeks.map((w) => ({
+  const weeklyData = weeks.map((w) => ({
     label: w.label,
     signups: w.signups,
     assessments: w.assessments,
@@ -82,54 +129,107 @@ export function ReportPage() {
 
   return (
     <div className="flex flex-col gap-8 pb-12">
-      <header className="flex flex-col gap-1.5">
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">
-          {organization.branding.appName.toUpperCase()} · OVERVIEW
-        </p>
-        <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-1">
-          What your people are actually using
-        </h1>
-        <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-          Totals and shapes only — how many people signed up, took an assessment, or booked a session, and what
-          those assessments look like in aggregate. You can never see which person did what.
-        </p>
+      {/* Header — one line of framing, then straight into the numbers. */}
+      <header className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex flex-col gap-1.5">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">
+            {organization.branding.appName.toUpperCase()} · OVERVIEW
+          </p>
+          <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-1">
+            Your programme, in numbers
+          </h1>
+          <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
+            Headcounts and rates only — never a name, never an individual score.
+          </p>
+        </div>
+        <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#B7D3BC] bg-[#EAF3EB] px-3 py-1 text-[11px] font-medium text-[#2F7F4C]">
+          <ShieldCheck className="h-3 w-3" aria-hidden />
+          <span>{liveStats.live ? 'Live counts' : 'Not set up yet'}</span>
+        </span>
       </header>
 
-      <section className="rounded-[28px] bg-white p-6 sm:p-7 border border-[#EAE4D9] shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-serif text-xl font-normal text-[#233226]">Employee app — live</h2>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#B7D3BC] bg-[#EAF3EB] px-3 py-1 text-[11px] font-medium text-[#2F7F4C]">
-            <ShieldCheck className="h-3 w-3" aria-hidden />
-            <span>{liveStats.live ? 'Live counts' : 'Not set up yet'}</span>
-          </span>
-        </div>
-        <p className="mt-1 text-xs text-[#78897B]">
-          The three numbers you're allowed to see about your employees' accounts — totals only, never a name.
+      {!liveStats.live && (
+        <p className="rounded-2xl border border-[#DCD5C8] bg-[#F3EEE5] px-4 py-3 text-[11px] leading-relaxed text-[#9E6B38]">
+          Run <code className="rounded bg-white/70 px-1 py-0.5">supabase/schema-employee.sql</code> and{' '}
+          <code className="rounded bg-white/70 px-1 py-0.5">supabase/schema-employee-analytics.sql</code> in your
+          Supabase project to turn this dashboard on.
         </p>
-        <div className="mt-5 grid gap-4 sm:grid-cols-3">
-          <LiveStat icon={UserPlus} label="Total sign-ups" value={liveStats.totalSignups} live={liveStats.live} />
-          <LiveStat
-            icon={ClipboardCheck}
-            label="Assessments taken"
-            value={liveStats.totalAssessments}
-            live={liveStats.live}
-          />
-          <LiveStat
-            icon={CalendarHeart}
-            label="Therapy sessions booked"
-            value={liveStats.totalBookings}
-            live={liveStats.live}
-          />
-        </div>
-        {!liveStats.live && (
-          <p className="mt-4 text-[11px] text-[#9E6B38]">
-            Run <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-employee.sql</code> and{' '}
-            <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-employee-analytics.sql</code> in your
-            Supabase project to turn this dashboard on.
-          </p>
-        )}
+      )}
+
+      {/* ── Key metrics ──────────────────────────────────────────────────── */}
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <StatTile
+          label="People signed up"
+          value={formatCount(liveStats.totalSignups)}
+          sub="Employee accounts created"
+          delta={deltaOf('signups')}
+          deltaLabel="vs last week"
+          trend={sparkOf('signups')}
+        />
+        <StatTile
+          label="Assessments taken"
+          value={formatCount(liveStats.totalAssessments)}
+          sub={`${perPerson.toFixed(1)} per person signed up`}
+          delta={deltaOf('assessments')}
+          deltaLabel="vs last week"
+          trend={sparkOf('assessments')}
+        />
+        <StatTile
+          label="Therapy sessions booked"
+          value={formatCount(liveStats.totalBookings)}
+          sub={`${pctLabel(bookingRate)} of people signed up`}
+          delta={deltaOf('bookings')}
+          deltaLabel="vs last week"
+          trend={sparkOf('bookings')}
+        />
+        <StatTile
+          label="Showing elevated signs"
+          value={scored ? pctLabel(elevatedShare) : '—'}
+          sub={scored ? `${elevated} of ${scored} assessments scored moderate or high` : 'Not enough responses yet'}
+          upIsGood={false}
+        />
+        <StatTile
+          label="Most-taken assessment"
+          value={topDomain && topDomain.total > 0 ? shortDomain(topDomain.type) : '—'}
+          sub={
+            topDomain && topDomain.total > 0
+              ? `${formatCount(topDomain.total)} taken of ${formatCount(liveStats.totalAssessments)} overall`
+              : 'No responses yet'
+          }
+        />
+        <StatTile
+          label="Assessments this week"
+          value={formatCount(last?.assessments ?? 0)}
+          sub={`Across ${ranked.filter((r) => r.total > 0).length} of ${ASSESSMENT_TYPES.length} assessments`}
+          delta={deltaOf('assessments')}
+          deltaLabel="vs last week"
+        />
       </section>
 
+      {/* ── Overall severity mix — the one headline shape ────────────────── */}
+      <ChartCard
+        title="Overall severity mix"
+        caption="Every completed assessment across all domains, by how it scored. Domains too small to split are left out of this bar and shown separately below."
+        figure={
+          <span className="text-[11px] text-[#78897B]">
+            {formatCount(scored)} scored
+          </span>
+        }
+        table={{
+          columns: ['Band', 'Assessments', 'Share'],
+          rows: mixSegments.map((s) => [s.label, s.count, pctLabel(s.share)]),
+        }}
+      >
+        {scored > 0 ? (
+          <StackedShareBar segments={mixSegments} total={scored} />
+        ) : (
+          <p className="text-[11px] text-[#9AA79C] italic py-2">
+            No assessment has enough responses to show a severity split yet.
+          </p>
+        )}
+      </ChartCard>
+
+      {/* ── Breakdown by domain ───────────────────────────────────────────── */}
       <ChartCard
         title="Assessments, by domain"
         caption="How many people have taken each assessment. The low/moderate/high split is withheld for a domain fewer than 5 people have tried — the number taken is always shown."
@@ -151,6 +251,7 @@ export function ReportPage() {
         </div>
       </ChartCard>
 
+      {/* ── Bookings ──────────────────────────────────────────────────────── */}
       <ChartCard
         title="Sessions booked, by format"
         caption="How people are choosing to get support. The requested/confirmed/cancelled split is withheld for a format fewer than 5 people have booked — the number booked is always shown."
@@ -170,12 +271,13 @@ export function ReportPage() {
         </div>
       </ChartCard>
 
+      {/* ── Movement ──────────────────────────────────────────────────────── */}
       <ChartCard
         title="Last 8 weeks"
-        caption="New sign-ups, assessments taken and sessions booked, week by week."
+        caption="New sign-ups, assessments taken and sessions booked, week by week. All three panels share one scale, so they are directly comparable."
         table={{
           columns: ['Week', 'Sign-ups', 'Assessments', 'Bookings'],
-          rows: trend.weeks.map((w) => [w.label, w.signups, w.assessments, w.bookings]),
+          rows: weeks.map((w) => [w.label, w.signups, w.assessments, w.bookings]),
         }}
       >
         <div className="flex flex-col gap-4">
@@ -217,32 +319,6 @@ function NotLiveNote({ live }: { live: boolean }) {
         Supabase project to turn this on.
       </span>
     </p>
-  );
-}
-
-function LiveStat({
-  icon: Icon,
-  label,
-  value,
-  live,
-}: {
-  icon: typeof UserPlus;
-  label: string;
-  value: number | undefined;
-  live: boolean | undefined;
-}) {
-  return (
-    <div className="rounded-[20px] bg-[#FAF7F2] border border-[#EAE4D9] p-5 flex items-start gap-3">
-      <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#E8F0EA] text-[#405445]">
-        <Icon className="h-4 w-4" aria-hidden />
-      </span>
-      <div>
-        <p className="text-2xl font-semibold text-[#233226] tabular-nums">
-          {live === undefined ? '—' : formatCount(value ?? 0)}
-        </p>
-        <p className="text-xs text-[#78897B] mt-0.5">{label}</p>
-      </div>
-    </div>
   );
 }
 

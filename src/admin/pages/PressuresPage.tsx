@@ -3,14 +3,41 @@ import { useReport } from '@/admin/ReportContext';
 import { ReportSkeleton } from '@/admin/widgets/PageHeading';
 import { MagnitudeBar } from '@/admin/widgets/ProportionBar';
 import { ChartCard } from '@/admin/charts/ChartCard';
+import { StatTile } from '@/admin/charts/StatTile';
 import { RankedBarChart } from '@/admin/charts/RankedBarChart';
+import { StackedShareBar, type ShareSegment } from '@/admin/charts/StackedShareBar';
 import { pctLabel } from '@/admin/charts/chart-theme';
 import { SEVERITY_COLOR, SEVERITY_LABEL } from '@/lib/tier';
-import { asFraction } from '@/domain/wellbeing-report';
+
+type Severity = 'low' | 'moderate' | 'high';
+const SEVERITY_ORDER: Severity[] = ['high', 'moderate', 'low'];
 
 export function PressuresPage() {
   const { report, loading } = useReport();
   if (loading || !report) return <ReportSkeleton />;
+
+  const pressures = report.whatsWeighing;
+  const top = pressures[0];
+
+  // How the pressures split by urgency — the shape that says whether this is a
+  // handful of acute problems or broad low-grade friction.
+  const byUrgency = SEVERITY_ORDER.map((sev) => ({
+    sev,
+    count: pressures.filter((p) => p.severity === sev).length,
+  }));
+  const urgencySegments: ShareSegment[] = byUrgency.map((u) => ({
+    key: u.sev,
+    label: SEVERITY_LABEL[u.sev],
+    count: u.count,
+    share: pressures.length ? u.count / pressures.length : 0,
+    color: SEVERITY_COLOR[u.sev],
+    labelOnFill: u.sev === 'moderate' ? 'dark' : 'light',
+  }));
+
+  const urgentCount = pressures.filter((p) => p.severity === 'high').length;
+  const meanReach = pressures.length
+    ? pressures.reduce((s, p) => s + p.share, 0) / pressures.length
+    : 0;
 
   return (
     <div className="flex flex-col gap-8 pb-12">
@@ -23,10 +50,33 @@ export function PressuresPage() {
           The reasons behind the mood
         </h1>
         <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-          Ranked by how many people raised each pressure. You cannot fix a feeling — you can only fix the thing
-          producing it, so each one carries its likely cause.
+          Ranked by how many people raised each pressure. Reach and urgency are two different questions — a pressure
+          can be everywhere and mild, or narrow and acute.
         </p>
       </header>
+
+      {/* ── Key metrics ──────────────────────────────────────────────────── */}
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatTile label="Pressures tracked" value={String(pressures.length)} sub="Named in this cycle's report" />
+        <StatTile
+          label="Most widespread"
+          value={top ? pctLabel(top.share) : '—'}
+          sub={top ? top.title : 'No pressures reported'}
+          upIsGood={false}
+        />
+        <StatTile
+          label="Marked urgent"
+          value={String(urgentCount)}
+          sub={`Of ${pressures.length} pressures · needs action now`}
+          upIsGood={false}
+        />
+        <StatTile
+          label="Average reach"
+          value={pctLabel(meanReach)}
+          sub="Typical share of people per pressure"
+          upIsGood={false}
+        />
+      </section>
 
       {/* The ranking, at a glance. Bar length is reach; colour is severity —
           two independent facts, so colour isn't restating the bar. Severity
@@ -36,17 +86,12 @@ export function PressuresPage() {
         caption="How much of the workforce raised each one. Colour marks how urgent it is, which is not the same question as how widespread."
         table={{
           columns: ['Pressure', 'Affected', 'Share', 'Urgency'],
-          rows: report.whatsWeighing.map((p) => [
-            p.title,
-            p.affected,
-            pctLabel(p.share),
-            SEVERITY_LABEL[p.severity],
-          ]),
+          rows: pressures.map((p) => [p.title, p.affected, pctLabel(p.share), SEVERITY_LABEL[p.severity]]),
         }}
       >
         <RankedBarChart
           maxValue={1}
-          data={report.whatsWeighing.map((p) => ({
+          data={pressures.map((p) => ({
             label: p.title,
             value: p.share,
             display: `${Math.round(p.share * 100)}% · ~${p.affected}`,
@@ -57,79 +102,84 @@ export function PressuresPage() {
         />
       </ChartCard>
 
-      {/* Ranked Pressure Cards */}
-      <div className="flex flex-col gap-6">
-        {report.whatsWeighing.map((p, i) => {
+      {/* ── Urgency mix ──────────────────────────────────────────────────── */}
+      <ChartCard
+        title="Split by urgency"
+        caption="Whether you are dealing with a few acute problems or broad low-grade friction — the two need very different responses."
+        table={{
+          columns: ['Urgency', 'Pressures', 'Share'],
+          rows: urgencySegments.map((s) => [s.label, s.count, pctLabel(s.share)]),
+        }}
+      >
+        {pressures.length > 0 ? (
+          <StackedShareBar segments={urgencySegments} total={pressures.length} />
+        ) : (
+          <p className="text-[11px] text-[#9AA79C] italic py-2">No pressures reported this cycle.</p>
+        )}
+      </ChartCard>
+
+      {/* ── Per-pressure detail, compact ─────────────────────────────────── */}
+      <section className="grid gap-4 sm:grid-cols-2">
+        {pressures.map((p, i) => {
           const pct = Math.round(p.share * 100);
           return (
             <article
               key={p.title}
-              className="rounded-[28px] bg-white p-7 sm:p-9 border border-[#EAE4D9] shadow-xs grid gap-8 lg:grid-cols-[1.6fr_1fr]"
+              className="rounded-[24px] bg-white p-6 border border-[#EAE4D9] shadow-xs flex flex-col gap-4"
             >
-              {/* Left Content */}
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#F3EEE5] text-xs font-bold text-[#405445]">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F3EEE5] text-[11px] font-bold text-[#405445]">
                     {String(i + 1).padStart(2, '0')}
                   </span>
-                  <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#233226]">{p.title}</h2>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D9D2C5] bg-[#FAF7F2] px-2.5 py-0.5 text-[11px] font-medium text-[#3E4F42]">
+                  <h2 className="font-serif text-lg font-normal text-[#233226] truncate">{p.title}</h2>
+                </div>
+                <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#D9D2C5] bg-[#FAF7F2] px-2.5 py-0.5 text-[10px] font-medium text-[#3E4F42]">
+                  <span
+                    className="h-2 w-2 rounded-full"
+                    style={{ backgroundColor: SEVERITY_COLOR[p.severity] }}
+                    aria-hidden
+                  />
+                  {SEVERITY_LABEL[p.severity]}
+                </span>
+              </div>
+
+              {/* The number leads, the bar carries the proportion. */}
+              <div className="flex flex-col gap-2">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-semibold tracking-tight text-[#233226] leading-none">{pct}%</span>
+                  <span className="text-[11px] text-[#78897B]">~{p.affected} people</span>
+                </div>
+                <MagnitudeBar share={p.share} color={SEVERITY_COLOR[p.severity]} label={`${pct}% of people`} />
+              </div>
+
+              {/* One line of cause — the only prose that earns its place, because
+                  a bar cannot say what to fix. */}
+              <div className="mt-auto rounded-xl bg-[#FAF7F2] p-3.5 border border-[#EAE4D9]">
+                <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#78897B]">
+                  <Lightbulb className="h-3 w-3 text-[#9E6B38]" aria-hidden />
+                  LIKELY CAUSE
+                </p>
+                <p className="mt-1 text-xs font-medium text-[#233226] leading-relaxed">{p.rootCause}</p>
+              </div>
+
+              {p.whoMostly.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[10px] font-medium text-[#78897B]">Most in</span>
+                  {p.whoMostly.map((team) => (
                     <span
-                      className="h-2 w-2 rounded-full"
-                      style={{ backgroundColor: SEVERITY_COLOR[p.severity] }}
-                      aria-hidden
-                    />
-                    {SEVERITY_LABEL[p.severity]}
-                  </span>
-                </div>
-
-                <p className="text-xs sm:text-sm leading-relaxed text-[#56685A] max-w-2xl">{p.plainLanguage}</p>
-
-                {/* Likely Cause Box */}
-                <div className="rounded-2xl bg-[#FAF7F2] p-5 border border-[#EAE4D9] mt-1">
-                  <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#78897B]">
-                    <Lightbulb className="h-3 w-3 text-[#9E6B38]" aria-hidden />
-                    LIKELY UNDERLYING CAUSE
-                  </p>
-                  <p className="mt-1.5 text-xs sm:text-sm font-medium text-[#233226] leading-relaxed">{p.rootCause}</p>
-                </div>
-              </div>
-
-              {/* Right Meta Column */}
-              <div className="flex flex-col justify-between rounded-2xl bg-[#FAF7F2] p-6 border border-[#EAE4D9]">
-                <div className="flex flex-col gap-3">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#78897B]">AFFECTED WORKFORCE</span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-serif text-3xl font-bold text-[#233226]">{pct}%</span>
-                    <span className="text-xs text-[#657669]">
-                      (~{p.affected} people · {asFraction(p.share)})
+                      key={team}
+                      className="rounded-full bg-[#FAF7F2] border border-[#D9D2C5] px-2 py-0.5 text-[10px] font-medium text-[#3E4F42]"
+                    >
+                      {team}
                     </span>
-                  </div>
-                  <div className="mt-1">
-                    <MagnitudeBar share={p.share} color={SEVERITY_COLOR[p.severity]} label={`${pct}% of people`} />
-                  </div>
+                  ))}
                 </div>
-
-                {p.whoMostly.length > 0 && (
-                  <div className="mt-6 border-t border-[#EAE4D9] pt-4">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-[#78897B]">MOST REPORTED IN</p>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {p.whoMostly.map((team) => (
-                        <span
-                          key={team}
-                          className="rounded-full bg-white border border-[#D9D2C5] px-2.5 py-1 text-[11px] font-medium text-[#3E4F42]"
-                        >
-                          {team}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              )}
             </article>
           );
         })}
-      </div>
+      </section>
     </div>
   );
 }
