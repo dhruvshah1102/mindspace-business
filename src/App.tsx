@@ -7,6 +7,7 @@ import { RequireEmployeeAuth } from '@/app/RequireEmployeeAuth';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from 'sonner';
 import { AdminLayout } from '@/admin/AdminLayout';
+import { BusinessImpactPage } from '@/admin/pages/BusinessImpactPage';
 import { ReportPage } from '@/admin/pages/ReportPage';
 import { FeelingsPage } from '@/admin/pages/FeelingsPage';
 import { PressuresPage } from '@/admin/pages/PressuresPage';
@@ -17,10 +18,12 @@ import { DriverAnalysisPage } from '@/admin/pages/DriverAnalysisPage';
 import { LoginPage } from '@/pages/LoginPage';
 import { EmployeeLoginPage } from '@/pages/EmployeeLoginPage';
 import { EmployeeLayout } from '@/employee/EmployeeLayout';
+import { EmployeeDashboardPage } from '@/employee/EmployeeDashboardPage';
 import { TaraPage } from '@/employee/TaraPage';
 import { AssessmentsPage } from '@/employee/AssessmentsPage';
 import { AssessmentRunnerPage } from '@/employee/AssessmentRunnerPage';
 import { BookSessionPage } from '@/employee/BookSessionPage';
+import { SelfHelpPage } from '@/employee/SelfHelpPage';
 import { ProfilePage } from '@/employee/ProfilePage';
 import { LandingPage } from '@/pages/LandingPage';
 
@@ -41,7 +44,7 @@ export default function App() {
               {/* Employee account sign-in (Google, via Supabase) */}
               <Route path="/app/login" element={<EmployeeLoginPage />} />
 
-              {/* Employee App — Tara, unlimited assessments, therapy booking */}
+              {/* Employee App — Hub, Tara, self-help, unlimited assessments, therapy booking */}
               <Route
                 path="/app"
                 element={
@@ -50,8 +53,10 @@ export default function App() {
                   </RequireEmployeeAuth>
                 }
               >
-                <Route index element={<Navigate to="tara" replace />} />
+                <Route index element={<Navigate to="home" replace />} />
+                <Route path="home" element={<EmployeeDashboardPage />} />
                 <Route path="tara" element={<TaraPage />} />
+                <Route path="self-help" element={<SelfHelpPage />} />
                 <Route path="assessments" element={<AssessmentsPage />} />
                 <Route path="assessments/:type" element={<AssessmentRunnerPage />} />
                 <Route path="book" element={<BookSessionPage />} />
@@ -68,6 +73,7 @@ export default function App() {
                 }
               >
                 <Route index element={<Navigate to="report" replace />} />
+                <Route path="impact" element={<BusinessImpactPage />} />
                 <Route path="report" element={<ReportPage />} />
                 <Route path="feelings" element={<FeelingsPage />} />
                 <Route path="pressures" element={<PressuresPage />} />

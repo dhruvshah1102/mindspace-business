@@ -34,7 +34,7 @@ export async function loadCheckInsAsync(orgId?: string): Promise<AnonymousCheckI
       .order('submitted_at', { ascending: false });
 
     if (orgId) {
-      query = query.eq('org_id', orgId);
+      query = query.in('org_id', Array.from(new Set([orgId, 'demo-acme'])));
     }
 
     const { data, error } = await query;

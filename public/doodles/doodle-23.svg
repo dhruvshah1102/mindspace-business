@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FDF8F0" stroke="#EEDFC9" stroke-width="3"/>
+  
+      <!-- Leaf Stem -->
+      <path d="M120 205 Q120 165 120 135" fill="none" stroke="#7A5230" stroke-width="5" stroke-linecap="round"/>
+      <!-- Fan Leaf Blade with Split Notch -->
+      <path d="M120 135 C85 128 50 105 55 72 C68 58 108 72 120 88 C132 72 172 58 185 72 C190 105 155 128 120 135 Z" fill="#FEE9B5" stroke="#C86D51" stroke-width="4.5" stroke-linejoin="round"/>
+      <!-- Radiating Delicate Ribs -->
+      <path d="M120 135 L78 78 M120 135 L102 72 M120 135 L120 90 M120 135 L138 72 M120 135 L162 78" stroke="#E07A5F" stroke-width="2.5" stroke-linecap="round"/>
+    
+</svg>

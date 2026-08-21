@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FAF5F0" stroke="#E7D9CB" stroke-width="3"/>
+  
+      <!-- Teapot Body -->
+      <path d="M85 105 C68 130 68 170 92 185 L148 185 C172 170 172 130 155 105 Z" fill="#F8E5D8" stroke="#C86D51" stroke-width="4.5" stroke-linejoin="round"/>
+      <!-- Lid & Knob -->
+      <polygon points="98,105 142,105 138,92 102,92" fill="#E8D5CE" stroke="#C86D51" stroke-width="3.5"/>
+      <circle cx="120" cy="85" r="6" fill="#4F6B57"/>
+      <!-- Curved Pouring Spout -->
+      <path d="M78 135 C55 130 50 112 45 105 L45 120 C50 140 70 155 82 160" fill="#F8E5D8" stroke="#C86D51" stroke-width="4" stroke-linejoin="round"/>
+      <!-- Handle -->
+      <path d="M162 118 C185 118 195 155 162 165" fill="none" stroke="#C86D51" stroke-width="4.5" stroke-linecap="round"/>
+      <!-- Steam -->
+      <path d="M42 95 C38 80 48 70 42 55" fill="none" stroke="#8E7DBE" stroke-width="3" stroke-linecap="round"/>
+    
+</svg>

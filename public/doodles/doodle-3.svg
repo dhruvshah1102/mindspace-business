@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F6F3FB" stroke="#DFD5EE" stroke-width="3"/>
+  
+      <!-- Mandala concentric rings -->
+      <circle cx="120" cy="120" r="14" fill="#EDE6F2" stroke="#735A88" stroke-width="3"/>
+      <circle cx="120" cy="120" r="32" fill="none" stroke="#8E7DBE" stroke-width="2.5" stroke-dasharray="5 5"/>
+      <circle cx="120" cy="120" r="68" fill="none" stroke="#735A88" stroke-width="3.5"/>
+      <circle cx="120" cy="120" r="85" fill="none" stroke="#8E7DBE" stroke-width="2" stroke-dasharray="3 4"/>
+      <!-- 8 Petal Loops -->
+      <path d="M120 52 C108 78 132 78 120 52 Z M120 188 C108 162 132 162 120 188 Z M52 120 C78 108 78 132 52 120 Z M188 120 C162 108 162 132 188 120 Z" fill="#F0E8F8" stroke="#735A88" stroke-width="3"/>
+      <path d="M72 72 C92 88 102 78 72 72 Z M168 168 C148 152 138 162 168 168 Z M168 72 C148 88 138 78 168 72 Z M72 168 C92 152 102 162 72 168 Z" fill="#F0E8F8" stroke="#735A88" stroke-width="3"/>
+      <!-- Center dot & Outer pearls -->
+      <circle cx="120" cy="120" r="5" fill="#735A88"/>
+      <circle cx="120" cy="42" r="4.5" fill="#C86D51"/>
+      <circle cx="120" cy="198" r="4.5" fill="#C86D51"/>
+      <circle cx="42" cy="120" r="4.5" fill="#C86D51"/>
+      <circle cx="198" cy="120" r="4.5" fill="#C86D51"/>
+    
+</svg>

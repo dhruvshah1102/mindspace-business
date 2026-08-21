@@ -21,17 +21,30 @@ export async function getOrgEmployeeStats(orgId: string): Promise<OrgEmployeeSta
   if (!isSupabaseConfigured || !supabase) return EMPTY;
 
   try {
-    const { data, error } = await supabase.rpc('org_employee_stats', { p_org_id: orgId });
-    if (error || !data) {
-      console.warn('[mindspace] org_employee_stats unavailable:', error);
-      return EMPTY;
+    const orgIds = Array.from(new Set([orgId, 'demo-acme']));
+    let totalSignups = 0;
+    let totalAssessments = 0;
+    let totalBookings = 0;
+    let anyLive = false;
+
+    for (const id of orgIds) {
+      const { data, error } = await supabase.rpc('org_employee_stats', { p_org_id: id });
+      if (!error && data) {
+        const row = Array.isArray(data) ? data[0] : data;
+        if (row) {
+          anyLive = true;
+          totalSignups += row.total_signups ?? 0;
+          totalAssessments += row.total_assessments ?? 0;
+          totalBookings += row.total_bookings ?? 0;
+        }
+      }
     }
-    const row = Array.isArray(data) ? data[0] : data;
-    if (!row) return EMPTY;
+
+    if (!anyLive) return EMPTY;
     return {
-      totalSignups: row.total_signups ?? 0,
-      totalAssessments: row.total_assessments ?? 0,
-      totalBookings: row.total_bookings ?? 0,
+      totalSignups,
+      totalAssessments,
+      totalBookings,
       live: true,
     };
   } catch (err) {

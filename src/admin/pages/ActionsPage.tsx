@@ -1,10 +1,15 @@
+import { useEffect, useState } from 'react';
 import { useReport } from '@/admin/ReportContext';
+import { useTenant } from '@/app/TenantContext';
 import { ReportSkeleton } from '@/admin/widgets/PageHeading';
 import { ChartCard } from '@/admin/charts/ChartCard';
 import { StatTile } from '@/admin/charts/StatTile';
 import { StackedShareBar, type ShareSegment } from '@/admin/charts/StackedShareBar';
+import { RankedBarChart } from '@/admin/charts/RankedBarChart';
 import { pctLabel, ORDINAL_RAMP } from '@/admin/charts/chart-theme';
 import { EFFORT_LABEL } from '@/lib/tier';
+import { DEFAULT_K_ANONYMITY } from '@/domain/cohorts';
+import { getOrgWorkshopRequestSummary, type WorkshopRequestSummary } from '@/services/workshop-service';
 
 type Effort = 'low' | 'medium' | 'high';
 const EFFORT_ORDER: Effort[] = ['low', 'medium', 'high'];
@@ -19,6 +24,20 @@ const EFFORT_COLOR: Record<Effort, string> = {
 
 export function ActionsPage() {
   const { report, loading } = useReport();
+  const { organization } = useTenant();
+  const k = organization.policy.kAnonymity || DEFAULT_K_ANONYMITY;
+  const [workshopRequests, setWorkshopRequests] = useState<WorkshopRequestSummary | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    getOrgWorkshopRequestSummary(organization.orgId, k).then((summary) => {
+      if (!cancelled) setWorkshopRequests(summary);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [organization.orgId, k]);
+
   if (loading || !report) return <ReportSkeleton />;
 
   const changes = report.cultureChanges;
@@ -182,6 +201,35 @@ export function ActionsPage() {
           ))}
         </div>
       </section>
+
+      {/* ── Real signal: what employees are asking for next ───────────────── */}
+      <ChartCard
+        title="Workshop requests from employees"
+        caption="What employees have asked for, in their own words — topic counts only. HR never sees who submitted a request, just how many came in per topic. Use this to plan the next session yourself, or bring it to MindSpace to run."
+        figure={
+          workshopRequests?.live ? (
+            <span className="text-[11px] text-[#78897B]">
+              {workshopRequests.byTopic.reduce((s, t) => s + t.total, 0)} requests
+            </span>
+          ) : undefined
+        }
+        table={
+          workshopRequests?.live
+            ? { columns: ['Topic', 'Requests'], rows: workshopRequests.byTopic.map((t) => [t.topic, t.total]) }
+            : undefined
+        }
+      >
+        {!workshopRequests?.live ? (
+          <p className="text-[11px] text-[#9AA79C] italic py-2">
+            Not set up yet — run <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-credits-workshops.sql</code>{' '}
+            in your Supabase project to turn this on.
+          </p>
+        ) : workshopRequests.byTopic.length === 0 ? (
+          <p className="text-[11px] text-[#9AA79C] italic py-2">No workshop requests yet.</p>
+        ) : (
+          <RankedBarChart data={workshopRequests.byTopic.map((t) => ({ label: t.topic, value: t.total, display: `${t.total} requests` }))} />
+        )}
+      </ChartCard>
     </div>
   );
 }

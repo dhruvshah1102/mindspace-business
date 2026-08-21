@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FBF6EE" stroke="#E6D7BE" stroke-width="3"/>
+  
+      <!-- Roof -->
+      <polygon points="60,130 120,70 180,130" fill="#C86D51" stroke="#243327" stroke-width="4" stroke-linejoin="round"/>
+      <!-- Chimney with Smoke -->
+      <rect x="150" y="85" width="14" height="26" fill="#8E7DBE" stroke="#243327" stroke-width="3"/>
+      <path d="M157 75 C150 60 165 50 157 38 C150 28 160 20 155 10" fill="none" stroke="#8E7DBE" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Cabin Walls -->
+      <rect x="72" y="130" width="96" height="65" fill="#F4EADB" stroke="#243327" stroke-width="4"/>
+      <!-- Glowing Window -->
+      <rect x="85" y="145" width="24" height="24" fill="#FEE9B5" stroke="#243327" stroke-width="3"/>
+      <line x1="97" y1="145" x2="97" y2="169" stroke="#243327" stroke-width="2"/>
+      <line x1="85" y1="157" x2="109" y2="157" stroke="#243327" stroke-width="2"/>
+      <!-- Wooden Door -->
+      <rect x="125" y="145" width="26" height="50" fill="#A47551" stroke="#243327" stroke-width="3"/>
+      <circle cx="132" cy="170" r="2.5" fill="#FFFFFF"/>
+      <!-- Ground line -->
+      <line x1="35" y1="195" x2="205" y2="195" stroke="#4F6B57" stroke-width="4" stroke-linecap="round"/>
+    
+</svg>

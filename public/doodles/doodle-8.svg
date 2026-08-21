@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FDF8F2" stroke="#EBDDC9" stroke-width="3"/>
+  
+      <!-- Left Wing -->
+      <polygon points="120,150 45,70 105,128" fill="#E8F0EA" stroke="#4F6B57" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Right Wing -->
+      <polygon points="120,150 195,70 135,128" fill="#E8F0EA" stroke="#4F6B57" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Folded Neck & Beak -->
+      <polyline points="105,128 55,115 40,130" fill="none" stroke="#243327" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Tail -->
+      <line x1="135" y1="128" x2="190" y2="160" stroke="#243327" stroke-width="4" stroke-linecap="round"/>
+      <!-- Body Diamond -->
+      <polygon points="105,128 120,195 135,128 120,150" fill="#C5DBC8" stroke="#243327" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Little sparkle -->
+      <path d="M40 95 L40 103 M36 99 L44 99" stroke="#C86D51" stroke-width="2.5" stroke-linecap="round"/>
+    
+</svg>

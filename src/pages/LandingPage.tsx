@@ -20,6 +20,7 @@ import {
   X,
 } from 'lucide-react';
 import { useTenant } from '@/app/TenantContext';
+import { AccentureLogo } from '@/components/AccentureLogo';
 
 export function LandingPage() {
   const { organization } = useTenant();
@@ -31,7 +32,7 @@ export function LandingPage() {
       <div
         aria-hidden
         className="pointer-events-none absolute -right-20 -top-20 h-[500px] w-[500px] opacity-25 blur-3xl rounded-full"
-        style={{ background: 'radial-gradient(circle, #8EA994 0%, #D4E0D6 50%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, #A100FF 0%, #8EA994 50%, transparent 70%)' }}
       />
       <div
         aria-hidden
@@ -42,14 +43,16 @@ export function LandingPage() {
       {/* Top Navbar */}
       <header className="sticky top-0 z-40 w-full border-b border-[#EAE4D9]/80 bg-[#FAF7F2]/95 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#405445] text-xs font-bold text-white shadow-xs">
+          {/* Co-Branded Brand Logo */}
+          <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
+            <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#405445] text-xs font-bold text-white shadow-xs">
               M
             </div>
-            <span className="font-serif text-xl font-medium tracking-tight text-[#233226]">
-              {organization.branding.appName}
+            <span className="font-serif text-lg sm:text-xl font-medium tracking-tight text-[#233226]">
+              MindSpace
             </span>
+            <span className="text-[#9AA79C] font-light text-sm">×</span>
+            <AccentureLogo variant="badge" badgeClassName="bg-black px-2.5 py-1 text-xs rounded-md shadow-xs border border-neutral-800" />
           </Link>
 
           {/* Desktop Navigation Links */}

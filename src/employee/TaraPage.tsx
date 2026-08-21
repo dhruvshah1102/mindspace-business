@@ -1,14 +1,34 @@
 import { useState } from 'react';
-import { Mic, MicOff, Phone, PhoneOff } from 'lucide-react';
+import { Loader2, Mic, MicOff, Phone, PhoneOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTenant } from '@/app/TenantContext';
+import { startTaraSession, OutOfCreditsError } from '@/services/credit-service';
 
 export function TaraPage() {
+  const { organization } = useTenant();
   const [callActive, setCallActive] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [connecting, setConnecting] = useState(false);
+  const [blockedMessage, setBlockedMessage] = useState<string | null>(null);
 
-  function startCall() {
-    setCallActive(true);
-    setMuted(false);
+  async function startCall() {
+    setConnecting(true);
+    setBlockedMessage(null);
+    try {
+      await startTaraSession(organization.orgId);
+      setCallActive(true);
+      setMuted(false);
+    } catch (err) {
+      if (err instanceof OutOfCreditsError) {
+        setBlockedMessage(`${err.message} Contact your HR team to top up the plan.`);
+      } else {
+        // Fail open — a transient credit-check error shouldn't block support access.
+        setCallActive(true);
+        setMuted(false);
+      }
+    } finally {
+      setConnecting(false);
+    }
   }
 
   function endCall() {
@@ -29,9 +49,11 @@ export function TaraPage() {
         <button
           type="button"
           onClick={callActive ? endCall : startCall}
+          disabled={connecting}
           aria-pressed={callActive}
           className={cn(
-            'relative flex h-36 w-36 sm:h-40 sm:w-40 items-center justify-center rounded-full transition-all cursor-pointer',
+            'relative flex h-36 w-36 sm:h-40 sm:w-40 items-center justify-center rounded-full transition-all',
+            connecting ? 'cursor-wait opacity-80' : 'cursor-pointer',
             'shadow-[0_0_0_10px_rgba(79,107,87,0.06),0_20px_40px_-16px_rgba(35,50,38,0.35)]',
             callActive
               ? 'bg-gradient-to-b from-[#E05A4E] to-[#B0392E]'
@@ -39,7 +61,9 @@ export function TaraPage() {
           )}
         >
           {callActive && <span className="absolute inset-0 rounded-full bg-[#DC2626]/25 animate-ping" aria-hidden />}
-          {callActive ? (
+          {connecting ? (
+            <Loader2 className="h-11 w-11 text-white relative z-10 animate-spin" strokeWidth={1.75} />
+          ) : callActive ? (
             <PhoneOff className="h-11 w-11 text-white relative z-10" strokeWidth={1.75} />
           ) : (
             <Phone className="h-11 w-11 text-white relative z-10" strokeWidth={1.75} />
@@ -47,8 +71,14 @@ export function TaraPage() {
         </button>
 
         <p className="text-sm font-semibold text-[#233226]">
-          {callActive ? 'Tara is listening…' : 'Tap to talk'}
+          {connecting ? 'Connecting…' : callActive ? 'Tara is listening…' : 'Tap to talk'}
         </p>
+
+        {blockedMessage && (
+          <p role="alert" className="max-w-xs rounded-xl border border-red-200 bg-red-50 p-3 text-xs text-red-600">
+            {blockedMessage}
+          </p>
+        )}
       </div>
 
       {callActive && (
@@ -80,8 +110,6 @@ export function TaraPage() {
           </div>
         </div>
       )}
-
-      {!callActive && <p className="text-xs text-[#9AA79C]">8 min available</p>}
 
       <p className="max-w-sm text-[11px] leading-relaxed text-[#9AA79C]">
         Preview — Tara's live voice agent connects here next. Nothing from this screen is stored or sent anywhere.

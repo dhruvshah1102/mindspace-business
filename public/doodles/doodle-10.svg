@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F5F7F4" stroke="#CFDDCF" stroke-width="3"/>
+  
+      <!-- Planter Pot -->
+      <polygon points="60,190 180,190 170,210 70,210" fill="#EFE8DC" stroke="#243327" stroke-width="4" stroke-linejoin="round"/>
+      <line x1="50" y1="210" x2="190" y2="210" stroke="#243327" stroke-width="4" stroke-linecap="round"/>
+      <!-- Gnarled Leaning Trunk -->
+      <path d="M115 190 C110 150 135 140 125 115 C115 95 100 90 95 72" fill="none" stroke="#7A5230" stroke-width="7" stroke-linecap="round"/>
+      <path d="M125 120 C140 115 165 120 170 105" fill="none" stroke="#7A5230" stroke-width="5" stroke-linecap="round"/>
+      <!-- Foliage Cloud Pads -->
+      <path d="M70 72 C70 55 115 50 125 68 C132 80 105 88 70 72 Z" fill="#4F6B57" stroke="#243327" stroke-width="3"/>
+      <path d="M145 105 C145 92 185 88 190 102 C195 112 170 118 145 105 Z" fill="#4F6B57" stroke="#243327" stroke-width="3"/>
+      <path d="M52 108 C52 95 88 90 92 104 C95 114 75 120 52 108 Z" fill="#5E7A67" stroke="#243327" stroke-width="3"/>
+    
+</svg>

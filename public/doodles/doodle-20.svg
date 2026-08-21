@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FDF7F3" stroke="#EED9CC" stroke-width="3"/>
+  
+      <!-- Bird Body -->
+      <path d="M78 105 C78 82 102 70 125 82 C148 95 162 130 138 160 C115 170 92 160 78 105 Z" fill="#E8F0EA" stroke="#243327" stroke-width="4"/>
+      <!-- Beak & Eye -->
+      <polygon points="78,90 55,85 74,100" fill="#E07A5F" stroke="#243327" stroke-width="2.5" stroke-linejoin="round"/>
+      <circle cx="95" cy="90" r="3.5" fill="#243327"/>
+      <!-- Tail & Wings -->
+      <polyline points="138,160 185,188 162,152" fill="#C5DBC8" stroke="#243327" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Perched Branch with tiny leaves -->
+      <path d="M40 175 Q120 165 200 170" fill="none" stroke="#7A5230" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="160" cy="155" r="5" fill="#E07A5F"/>
+    
+</svg>

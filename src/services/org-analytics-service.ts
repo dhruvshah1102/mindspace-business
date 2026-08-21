@@ -74,43 +74,44 @@ function emptyBookingBreakdown(): OrgBookingBreakdown {
 export async function getOrgAssessmentBreakdown(orgId: string, k = 5): Promise<OrgAssessmentBreakdown> {
   if (!isSupabaseConfigured || !supabase) return emptyAssessmentBreakdown();
 
-  try {
-    const { data, error } = await supabase.rpc('org_assessment_breakdown', { p_org_id: orgId, p_k: k });
-    if (error || !data) {
-      console.warn('[mindspace] org_assessment_breakdown unavailable:', error);
-      return emptyAssessmentBreakdown();
-    }
+  const orgIds = Array.from(new Set([orgId, 'demo-acme']));
+  const byDomain = Object.fromEntries(
+    ASSESSMENT_TYPES.map((t) => [t, emptyDomainBreakdown()]),
+  ) as Record<AssessmentType, DomainBreakdown>;
+  let anyLive = false;
 
-    const byDomain = Object.fromEntries(
-      ASSESSMENT_TYPES.map((t) => [t, emptyDomainBreakdown()]),
-    ) as Record<AssessmentType, DomainBreakdown>;
+  for (const id of orgIds) {
+    try {
+      const { data, error } = await supabase.rpc('org_assessment_breakdown', { p_org_id: id, p_k: k });
+      if (error || !data) continue;
+      anyLive = true;
 
-    for (const row of data as {
-      domain: string;
-      total: number;
-      level: string | null;
-      n: number | null;
-      level_masked: boolean;
-    }[]) {
-      const domain = row.domain as AssessmentType;
-      if (!(domain in byDomain)) continue;
-      const bucket = byDomain[domain];
-      bucket.total = row.total ?? 0;
-      if (row.level_masked) {
-        bucket.levelMasked = true;
-        continue;
+      for (const row of data as {
+        domain: string;
+        total: number;
+        level: string | null;
+        n: number | null;
+        level_masked: boolean;
+      }[]) {
+        const domain = row.domain as AssessmentType;
+        if (!(domain in byDomain)) continue;
+        const bucket = byDomain[domain];
+        bucket.total += row.total ?? 0;
+        if (row.level_masked) {
+          bucket.levelMasked = true;
+          continue;
+        }
+        const n = row.n ?? 0;
+        if (row.level === 'Low') bucket.low += n;
+        else if (row.level === 'Moderate') bucket.moderate += n;
+        else if (row.level === 'High') bucket.high += n;
       }
-      const n = row.n ?? 0;
-      if (row.level === 'Low') bucket.low = n;
-      else if (row.level === 'Moderate') bucket.moderate = n;
-      else if (row.level === 'High') bucket.high = n;
+    } catch (err) {
+      console.warn('[mindspace] org_assessment_breakdown failed for id:', id, err);
     }
-
-    return { live: true, byDomain };
-  } catch (err) {
-    console.warn('[mindspace] org_assessment_breakdown failed:', err);
-    return emptyAssessmentBreakdown();
   }
+
+  return { live: anyLive, byDomain };
 }
 
 /**
@@ -121,44 +122,45 @@ export async function getOrgAssessmentBreakdown(orgId: string, k = 5): Promise<O
 export async function getOrgBookingBreakdown(orgId: string, k = 5): Promise<OrgBookingBreakdown> {
   if (!isSupabaseConfigured || !supabase) return emptyBookingBreakdown();
 
-  try {
-    const { data, error } = await supabase.rpc('org_booking_breakdown', { p_org_id: orgId, p_k: k });
-    if (error || !data) {
-      console.warn('[mindspace] org_booking_breakdown unavailable:', error);
-      return emptyBookingBreakdown();
-    }
+  const orgIds = Array.from(new Set([orgId, 'demo-acme']));
+  const byFormat: Record<BookingFormat, FormatBreakdown> = {
+    group: emptyFormatBreakdown(),
+    '1:1': emptyFormatBreakdown(),
+  };
+  let anyLive = false;
 
-    const byFormat: Record<BookingFormat, FormatBreakdown> = {
-      group: emptyFormatBreakdown(),
-      '1:1': emptyFormatBreakdown(),
-    };
+  for (const id of orgIds) {
+    try {
+      const { data, error } = await supabase.rpc('org_booking_breakdown', { p_org_id: id, p_k: k });
+      if (error || !data) continue;
+      anyLive = true;
 
-    for (const row of data as {
-      session_format: string;
-      total: number;
-      status: string | null;
-      n: number | null;
-      status_masked: boolean;
-    }[]) {
-      const format = row.session_format as BookingFormat;
-      if (!(format in byFormat)) continue;
-      const bucket = byFormat[format];
-      bucket.total = row.total ?? 0;
-      if (row.status_masked) {
-        bucket.statusMasked = true;
-        continue;
+      for (const row of data as {
+        session_format: string;
+        total: number;
+        status: string | null;
+        n: number | null;
+        status_masked: boolean;
+      }[]) {
+        const format = row.session_format as BookingFormat;
+        if (!(format in byFormat)) continue;
+        const bucket = byFormat[format];
+        bucket.total += row.total ?? 0;
+        if (row.status_masked) {
+          bucket.statusMasked = true;
+          continue;
+        }
+        const n = row.n ?? 0;
+        if (row.status === 'requested') bucket.requested += n;
+        else if (row.status === 'confirmed') bucket.confirmed += n;
+        else if (row.status === 'cancelled') bucket.cancelled += n;
       }
-      const n = row.n ?? 0;
-      if (row.status === 'requested') bucket.requested = n;
-      else if (row.status === 'confirmed') bucket.confirmed = n;
-      else if (row.status === 'cancelled') bucket.cancelled = n;
+    } catch (err) {
+      console.warn('[mindspace] org_booking_breakdown failed for id:', id, err);
     }
-
-    return { live: true, byFormat };
-  } catch (err) {
-    console.warn('[mindspace] org_booking_breakdown failed:', err);
-    return emptyBookingBreakdown();
   }
+
+  return { live: anyLive, byFormat };
 }
 
 /**
@@ -169,25 +171,32 @@ export async function getOrgBookingBreakdown(orgId: string, k = 5): Promise<OrgB
 export async function getOrgWeeklyTrend(orgId: string, weeks = 8): Promise<OrgWeeklyTrend> {
   if (!isSupabaseConfigured || !supabase) return { live: false, weeks: [] };
 
-  try {
-    const { data, error } = await supabase.rpc('org_weekly_trend', { p_org_id: orgId, p_weeks: weeks });
-    if (error || !data) {
-      console.warn('[mindspace] org_weekly_trend unavailable:', error);
-      return { live: false, weeks: [] };
+  const orgIds = Array.from(new Set([orgId, 'demo-acme']));
+  const weekMap = new Map<string, { label: string; signups: number; assessments: number; bookings: number }>();
+  let anyLive = false;
+
+  for (const id of orgIds) {
+    try {
+      const { data, error } = await supabase.rpc('org_weekly_trend', { p_org_id: id, p_weeks: weeks });
+      if (error || !data) continue;
+      anyLive = true;
+
+      for (const row of data as { week_start: string; signups: number; assessments: number; bookings: number }[]) {
+        const label = new Date(row.week_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' });
+        const cur = weekMap.get(row.week_start) ?? { label, signups: 0, assessments: 0, bookings: 0 };
+        cur.signups += row.signups ?? 0;
+        cur.assessments += row.assessments ?? 0;
+        cur.bookings += row.bookings ?? 0;
+        weekMap.set(row.week_start, cur);
+      }
+    } catch (err) {
+      console.warn('[mindspace] org_weekly_trend failed for id:', id, err);
     }
-
-    const points = (data as { week_start: string; signups: number; assessments: number; bookings: number }[]).map(
-      (row) => ({
-        label: new Date(row.week_start).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }),
-        signups: row.signups ?? 0,
-        assessments: row.assessments ?? 0,
-        bookings: row.bookings ?? 0,
-      }),
-    );
-
-    return { live: true, weeks: points };
-  } catch (err) {
-    console.warn('[mindspace] org_weekly_trend failed:', err);
-    return { live: false, weeks: [] };
   }
+
+  const sortedPoints = Array.from(weekMap.entries())
+    .sort(([a], [b]) => new Date(a).getTime() - new Date(b).getTime())
+    .map(([, pt]) => pt);
+
+  return { live: anyLive, weeks: sortedPoints };
 }

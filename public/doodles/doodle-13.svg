@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FDF5F2" stroke="#EED3C7" stroke-width="3"/>
+  
+      <!-- Big Spotted Mushroom Cap -->
+      <path d="M50 130 C50 68 190 68 190 130 C190 138 50 138 50 130 Z" fill="#E07A5F" stroke="#243327" stroke-width="4.5" stroke-linejoin="round"/>
+      <!-- Polka Dots on Cap -->
+      <circle cx="85" cy="100" r="9" fill="#FFFFFF" stroke="#243327" stroke-width="2.5"/>
+      <circle cx="125" cy="85" r="11" fill="#FFFFFF" stroke="#243327" stroke-width="2.5"/>
+      <circle cx="158" cy="108" r="8" fill="#FFFFFF" stroke="#243327" stroke-width="2.5"/>
+      <!-- Mushroom Stalk -->
+      <path d="M92 138 C92 170 88 190 120 190 C152 190 148 170 148 138" fill="#FDF8EE" stroke="#243327" stroke-width="4" stroke-linecap="round"/>
+      <!-- Gills under cap -->
+      <line x1="98" y1="138" x2="98" y2="145" stroke="#78897B" stroke-width="2"/>
+      <line x1="142" y1="138" x2="142" y2="145" stroke="#78897B" stroke-width="2"/>
+      <!-- Grass Blades at Base -->
+      <path d="M72 195 L80 180 M115 195 L120 178 M160 195 L155 182" stroke="#4F6B57" stroke-width="3.5" stroke-linecap="round"/>
+    
+</svg>

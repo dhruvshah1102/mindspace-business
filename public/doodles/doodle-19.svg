@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F5F8F5" stroke="#D0E2D1" stroke-width="3"/>
+  
+      <!-- Ceramic Pot -->
+      <polygon points="75,140 165,140 152,205 88,205" fill="#EFE8DC" stroke="#4F6B57" stroke-width="4" stroke-linejoin="round"/>
+      <line x1="65" y1="205" x2="175" y2="205" stroke="#4F6B57" stroke-width="4" stroke-linecap="round"/>
+      <!-- Succulent Rosette Petals -->
+      <path d="M120 75 C108 100 108 125 120 138 C132 125 132 100 120 75 Z" fill="#5E7A67" stroke="#243327" stroke-width="3.5"/>
+      <path d="M92 98 C102 112 108 128 115 138 C90 134 82 112 92 98 Z" fill="#A9CBAE" stroke="#243327" stroke-width="3"/>
+      <path d="M148 98 C138 112 132 128 125 138 C150 134 158 112 148 98 Z" fill="#A9CBAE" stroke="#243327" stroke-width="3"/>
+    
+</svg>

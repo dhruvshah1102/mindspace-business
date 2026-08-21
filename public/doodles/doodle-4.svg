@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FDF6F0" stroke="#EED9C7" stroke-width="3"/>
+  
+      <!-- Kitten body curve -->
+      <path d="M140 180 C75 180 50 135 75 95 C92 72 135 68 165 85 C190 102 198 140 180 168 C168 185 145 192 120 192 C80 192 45 160 45 118" fill="#F8E5D8" stroke="#C86D51" stroke-width="4" stroke-linecap="round"/>
+      <!-- Ears -->
+      <path d="M92 78 L80 52 L105 65 M135 65 L155 48 L150 72" fill="#E8B4A2" stroke="#C86D51" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Peaceful Closed Eyes -->
+      <path d="M98 98 C104 92 112 92 118 98 M130 98 C136 92 144 92 150 98" fill="none" stroke="#4F6B57" stroke-width="3" stroke-linecap="round"/>
+      <!-- Nose & Mouth -->
+      <path d="M124 108 L124 114 M120 114 C122 118 126 118 128 114" fill="none" stroke="#C86D51" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Whiskers -->
+      <path d="M85 110 L62 105 M85 118 L60 120 M160 110 L182 105 M160 118 L185 120" stroke="#78897B" stroke-width="2" stroke-linecap="round"/>
+      <!-- Floating Zzz -->
+      <text x="175" y="60" font-family="sans-serif" font-weight="bold" font-size="16" fill="#8E7DBE">z</text>
+      <text x="190" y="45" font-family="sans-serif" font-weight="bold" font-size="20" fill="#8E7DBE">Z</text>
+    
+</svg>

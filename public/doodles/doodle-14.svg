@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F4F7FB" stroke="#CCDDF2" stroke-width="3"/>
+  
+      <!-- Plane Body Fold -->
+      <polygon points="200,45 60,130 105,145" fill="#E8F0EA" stroke="#243327" stroke-width="4" stroke-linejoin="round"/>
+      <polygon points="200,45 105,145 130,175 145,140" fill="#C5DBC8" stroke="#243327" stroke-width="3.5" stroke-linejoin="round"/>
+      <!-- Looping Wind Trail -->
+      <path d="M40 185 C65 200 75 178 55 160 C38 145 60 128 85 135" fill="none" stroke="#8E7DBE" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="6 7"/>
+      <!-- Sparkles -->
+      <path d="M195 90 L195 98 M191 94 L199 94" stroke="#E07A5F" stroke-width="2.5" stroke-linecap="round"/>
+    
+</svg>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F9F5FD" stroke="#E8DDF7" stroke-width="3"/>
+  
+      <!-- Stems -->
+      <line x1="95" y1="200" x2="115" y2="45" stroke="#4F6B57" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="120" y1="200" x2="124" y2="50" stroke="#4F6B57" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="145" y1="200" x2="133" y2="55" stroke="#4F6B57" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Purple Lavender Blossom Grains (Center) -->
+      <ellipse cx="115" cy="55" rx="7" ry="4.5" fill="#8E7DBE"/>
+      <ellipse cx="115" cy="70" rx="8" ry="5" fill="#735A88"/>
+      <ellipse cx="115" cy="85" rx="9" ry="5.5" fill="#8E7DBE"/>
+      <ellipse cx="115" cy="100" rx="9" ry="5.5" fill="#735A88"/>
+      <!-- Left Sprig Grains -->
+      <ellipse cx="124" cy="65" rx="7" ry="4.5" fill="#8E7DBE"/>
+      <ellipse cx="124" cy="80" rx="8" ry="5" fill="#735A88"/>
+      <ellipse cx="124" cy="95" rx="8.5" ry="5.5" fill="#8E7DBE"/>
+      <!-- Right Sprig Grains -->
+      <ellipse cx="133" cy="75" rx="7" ry="4.5" fill="#8E7DBE"/>
+      <ellipse cx="133" cy="90" rx="8" ry="5" fill="#735A88"/>
+      <!-- Ribbon Bow Tie -->
+      <path d="M108 160 C98 152 98 168 108 164 C132 152 132 168 122 164" fill="#FCECE6" stroke="#C86D51" stroke-width="3" stroke-linecap="round"/>
+    
+</svg>

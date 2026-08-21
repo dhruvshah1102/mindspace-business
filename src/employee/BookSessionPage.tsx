@@ -86,8 +86,15 @@ export function BookSessionPage() {
         </div>
         <div className="text-left sm:text-right">
           <p className="text-2xl font-semibold text-[#233226]">
-            {formatRupees(individualSessionPaise)} <span className="text-xs font-normal text-[#78897B]">/ session</span>
+            {individualSessionPaise === 0 ? (
+              <span className="text-[#2F7F4C] font-bold">100% Sponsored</span>
+            ) : (
+              <>
+                {formatRupees(individualSessionPaise)} <span className="text-xs font-normal text-[#78897B]">/ session</span>
+              </>
+            )}
           </p>
+          <p className="text-[11px] text-[#78897B] mt-0.5">Accenture Wellbeing Benefits</p>
         </div>
       </section>
 

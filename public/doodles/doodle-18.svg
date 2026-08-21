@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F6F4FB" stroke="#DFD8EE" stroke-width="3"/>
+  
+      <!-- Golden Crescent Moon -->
+      <path d="M120 42 C72 42 48 95 68 155 C88 215 165 202 180 180 C132 180 100 145 108 100 C112 68 132 52 120 42 Z" fill="#FEE9B5" stroke="#E07A5F" stroke-width="4" stroke-linejoin="round"/>
+      <!-- Sparkling Stars -->
+      <path d="M165 65 L165 85 M155 75 L175 75" stroke="#8E7DBE" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M188 115 L188 130 M180 122 L196 122" stroke="#59446B" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="150" cy="150" r="3.5" fill="#E07A5F"/>
+      <circle cx="180" cy="45" r="2.5" fill="#8E7DBE"/>
+    
+</svg>

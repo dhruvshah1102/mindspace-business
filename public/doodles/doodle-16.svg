@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F2F8F8" stroke="#C7E4E4" stroke-width="3"/>
+  
+      <!-- Surging Wave Crest (Japanese inspired) -->
+      <path d="M25 175 C70 175 95 165 130 120 C155 88 172 58 148 58 C124 58 132 88 115 98" fill="none" stroke="#3B8B88" stroke-width="5" stroke-linecap="round"/>
+      <path d="M25 192 C85 192 120 182 165 150 C200 125 215 110 200 102" fill="none" stroke="#243327" stroke-width="4.5" stroke-linecap="round"/>
+      <!-- Foam Claws & Water Drops -->
+      <circle cx="162" cy="52" r="3.5" fill="#3B8B88"/>
+      <circle cx="180" cy="65" r="3.5" fill="#3B8B88"/>
+      <circle cx="142" cy="42" r="3" fill="#8E7DBE"/>
+      <circle cx="195" cy="85" r="2.5" fill="#3B8B88"/>
+      <!-- Base ocean foam lines -->
+      <path d="M40 205 C90 200 150 200 200 205" stroke="#A9CBAE" stroke-width="3" stroke-linecap="round"/>
+    
+</svg>

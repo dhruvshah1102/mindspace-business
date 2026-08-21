@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#FBF5EE" stroke="#E8D9C5" stroke-width="3"/>
+  
+      <!-- Dome Lantern Balloon -->
+      <path d="M85 180 C70 120 70 80 120 55 C170 80 170 120 155 180 Z" fill="#FCECE6" stroke="#C86D51" stroke-width="4" stroke-linejoin="round"/>
+      <!-- Inner Glow -->
+      <circle cx="120" cy="150" r="22" fill="#FEE9B5" opacity="0.8"/>
+      <!-- Wood Base Ring -->
+      <ellipse cx="120" cy="180" rx="35" ry="9" fill="#EBDDC9" stroke="#C86D51" stroke-width="3.5"/>
+      <!-- Flame Center -->
+      <circle cx="120" cy="155" r="7" fill="#E07A5F"/>
+      <!-- Radiating Ember Stardust -->
+      <circle cx="65" cy="45" r="3" fill="#E07A5F" opacity="0.7"/>
+      <circle cx="175" cy="40" r="4" fill="#8E7DBE" opacity="0.8"/>
+      <circle cx="195" cy="90" r="2.5" fill="#E07A5F" opacity="0.6"/>
+      <circle cx="45" cy="120" r="3" fill="#8E7DBE" opacity="0.6"/>
+    
+</svg>

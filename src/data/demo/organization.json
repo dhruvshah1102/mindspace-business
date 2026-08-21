@@ -1,25 +1,25 @@
 {
-  "orgId": "demo-acme",
-  "name": "MindSpace",
-  "legalName": "MindSpace Technologies Pvt Ltd",
-  "primaryDomain": "mindspace",
+  "orgId": "accenture",
+  "name": "Accenture",
+  "legalName": "Accenture Solutions Pvt Ltd",
+  "primaryDomain": "accenture.com",
   "branding": {
     "primary": "#4F6B57",
-    "accent": "#A9CBAE",
+    "accent": "#A100FF",
     "surface": "#FAF7F0",
-    "appName": "MindSpace",
-    "supportEmail": "wellness@mindspace.example"
+    "appName": "MindSpace × Accenture",
+    "supportEmail": "wellbeing@accenture.com"
   },
   "plan": {
-    "tier": "pilot",
-    "seats": 480,
-    "contractStart": "2026-06-01",
-    "trial": true
+    "tier": "enterprise",
+    "seats": 50000,
+    "contractStart": "2026-01-01",
+    "trial": false
   },
   "policy": {
     "identityMode": "aggregate_only",
     "kAnonymity": 5,
-    "escalationContact": "safety@mindspace.example",
+    "escalationContact": "wellbeing-safety@accenture.com",
     "retentionDays": 730,
     "allowedCohortDims": [
       "department",
@@ -29,11 +29,11 @@
     ]
   },
   "pricing": {
-    "groupSessionPaise": 50000,
-    "individualSessionPaise": 50000,
-    "payer": "split",
-    "splitPercent": 50
+    "groupSessionPaise": 0,
+    "individualSessionPaise": 0,
+    "payer": "company",
+    "splitPercent": 0
   },
-  "status": "trial",
-  "createdAt": "2026-06-01T00:00:00.000Z"
+  "status": "active",
+  "createdAt": "2026-01-01T00:00:00.000Z"
 }

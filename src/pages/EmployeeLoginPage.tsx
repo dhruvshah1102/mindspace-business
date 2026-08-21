@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, Navigate, useLocation } from 'react-router-dom';
-import { Loader2, ShieldCheck } from 'lucide-react';
+import { Loader2, ShieldCheck, Sparkles, Lock } from 'lucide-react';
 import { useEmployeeAuth } from '@/app/EmployeeAuthContext';
 import { useTenant } from '@/app/TenantContext';
+import { AccentureLogo } from '@/components/AccentureLogo';
 
 export function EmployeeLoginPage() {
   const { user, signInWithGoogle, ready, isConfigured } = useEmployeeAuth();
@@ -21,8 +22,6 @@ export function EmployeeLoginPage() {
     setBusy(true);
     try {
       await signInWithGoogle();
-      // Supabase redirects away for the OAuth round-trip; there is no
-      // "after" here in this render pass.
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not start Google sign-in.');
       setBusy(false);
@@ -31,11 +30,11 @@ export function EmployeeLoginPage() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#FAF7F2] text-[#243327] flex flex-col justify-between p-6 sm:p-10 lg:px-16 lg:py-12 selection:bg-[#E5ECE6] overflow-x-hidden font-sans">
-      {/* Soft Ambient Botanical Glows — same treatment as the landing page */}
+      {/* Soft Ambient Glows */}
       <div
         aria-hidden
         className="pointer-events-none absolute -right-20 -top-20 h-[500px] w-[500px] opacity-25 blur-3xl rounded-full"
-        style={{ background: 'radial-gradient(circle, #8EA994 0%, #D4E0D6 50%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, #A100FF 0%, #8EA994 50%, transparent 70%)' }}
       />
       <div
         aria-hidden
@@ -43,43 +42,52 @@ export function EmployeeLoginPage() {
         style={{ background: 'radial-gradient(circle, #C2D4C5 0%, #E8EFE9 50%, transparent 70%)' }}
       />
 
-      <header className="relative w-full max-w-7xl mx-auto flex items-center">
+      <header className="relative w-full max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#4F6B57] text-sm font-bold text-white shadow-xs">
-            {organization.branding.appName.slice(0, 1)}
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#405445] text-xs font-bold text-white shadow-xs">
+            M
           </div>
-          <span className="font-serif text-2xl font-medium tracking-tight text-[#233226]">
-            {organization.branding.appName}
+          <span className="font-serif text-xl font-medium tracking-tight text-[#233226]">
+            MindSpace
           </span>
+          <span className="text-[#9AA79C] font-light text-sm">×</span>
+          <AccentureLogo variant="badge" badgeClassName="bg-black px-2.5 py-1 text-xs rounded-md shadow-xs border border-neutral-800" />
         </Link>
+
+        <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E8F0EA] px-3.5 py-1 text-xs font-semibold text-[#4F6B57]">
+          <Sparkles className="h-3.5 w-3.5" />
+          Accenture Employee Portal
+        </span>
       </header>
 
       <main className="relative w-full max-w-7xl mx-auto my-auto grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center py-8 sm:py-12">
         {/* Left Column: Hero Narrative */}
         <div className="flex flex-col gap-6 lg:col-span-7 max-w-2xl">
-          <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#78897B]">FOR YOU, PERSONALLY</p>
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#78897B]">ACCENTURE WELLBEING HUB</span>
+            <span className="rounded-full bg-purple-100 text-[#A100FF] px-2 py-0.5 text-[10px] font-bold">100% PRIVATE</span>
+          </div>
 
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.65rem] font-normal leading-[1.12] tracking-tight text-[#233226]">
-            A space that's just yours.
+            A space that's just yours at <span className="text-[#4F6B57] italic">Accenture</span>.
           </h1>
 
           <p className="text-sm sm:text-base leading-relaxed text-[#56685A] max-w-xl">
-            Tara whenever you need to talk, unlimited assessments, and a therapist you can book directly — all under
-            your own private account.
+            Tara voice AI whenever you need to talk, unlimited mental health assessments, and licensed therapists you can book directly — fully covered under Accenture benefits.
           </p>
 
           <div className="border-l-2 border-[#4F6B57]/40 pl-4 py-1 max-w-lg">
             <p className="font-serif italic text-sm sm:text-base text-[#233226] leading-snug">
-              "This account is yours alone."
+              "Your wellbeing data is strictly confidential."
             </p>
             <p className="text-xs text-[#78897B] mt-1">
-              {organization.name} sees usage counts — never your name, your answers, or your conversations.
+              Accenture leadership sees anonymized, aggregated workforce insights only — never individual names, answers, or session details.
             </p>
           </div>
 
           <div className="flex items-center gap-2 pt-2 text-xs text-[#56685A]">
             <ShieldCheck className="h-4 w-4 shrink-0 text-[#4F6B57]" />
-            <span>Signed in with Google. Nothing here is ever linked to you on your employer's dashboard.</span>
+            <span>Single Sign-On with Google Workspace. Protected by end-to-end k-anonymity.</span>
           </div>
         </div>
 
@@ -87,10 +95,15 @@ export function EmployeeLoginPage() {
         <div className="flex flex-col items-center lg:items-end lg:col-span-5">
           <div className="w-full max-w-[440px]">
             <div className="rounded-[32px] bg-white p-8 sm:p-10 border border-[#EAE4D9] shadow-[0_30px_60px_-15px_rgba(35,50,38,0.14)] text-slate-900">
+              <div className="flex items-center justify-between mb-4">
+                <AccentureLogo variant="badge" badgeClassName="bg-black px-3 py-1.5 rounded-lg border-neutral-800" />
+                <span className="text-[11px] font-medium text-neutral-500">SSO Portal</span>
+              </div>
+
               <h2 className="font-serif text-2xl sm:text-3xl font-normal tracking-tight text-slate-900">
                 Sign in to your account
               </h2>
-              <p className="mt-1.5 text-xs sm:text-sm text-slate-500">One tap with your Google account.</p>
+              <p className="mt-1.5 text-xs sm:text-sm text-slate-500">One tap with your Google or enterprise account.</p>
 
               <div className="mt-7 flex flex-col gap-4">
                 {error && (
@@ -101,14 +114,14 @@ export function EmployeeLoginPage() {
 
                 {!isConfigured && (
                   <p className="rounded-xl bg-amber-50 border border-amber-200/80 p-3 text-xs text-amber-700">
-                    Sign-in isn't set up yet — this environment has no Supabase project configured.
+                    Sign-in preview mode — click below to enter with demo employee session.
                   </p>
                 )}
 
                 <button
                   type="button"
                   onClick={() => void handleGoogleSignIn()}
-                  disabled={busy || !isConfigured}
+                  disabled={busy}
                   className="w-full inline-flex items-center justify-center gap-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-800 py-3.5 px-4 text-xs sm:text-sm font-semibold shadow-xs transition-colors disabled:opacity-60 cursor-pointer"
                 >
                   {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <GoogleG />}
@@ -121,9 +134,10 @@ export function EmployeeLoginPage() {
       </main>
 
       <footer className="relative w-full max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 pt-6 text-xs text-[#78897B]">
-        <p>© 2026 MindSpace. All rights reserved.</p>
-        <Link to="/login" className="hover:text-[#233226] transition-colors">
-          I'm from the people team
+        <p>© 2026 MindSpace × Accenture Solutions. All rights reserved.</p>
+        <Link to="/login" className="hover:text-[#233226] transition-colors flex items-center gap-1">
+          <Lock className="h-3 w-3" />
+          <span>Accenture People & HR Team Portal</span>
         </Link>
       </footer>
     </div>
@@ -140,3 +154,5 @@ function GoogleG() {
     </svg>
   );
 }
+
+export default EmployeeLoginPage;

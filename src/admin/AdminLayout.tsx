@@ -6,6 +6,7 @@ import {
   HeartHandshake,
   Layers,
   LayoutDashboard,
+  LineChart,
   LogOut,
   Smile,
   TrendingUp,
@@ -15,6 +16,7 @@ import {
 import { useAuth } from '@/app/AuthContext';
 import { useTenant } from '@/app/TenantContext';
 import { ReportProvider } from '@/admin/ReportContext';
+import { AccentureLogo } from '@/components/AccentureLogo';
 import { cn } from '@/lib/utils';
 
 interface NavEntry {
@@ -22,6 +24,8 @@ interface NavEntry {
   label: string;
   icon: ComponentType<{ className?: string }>;
 }
+
+const IMPACT_NAV: NavEntry[] = [{ to: '/admin/impact', label: 'Business Impact', icon: LineChart }];
 
 const REPORT_NAV: NavEntry[] = [
   { to: '/admin/report', label: 'Overview', icon: LayoutDashboard },
@@ -58,17 +62,23 @@ function AdminLayoutContent() {
   const sidebarContent = (
     <>
       {/* Brand */}
-      <div className="flex items-center gap-2.5 px-5 pt-6 pb-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#405445] text-xs font-bold text-white shadow-xs">
-          {organization.branding.appName.slice(0, 1)}
+      <div className="flex flex-col gap-2.5 px-5 pt-6 pb-5 border-b border-[#EAE4D9]/60">
+        <Link to="/" className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#405445] text-xs font-bold text-white shadow-xs">
+            M
+          </div>
+          <span className="font-serif text-base font-medium tracking-tight text-[#233226] truncate">
+            MindSpace
+          </span>
+        </Link>
+        <div className="flex items-center">
+          <AccentureLogo variant="badge" badgeClassName="bg-black px-2.5 py-1 text-xs rounded-md shadow-xs border border-neutral-800" />
         </div>
-        <span className="font-serif text-lg font-medium tracking-tight text-[#233226] truncate">
-          {organization.branding.appName}
-        </span>
       </div>
 
       {/* Nav groups */}
-      <nav className="flex-1 overflow-y-auto px-3 flex flex-col gap-6">
+      <nav className="flex-1 overflow-y-auto px-3 flex flex-col gap-6 pt-4">
+        <NavGroup title="Business Impact" items={IMPACT_NAV} />
         <NavGroup title="Reports" items={REPORT_NAV} />
         <NavGroup title="Deep analytics" items={DETAIL_NAV} />
       </nav>
@@ -102,11 +112,10 @@ function AdminLayoutContent() {
       <div className="md:hidden sticky top-0 z-40 flex h-14 items-center justify-between border-b border-[#EAE4D9]/80 bg-[#FAF7F2]/95 backdrop-blur-md px-4">
         <Link to="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
           <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#405445] text-xs font-bold text-white shadow-xs">
-            {organization.branding.appName.slice(0, 1)}
+            M
           </div>
-          <span className="font-serif text-base font-medium tracking-tight text-[#233226]">
-            {organization.branding.appName}
-          </span>
+          <span className="text-[#9AA79C] font-light text-xs">×</span>
+          <AccentureLogo variant="badge" badgeClassName="bg-black px-2 py-0.5 text-xs rounded-md shadow-xs border border-neutral-800" />
         </Link>
         <button
           type="button"

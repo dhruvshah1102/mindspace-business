@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F3F6F3" stroke="#C7DBC7" stroke-width="3"/>
+  
+      <!-- Central Curved Branch -->
+      <path d="M45 195 Q120 145 195 45" fill="none" stroke="#7A5230" stroke-width="5" stroke-linecap="round"/>
+      <!-- Needle Clusters (Left & Right) -->
+      <path d="M95 165 L65 150 M95 165 L75 180 M125 135 L95 115 M125 135 L100 148 M155 100 L125 78 M155 100 L132 110 M180 65 L158 45 M180 65 L168 70" stroke="#4F6B57" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M95 165 L120 145 M125 135 L155 115 M155 100 L185 82" stroke="#4F6B57" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Pinecone Accent -->
+      <ellipse cx="95" cy="180" rx="10" ry="14" fill="#A47551" stroke="#5A3D28" stroke-width="2.5"/>
+    
+</svg>

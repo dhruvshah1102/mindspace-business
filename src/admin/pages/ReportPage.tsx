@@ -12,6 +12,7 @@ import { bandColor } from '@/lib/viz-palette';
 import { ASSESSMENT_TYPES, ASSESSMENT_METADATA, type AssessmentType } from '@/domain/assessments';
 import { DEFAULT_K_ANONYMITY } from '@/domain/cohorts';
 import { getOrgEmployeeStats, type OrgEmployeeStats } from '@/services/org-stats-service';
+import { getOrgCreditBalance, type OrgCreditBalance } from '@/services/credit-service';
 import {
   getOrgAssessmentBreakdown,
   getOrgBookingBreakdown,
@@ -48,6 +49,7 @@ export function ReportPage() {
   const [assessments, setAssessments] = useState<OrgAssessmentBreakdown | null>(null);
   const [bookings, setBookings] = useState<OrgBookingBreakdown | null>(null);
   const [trend, setTrend] = useState<OrgWeeklyTrend | null>(null);
+  const [credits, setCredits] = useState<OrgCreditBalance | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -56,19 +58,21 @@ export function ReportPage() {
       getOrgAssessmentBreakdown(organization.orgId, k),
       getOrgBookingBreakdown(organization.orgId, k),
       getOrgWeeklyTrend(organization.orgId, 8),
-    ]).then(([stats, assessmentBreakdown, bookingBreakdown, weeklyTrend]) => {
+      getOrgCreditBalance(organization.orgId),
+    ]).then(([stats, assessmentBreakdown, bookingBreakdown, weeklyTrend, creditBalance]) => {
       if (cancelled) return;
       setLiveStats(stats);
       setAssessments(assessmentBreakdown);
       setBookings(bookingBreakdown);
       setTrend(weeklyTrend);
+      setCredits(creditBalance);
     });
     return () => {
       cancelled = true;
     };
   }, [organization.orgId, k]);
 
-  if (!liveStats || !assessments || !bookings || !trend) return <ReportSkeleton />;
+  if (!liveStats || !assessments || !bookings || !trend || !credits) return <ReportSkeleton />;
 
   // ── Week-over-week movement, for the tile sparklines and deltas ────────────
   const weeks = trend.weeks;
@@ -203,6 +207,16 @@ export function ReportPage() {
           sub={`Across ${ranked.filter((r) => r.total > 0).length} of ${ASSESSMENT_TYPES.length} assessments`}
           delta={deltaOf('assessments')}
           deltaLabel="vs last week"
+        />
+        <StatTile
+          label="Tara credits remaining"
+          value={credits.live ? formatCount(credits.creditsRemaining) : '—'}
+          sub={
+            credits.live
+              ? `${formatCount(credits.creditsUsed)} of ${formatCount(credits.totalCredits)} used · ${credits.planName} plan`
+              : 'Not set up yet'
+          }
+          upIsGood
         />
       </section>
 

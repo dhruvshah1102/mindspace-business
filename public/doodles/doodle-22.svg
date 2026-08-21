@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240">
+  <rect width="240" height="240" rx="32" fill="#F5F7FA" stroke="#D0DCEB" stroke-width="3"/>
+  
+      <!-- Logarithmic Nautilus Curve -->
+      <path d="M120 120 A9 9 0 0 1 129 129 A18 18 0 0 1 111 147 A32 32 0 0 1 79 115 A50 50 0 0 1 129 65 A72 72 0 0 1 201 137 A95 95 0 0 1 106 215 C60 215 32 165 46 106" fill="none" stroke="#3B8B88" stroke-width="4.5" stroke-linecap="round"/>
+      <!-- Growth Chamber Ribs -->
+      <line x1="120" y1="120" x2="129" y2="129" stroke="#8E7DBE" stroke-width="3" stroke-linecap="round"/>
+      <line x1="111" y1="147" x2="102" y2="156" stroke="#8E7DBE" stroke-width="3" stroke-linecap="round"/>
+      <line x1="79" y1="115" x2="65" y2="110" stroke="#8E7DBE" stroke-width="3" stroke-linecap="round"/>
+      <line x1="129" y1="65" x2="133" y2="52" stroke="#8E7DBE" stroke-width="3" stroke-linecap="round"/>
+      <line x1="201" y1="137" x2="215" y2="147" stroke="#8E7DBE" stroke-width="3" stroke-linecap="round"/>
+    
+</svg>
