@@ -50,7 +50,7 @@ export function PressuresPage() {
           The reasons behind the mood
         </h1>
         <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-          Ranked by how many people raised each pressure. Reach and urgency are two different questions — a pressure
+          Ranked by how many people raised each pressure. Reach and urgency are two different questions: a pressure
           can be everywhere and mild, or narrow and acute.
         </p>
       </header>
@@ -60,7 +60,7 @@ export function PressuresPage() {
         <StatTile label="Pressures tracked" value={String(pressures.length)} sub="Named in this cycle's report" />
         <StatTile
           label="Most widespread"
-          value={top ? pctLabel(top.share) : '—'}
+          value={top ? pctLabel(top.share) : '–'}
           sub={top ? top.title : 'No pressures reported'}
           upIsGood={false}
         />
@@ -105,7 +105,7 @@ export function PressuresPage() {
       {/* ── Urgency mix ──────────────────────────────────────────────────── */}
       <ChartCard
         title="Split by urgency"
-        caption="Whether you are dealing with a few acute problems or broad low-grade friction — the two need very different responses."
+        caption="Whether you are dealing with a few acute problems or broad low-grade friction, the two need very different responses."
         table={{
           columns: ['Urgency', 'Pressures', 'Share'],
           rows: urgencySegments.map((s) => [s.label, s.count, pctLabel(s.share)]),

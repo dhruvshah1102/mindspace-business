@@ -38,7 +38,7 @@ export function DriverAnalysisPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-ds-base">Driver Analysis</h1>
-          <p className="text-sm text-muted-foreground">What's actually driving severity in this cohort — not just the score.</p>
+          <p className="text-sm text-muted-foreground">What's actually driving severity in this cohort, not just the score.</p>
         </div>
         <Select value={department} onValueChange={setDepartment}>
           <SelectTrigger className="w-48">
@@ -56,7 +56,7 @@ export function DriverAnalysisPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Theme prevalence — {department}</CardTitle>
+          <CardTitle>Theme prevalence: {department}</CardTitle>
           <CardDescription>Share of TARA sessions mentioning each theme, vs the org-wide top themes ({orgTopThemes.map((t) => THEME_LABELS[t as Theme]).join(', ')}).</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
@@ -81,7 +81,7 @@ export function DriverAnalysisPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Ranked drivers — {department}</CardTitle>
+          <CardTitle>Ranked drivers: {department}</CardTitle>
           <CardDescription>Theme correlation against domain severity (r², within-cohort). Higher = more of that domain's variance explained by this theme.</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">

@@ -93,7 +93,7 @@ export function EmployeeDashboardPage() {
             </h1>
 
             <p className="text-sm sm:text-base text-white/80 leading-relaxed max-w-xl">
-              Your confidential sanctuary for mental health and calm. Speak with Tara, track your wellbeing, or connect with a dedicated therapist.
+              Check in, talk to Tara, or book a session, all in one private space.
             </p>
 
             <div className="flex items-center gap-2 pt-2 text-xs text-white/70">
@@ -125,7 +125,7 @@ export function EmployeeDashboardPage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#233226]">How are you feeling right now?</h2>
-            <p className="text-xs text-[#78897B] mt-0.5">Take a micro-moment to check in with yourself.</p>
+            <p className="text-xs text-[#78897B] mt-0.5">Just for you. Nothing is shared.</p>
           </div>
           <span className="text-xs font-medium text-[#4F6B57] bg-[#E8F0EA] px-3 py-1 rounded-full">Private</span>
         </div>
@@ -158,7 +158,7 @@ export function EmployeeDashboardPage() {
         {selectedMood && (
           <div className="mt-2 rounded-2xl bg-[#F4F8F5] border border-[#D5E5D8] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
             <p className="text-xs sm:text-sm text-[#233226]">
-              Thank you for acknowledging your feeling. Would you like to chat with <strong>Tara</strong> or try <strong>Self-Help & Zen Doodling</strong>?
+              Want to talk it through with <strong>Tara</strong>, or try a <strong>self-help</strong> exercise?
             </p>
             <div className="flex items-center gap-2 shrink-0">
               <Link
@@ -194,7 +194,7 @@ export function EmployeeDashboardPage() {
                 <span className="rounded-full bg-purple-50 px-2 py-0.5 text-[10px] font-bold text-purple-700">ZEN DOODLE</span>
               </div>
               <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                Instant crisis relief, 5-4-3-2-1 grounding, paced breathing, and an interactive Zen Doodling pad to release tension.
+                Grounding, breathing, and a doodle pad for quick relief.
               </p>
             </div>
           </div>
@@ -222,7 +222,7 @@ export function EmployeeDashboardPage() {
                 <span className="rounded-full bg-[#E8F0EA] px-2 py-0.5 text-[10px] font-bold text-[#4F6B57]">24/7 LIVE</span>
               </div>
               <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                A judgment-free voice space. Vent, unpack your day, or work through stress in real-time.
+                A judgment-free space to talk things through.
               </p>
             </div>
           </div>
@@ -250,7 +250,7 @@ export function EmployeeDashboardPage() {
                 <span className="rounded-full bg-purple-50 px-2 py-0.5 text-[10px] font-bold text-purple-700">CLINICAL</span>
               </div>
               <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                6 evidence-based assessments (GAD-7, PHQ-9, Burnout, Sleep) to understand your mental state.
+                6 clinical assessments: GAD-7, PHQ-9, burnout, and more.
               </p>
             </div>
           </div>
@@ -278,7 +278,7 @@ export function EmployeeDashboardPage() {
                 <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-bold text-emerald-700">100% COVERED</span>
               </div>
               <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                Connect with professional psychologists and certified coaches, fully sponsored by Accenture.
+                Licensed therapists and coaches, fully sponsored.
               </p>
             </div>
           </div>
@@ -331,7 +331,7 @@ export function EmployeeDashboardPage() {
             </div>
           ) : (
             <p className="text-xs text-[#56685A] leading-relaxed">
-              Take 60 seconds before your next meeting or after intense client deliverables to lower cortisol levels and regain mental clarity.
+              60 seconds to reset before your next meeting.
             </p>
           )}
         </div>
@@ -344,7 +344,7 @@ export function EmployeeDashboardPage() {
               Accenture Privacy Guarantee
             </div>
             <p className="text-xs sm:text-sm text-[#56685A] leading-relaxed">
-              Accenture receives only anonymized, aggregated demographic data (minimum 5-person k-anonymity). Your personal responses, notes, and sessions remain completely private.
+              Accenture only ever sees anonymized group data, never your personal responses or sessions.
             </p>
           </div>
 

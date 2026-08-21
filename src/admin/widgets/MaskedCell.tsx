@@ -12,7 +12,7 @@ export function MaskedCell({ k }: { k: number }) {
           Not enough responses
         </div>
       </TooltipTrigger>
-      <TooltipContent>Fewer than {k} respondents — hidden to protect individual privacy.</TooltipContent>
+      <TooltipContent>Fewer than {k} respondents, hidden to protect individual privacy.</TooltipContent>
     </Tooltip>
   );
 }

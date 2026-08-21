@@ -45,7 +45,7 @@ export function WorkshopRequestCard() {
         <div>
           <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#233226]">Request a workshop</h2>
           <p className="text-xs text-[#78897B] mt-0.5">
-            Tell us what kind of session would help your team — HR sees only how many requests came in per topic.
+            HR sees a count per topic, never who asked.
           </p>
         </div>
         <span className="text-xs font-medium text-[#4F6B57] bg-[#E8F0EA] px-3 py-1 rounded-full shrink-0">
@@ -58,7 +58,7 @@ export function WorkshopRequestCard() {
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#2F7F4C]" />
           <div className="flex-1">
             <p className="text-xs sm:text-sm leading-relaxed text-[#233226]">
-              Request sent. It's been added to the anonymous count HR sees for this topic.
+              Request sent. Added to the count for this topic.
             </p>
             <button
               type="button"
@@ -95,7 +95,7 @@ export function WorkshopRequestCard() {
 
           <div className="flex flex-col gap-1.5">
             <label htmlFor="workshop-details" className="text-xs font-medium text-[#233226]">
-              Anything specific? <span className="font-normal text-[#78897B]">(optional, kept private to you)</span>
+              Details <span className="font-normal text-[#78897B]">(optional, private)</span>
             </label>
             <textarea
               id="workshop-details"

@@ -112,7 +112,7 @@ export function OverviewPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="flex items-end justify-between">
-                    <span className="text-3xl font-bold tabular-nums">{overall.indices.owi ?? '—'}</span>
+                    <span className="text-3xl font-bold tabular-nums">{overall.indices.owi ?? '–'}</span>
                     {owiDelta !== null && (
                       <span
                         className={

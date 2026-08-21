@@ -17,7 +17,7 @@ export const MOOD_TIER_LABELS: Record<MoodTier, string> = {
 export const MOOD_TIER_BLURBS: Record<MoodTier, string> = {
   thriving: 'Energy, focus and mood are all in a good place right now.',
   steady: 'Coping fine with the normal ups and downs of the job.',
-  strained: 'Persistently tired and stretched — the warning stage, not a crisis.',
+  strained: 'Persistently tired and stretched. The warning stage, not a crisis.',
   struggling: 'Reporting symptoms severe enough that professional support matters.',
 };
 

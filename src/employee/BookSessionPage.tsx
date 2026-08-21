@@ -49,7 +49,7 @@ export function BookSessionPage() {
   }
 
   const payerCopy: Record<typeof payer, string> = {
-    company: `Covered by ${organization.name} — no cost to you.`,
+    company: `Covered by ${organization.name}, no cost to you.`,
     employee: 'Billed to you directly after your session is confirmed.',
     split: 'Split between you and your employer.',
   };
@@ -60,7 +60,7 @@ export function BookSessionPage() {
         <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#78897B]">PRIVATE · BOOKED FROM YOUR PROFILE</p>
         <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226] mt-1">Book a session</h1>
         <p className="max-w-xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-          {organization.name} sees a usage count — never your name, your reason, or which slot you booked.
+          {organization.name} sees a usage count, never your name, your reason, or which slot you booked.
         </p>
       </header>
 
@@ -165,7 +165,7 @@ export function BookSessionPage() {
 
       <footer className="flex items-center gap-2 text-[11px] text-[#78897B]">
         <ShieldCheck className="h-3.5 w-3.5" />
-        <span>Your employer only ever sees an aggregate count of sessions booked — never who, when, or why.</span>
+        <span>Your employer only ever sees an aggregate count of sessions booked, never who, when, or why.</span>
       </footer>
     </div>
   );

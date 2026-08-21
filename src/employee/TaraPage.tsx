@@ -112,7 +112,7 @@ export function TaraPage() {
       )}
 
       <p className="max-w-sm text-[11px] leading-relaxed text-[#9AA79C]">
-        Preview — Tara's live voice agent connects here next. Nothing from this screen is stored or sent anywhere.
+        Preview. Nothing here is stored or sent anywhere.
       </p>
     </div>
   );

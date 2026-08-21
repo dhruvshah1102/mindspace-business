@@ -101,7 +101,7 @@ export function AssessmentRunnerPage() {
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4F6B57] text-white shadow-xs">
             <Heart className="h-6 w-6" />
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226]">{meta.title} — done</h1>
+          <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226]">{meta.title}: done</h1>
         </div>
 
         <div className="rounded-[28px] bg-white p-7 border border-[#EAE4D9] shadow-xs flex flex-col gap-4">
@@ -115,7 +115,7 @@ export function AssessmentRunnerPage() {
             </span>
           </div>
           <p className="text-xs sm:text-sm leading-relaxed text-[#56685A]">
-            This is private to you — {organization.name} only ever sees that an assessment was taken, never this
+            This is private to you. {organization.name} only ever sees that an assessment was taken, never this
             score. You can retake this any time.
           </p>
         </div>

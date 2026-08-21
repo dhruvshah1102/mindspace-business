@@ -68,7 +68,7 @@ export function BusinessImpactPage() {
             What this is doing for the business
           </h1>
           <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-            Absenteeism, productivity, and retention — set against where things stood before the programme.
+            Absenteeism, productivity, and retention, set against where things stood before the programme.
           </p>
         </div>
         <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#E4D4B8] bg-[#FBF3E1] px-3 py-1 text-[11px] font-medium text-[#9E6B38]">
@@ -78,8 +78,7 @@ export function BusinessImpactPage() {
       </header>
 
       <p className="rounded-2xl border border-[#DCD5C8] bg-[#F3EEE5] px-4 py-3 text-[11px] leading-relaxed text-[#78897B]">
-        These figures are illustrative — they show the kind of insight this page will surface once your leave,
-        attendance, and performance systems are connected. Nothing here is read from real employee records.
+        Illustrative. Connect your leave and performance systems to replace these with real numbers.
       </p>
 
       {/* ── Key metrics ──────────────────────────────────────────────────── */}

@@ -150,7 +150,7 @@ export function FeelingsPage() {
       {/* Team strain */}
       <ChartCard
         title="Strain by team"
-        caption="Share of each team stretched or worse. The dashed line is the company average — the teams to the right of it are carrying more than their share."
+        caption="Share of each team stretched or worse. The dashed line is the company average; teams to the right of it are carrying more than their share."
         masked={{ k: 5, hiddenCount: maskedTeams }}
         table={{
           columns: ['Team', 'Responses', 'Under strain'],

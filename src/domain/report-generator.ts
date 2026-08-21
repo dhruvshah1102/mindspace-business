@@ -217,7 +217,7 @@ export function generateCompanyReport(rollup: OrgRollup, organization: Organizat
   // 4. Executive Narrative
   const executiveSummary: CompanyExecutiveReport['executiveSummary'] = {
     status: 'moderate_strain',
-    statusLabel: 'Moderate Strain — Workload & Recovery are Primary Drivers',
+    statusLabel: 'Moderate Strain: Workload & Recovery are Primary Drivers',
     headline: `Overall workforce engagement is high at ${(participationRate * 100).toFixed(0)}%, but targeted interventions are needed in Operations and Engineering.`,
     paragraphs: [
       `Across ${organization.name}'s ${participants} participating employees this cycle, **74% of the workforce is functioning stably or thriving** (${stableCount + thrivingCount} employees). However, an emerging **25% (${strainedCount + highRiskCount} employees)** are experiencing noticeable fatigue, predominantly driven by intense shift workloads and compounded sleep deficit.`,

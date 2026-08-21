@@ -73,7 +73,7 @@ export function EmployeeLoginPage() {
           </h1>
 
           <p className="text-sm sm:text-base leading-relaxed text-[#56685A] max-w-xl">
-            Tara voice AI whenever you need to talk, unlimited mental health assessments, and licensed therapists you can book directly — fully covered under Accenture benefits.
+            Talk to Tara anytime, take unlimited assessments, and book licensed therapists, fully covered by Accenture.
           </p>
 
           <div className="border-l-2 border-[#4F6B57]/40 pl-4 py-1 max-w-lg">
@@ -81,7 +81,7 @@ export function EmployeeLoginPage() {
               "Your wellbeing data is strictly confidential."
             </p>
             <p className="text-xs text-[#78897B] mt-1">
-              Accenture leadership sees anonymized, aggregated workforce insights only — never individual names, answers, or session details.
+              Leadership sees anonymized, aggregated insights only, never your name, answers, or sessions.
             </p>
           </div>
 
@@ -114,7 +114,7 @@ export function EmployeeLoginPage() {
 
                 {!isConfigured && (
                   <p className="rounded-xl bg-amber-50 border border-amber-200/80 p-3 text-xs text-amber-700">
-                    Sign-in preview mode — click below to enter with demo employee session.
+                    Sign-in preview mode. Click below to enter with demo employee session.
                   </p>
                 )}
 

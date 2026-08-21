@@ -88,7 +88,7 @@ export function LoginPage() {
           </h1>
 
           <p className="text-sm sm:text-base leading-relaxed text-[#56685A] max-w-xl">
-            Every month your team answers honestly, and anonymously. We read all of it and write you a plain-English report: what's weighing on people, why, and what to change about the way work happens here.
+            Anonymous monthly check-ins, turned into a plain-English report: what's weighing on people, why, and what to change.
           </p>
 
           {/* Quote Callout with Left Border Accent */}
@@ -97,13 +97,13 @@ export function LoginPage() {
               “Operations is running late three nights a week and it's showing up as sleep loss.”
             </p>
             <p className="text-xs text-[#78897B] mt-1">
-              — the kind of sentence this report gives you, instead of a score of 58.
+              The kind of sentence this report gives you, instead of a score of 58.
             </p>
           </div>
 
           <div className="flex items-center gap-2 pt-2 text-xs text-[#56685A]">
             <ShieldCheck className="h-4 w-4 shrink-0 text-[#405445]" />
-            <span>Aggregate-only by default. You will never see who said what — that's the point.</span>
+            <span>Aggregate-only by default. You will never see who said what. That's the point.</span>
           </div>
         </div>
 

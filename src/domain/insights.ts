@@ -84,7 +84,7 @@ export function generateInsights(rollup: OrgRollup, k: number = DEFAULT_K_ANONYM
     insights.push({
       id: `item_${key}`,
       headline: `"${question.text}" is ${stats.delta > 0 ? 'escalating' : 'improving'} in ${DOMAIN_LABELS[domain]}`,
-      body: `This item moved ${stats.delta > 0 ? '+' : ''}${stats.delta.toFixed(2)} pts (n=${stats.n}) while the overall ${DOMAIN_LABELS[domain]} average moved less — a sub-signal worth investigating on its own.`,
+      body: `This item moved ${stats.delta > 0 ? '+' : ''}${stats.delta.toFixed(2)} pts (n=${stats.n}) while the overall ${DOMAIN_LABELS[domain]} average moved less, a sub-signal worth investigating on its own.`,
       severity: Math.abs(stats.delta) > 0.7 ? 'warning' : 'info',
       cohortLabel: null,
       recommendedAction: 'Cross-check against the Driver Analysis screen for the theme most correlated with this item.',

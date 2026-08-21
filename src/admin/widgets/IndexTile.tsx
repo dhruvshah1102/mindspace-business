@@ -17,7 +17,7 @@ export function IndexTile({ label, value, delta, suffix = '', hint }: IndexTileP
         <p className="text-xs font-medium text-muted-foreground">{label}</p>
         <div className="mt-2 flex items-baseline gap-2">
           <span className={cn('text-3xl font-semibold tabular-nums', value === null && 'text-muted-foreground')}>
-            {value === null ? '—' : `${value}${suffix}`}
+            {value === null ? '–' : `${value}${suffix}`}
           </span>
           {delta !== undefined && delta !== null && <DeltaBadge delta={delta} />}
         </div>

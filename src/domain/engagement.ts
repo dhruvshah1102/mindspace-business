@@ -31,10 +31,10 @@ export const FEATURE_LABELS: Record<EngagementFeature, string> = {
 
 /** One-line explanation of what the number actually counts, shown under each tile. */
 export const FEATURE_BLURBS: Record<EngagementFeature, string> = {
-  checkin: 'Pulse-check submissions. Counted as responses, not people — check-ins are unlinked by design.',
+  checkin: 'Pulse-check submissions. Counted as responses, not people; check-ins are unlinked by design.',
   assessment: 'Finished a full clinical assessment module.',
   tara: 'Held at least one conversation with the AI companion.',
-  therapy: 'Booked time with a therapist — group circle or private 1:1.',
+  therapy: 'Booked time with a therapist, group circle or private 1:1.',
 };
 
 export interface FeatureUsage {

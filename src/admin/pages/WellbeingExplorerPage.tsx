@@ -29,7 +29,7 @@ export function WellbeingExplorerPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-2xl font-semibold text-ds-base">Wellbeing Explorer</h1>
-        <p className="text-sm text-muted-foreground">Item-level detail — the individual questions behind every domain score.</p>
+        <p className="text-sm text-muted-foreground">Item-level detail: the individual questions behind every domain score.</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
@@ -46,7 +46,7 @@ export function WellbeingExplorerPage() {
             >
               <CardContent className="p-4">
                 <p className="text-xs font-medium text-muted-foreground">{ASSESSMENT_METADATA[domain].title.replace(' Assessment', '')}</p>
-                <p className="mt-1 text-2xl font-semibold tabular-nums">{stats?.mean ?? '—'}</p>
+                <p className="mt-1 text-2xl font-semibold tabular-nums">{stats?.mean ?? '–'}</p>
                 {stats && (
                   <div className="mt-1 flex gap-1 text-[10px] text-muted-foreground">
                     <span>n={stats.n}</span>
@@ -61,9 +61,9 @@ export function WellbeingExplorerPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle>{meta.title} — item-level table</CardTitle>
+          <CardTitle>{meta.title}: item-level table</CardTitle>
           <CardDescription>
-            Domain mean {domainStats?.mean ?? '—'} · median {domainStats?.median ?? '—'} · p90 {domainStats?.p90 ?? '—'} · n={domainStats?.n ?? 0}
+            Domain mean {domainStats?.mean ?? '–'} · median {domainStats?.median ?? '–'} · p90 {domainStats?.p90 ?? '–'} · n={domainStats?.n ?? 0}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -89,7 +89,7 @@ export function WellbeingExplorerPage() {
                     </TableCell>
                     <TableCell className="text-right tabular-nums">{row.mean.toFixed(2)}</TableCell>
                     <TableCell className="text-right tabular-nums">
-                      {row.delta === null ? '—' : `${row.delta >= 0 ? '+' : ''}${row.delta.toFixed(2)}`}
+                      {row.delta === null ? '–' : `${row.delta >= 0 ? '+' : ''}${row.delta.toFixed(2)}`}
                     </TableCell>
                     <TableCell className="text-right tabular-nums">{row.n}</TableCell>
                   </TableRow>

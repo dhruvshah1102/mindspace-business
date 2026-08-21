@@ -47,7 +47,7 @@ export async function requestBooking(
   booking: { sessionFormat: SessionFormat; preferredSlot: string | null; notes?: string },
 ): Promise<void> {
   if (!isSupabaseConfigured || !supabase) {
-    throw new Error('Booking requests cannot be sent right now — please try again in a moment.');
+    throw new Error('Booking requests cannot be sent right now. Please try again in a moment.');
   }
 
   const { error } = await supabase.from('therapy_bookings').insert({

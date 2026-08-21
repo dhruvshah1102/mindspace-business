@@ -15,6 +15,7 @@ import { ActionsPage } from '@/admin/pages/ActionsPage';
 import { CohortHeatmapPage } from '@/admin/pages/CohortHeatmapPage';
 import { WellbeingExplorerPage } from '@/admin/pages/WellbeingExplorerPage';
 import { DriverAnalysisPage } from '@/admin/pages/DriverAnalysisPage';
+import { AdminProfilePage } from '@/admin/pages/AdminProfilePage';
 import { LoginPage } from '@/pages/LoginPage';
 import { EmployeeLoginPage } from '@/pages/EmployeeLoginPage';
 import { EmployeeLayout } from '@/employee/EmployeeLayout';
@@ -82,6 +83,7 @@ export default function App() {
                 <Route path="data/heatmap" element={<CohortHeatmapPage />} />
                 <Route path="data/explorer" element={<WellbeingExplorerPage />} />
                 <Route path="data/drivers" element={<DriverAnalysisPage />} />
+                <Route path="profile" element={<AdminProfilePage />} />
               </Route>
 
               <Route path="*" element={<Navigate to="/" replace />} />

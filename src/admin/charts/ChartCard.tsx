@@ -104,7 +104,7 @@ export function ChartCard({
         <p className="flex items-center gap-1.5 text-[11px] text-[#78897B] border-t border-[#EAE4D9]/70 pt-3">
           <ShieldCheck className="h-3 w-3 shrink-0" aria-hidden />
           <span>
-            {masked.hiddenCount} group{masked.hiddenCount === 1 ? '' : 's'} hidden — fewer than {masked.k} people
+            {masked.hiddenCount} group{masked.hiddenCount === 1 ? '' : 's'} hidden, fewer than {masked.k} people
             answered, so showing a number could identify someone.
           </span>
         </p>

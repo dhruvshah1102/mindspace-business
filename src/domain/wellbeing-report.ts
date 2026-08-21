@@ -178,7 +178,7 @@ export function writeLocalReport(snapshot: FeelingSnapshot): WellbeingReport {
         : mood === 'okay'
           ? 'The majority are coping, but a visible minority are running low on reserves.'
           : mood === 'strained'
-            ? `${asFraction(strained.share + struggling.share)} are running on empty — this is the stage where it is still cheap to fix.`
+            ? `${asFraction(strained.share + struggling.share)} are running on empty. This is the stage where it is still cheap to fix.`
             : 'A significant share of your workforce is past coping and needs support now.',
     summary: [
       `${snapshot.responses} people at ${snapshot.orgName} checked in anonymously this cycle. ${asFraction(okShare)} say they are doing well or holding steady.`,
@@ -192,11 +192,11 @@ export function writeLocalReport(snapshot: FeelingSnapshot): WellbeingReport {
     whatThisMeans:
       mood === 'good' || mood === 'okay'
         ? 'This is a maintenance situation, not a crisis. Protect what is working and address the one or two pockets before they spread.'
-        : 'This is localised operational friction rather than a broken culture — which is good news, because friction responds quickly to changes in how work is scheduled and acknowledged.',
+        : 'This is localised operational friction rather than a broken culture, which is good news because friction responds quickly to changes in how work is scheduled and acknowledged.',
     goingWell: [
-      `${Math.round(snapshot.participationRate * 100)}% of the workforce chose to answer — people trust the process enough to be honest.`,
+      `${Math.round(snapshot.participationRate * 100)}% of the workforce chose to answer: people trust the process enough to be honest.`,
       thriving.count > 0 ? `${people(thriving.count)} report genuinely good energy, focus and mood.` : 'Participation held up across every team.',
-      calmTeams.length ? `${calmTeams.map((t) => t.team).join(' and ')} show what a healthy load looks like here — worth studying, not just celebrating.` : 'No team is in crisis.',
+      calmTeams.length ? `${calmTeams.map((t) => t.team).join(' and ')} show what a healthy load looks like here, worth studying and not just celebrating.` : 'No team is in crisis.',
     ],
     needsAttention: [
       topThemes[0] ? `${topThemes[0].label} is the single most-raised pressure, mentioned by ${asFraction(topThemes[0].share)}.` : 'No dominant pressure emerged.',
@@ -230,7 +230,7 @@ export function writeLocalReport(snapshot: FeelingSnapshot): WellbeingReport {
     doThisFirst: [
       topThemes[0] && CULTURE_PLAYS[topThemes[0].theme]
         ? CULTURE_PLAYS[topThemes[0].theme]!.how[0]
-        : 'Name what you heard in an all-hands — people answer honestly once, and only twice if something visibly changed.',
+        : 'Name what you heard in an all-hands: people answer honestly once, and only twice if something visibly changed.',
       hotTeams[0] ? `Sit down with ${hotTeams[0].team}'s leadership this week and walk through their picture together.` : 'Share this report with team leads.',
       'Open the confidential 1:1 counselling line and say out loud that HR cannot see who uses it.',
     ],
@@ -259,17 +259,17 @@ const THEME_PLAIN: Partial<Record<string, string>> = {
 };
 
 const THEME_ROOT: Partial<Record<string, string>> = {
-  workload: 'Usually planning, not effort — commitments are being made without a capacity check.',
+  workload: 'Usually planning, not effort: commitments are being made without a capacity check.',
   long_hours: 'Usually an expectations problem: nobody said when the day is allowed to end.',
   sleep: 'Frequently downstream of late-night work, on-call rotas or evening notifications.',
   work_life_balance: 'Usually caused by meetings and requests colonising the edges of the day.',
   manager_relationship: 'Often managers with too many direct reports and no time to prioritise for their team.',
   role_clarity: 'Usually a job description that drifted while nobody rewrote it.',
-  recognition: 'Rarely about money — it is about work being seen by the people who matter.',
+  recognition: 'Rarely about money. It is about work being seen by the people who matter.',
   career_growth: 'Usually an absence of any visible progression conversation, not an absence of roles.',
   compensation_stress: 'Financial literacy support and predictable pay cycles help more than raises alone.',
   interpersonal_conflict: 'Often unresolved handoff disputes between teams rather than personality clashes.',
-  job_insecurity: 'Usually a communication vacuum — people fill silence with the worst explanation.',
+  job_insecurity: 'Usually a communication vacuum: people fill silence with the worst explanation.',
   remote_isolation: 'Usually meeting habits that favour whoever is physically in the room.',
   commute: 'Shift timing and start-time flexibility move this more than anything else.',
   physical_health: 'Sedentary shift patterns and skipped breaks are the usual contributors.',
@@ -300,7 +300,7 @@ const CULTURE_PLAYS: Partial<Record<string, CultureChange>> = {
       'Make late deployments and shift overruns something a lead has to justify, not something quietly rewarded.',
     ],
     effort: 'low',
-    expected: 'Evenings become recoverable again — the fastest single lever on fatigue and sleep.',
+    expected: 'Evenings become recoverable again, the fastest single lever on fatigue and sleep.',
   },
   sleep: {
     title: 'Treat rest as an operating input, not a personal habit',
@@ -315,10 +315,10 @@ const CULTURE_PLAYS: Partial<Record<string, CultureChange>> = {
   },
   recognition: {
     title: 'Make good work visible on a schedule',
-    why: 'Recognition gaps are cheap to close and expensive to ignore — they drive quiet quitting more reliably than pay does.',
+    why: 'Recognition gaps are cheap to close and expensive to ignore: they drive quiet quitting more reliably than pay does.',
     how: [
       'Institute a fortnightly ritual where peers, not just managers, name specific wins.',
-      'Ask leads to send one specific thank-you per week — specific, not generic.',
+      'Ask leads to send one specific thank-you per week: specific, not generic.',
       'Celebrate the unglamorous saves as loudly as the deals.',
     ],
     effort: 'low',
@@ -337,7 +337,7 @@ const CULTURE_PLAYS: Partial<Record<string, CultureChange>> = {
   },
   role_clarity: {
     title: 'Write down what good looks like',
-    why: 'When expectations are vague, conscientious people overwork to be safe — and burn out first.',
+    why: 'When expectations are vague, conscientious people overwork to be safe, and burn out first.',
     how: [
       'Rewrite the three vaguest role definitions with the people doing the job.',
       'Define what "done" and "good enough" mean for recurring work.',
@@ -365,7 +365,7 @@ const DEFAULT_ACTIVITIES: WellbeingReportBody['activities'] = [
     format: 'Interactive workshop',
     who: 'Open to the teams reporting the most fatigue',
     description:
-      'A 45-minute session with a MindSpace sleep psychologist on wind-down routines, shift recovery, screen and caffeine cut-offs — practical, not lecture-style.',
+      'A 45-minute session with a MindSpace sleep psychologist on wind-down routines, shift recovery, screen and caffeine cut-offs. Practical, not lecture-style.',
     cadence: '45 minutes · virtual or on-site',
     therapistLed: true,
     outcome: 'Daytime alertness and focus typically recover before the underlying workload does.',
@@ -387,11 +387,11 @@ const DEFAULT_ACTIVITIES: WellbeingReportBody['activities'] = [
     format: 'Private clinical support',
     who: 'Company-wide, fully confidential',
     description:
-      'Employees book video sessions with certified therapists directly. You see a utilisation count and nothing else — no names, ever.',
+      'Employees book video sessions with certified therapists directly. You see a utilisation count and nothing else. No names, ever.',
     cadence: '45 minutes per session · on demand',
     therapistLed: true,
     outcome: 'High-need cases get care without anyone having to disclose to their employer.',
-    cost: 'Configurable — commonly 2 sponsored sessions per person per year',
+    cost: 'Configurable: commonly 2 sponsored sessions per person per year',
   },
   {
     title: 'Win spotlight ritual',

@@ -67,8 +67,16 @@ export function ReportPage() {
       setTrend(weeklyTrend);
       setCredits(creditBalance);
     });
+
+    const handleCreditsUpdate = (e: any) => {
+      if (e.detail) setCredits(e.detail);
+      else getOrgCreditBalance(organization.orgId).then(setCredits);
+    };
+    window.addEventListener('mindspace:credits-updated', handleCreditsUpdate);
+
     return () => {
       cancelled = true;
+      window.removeEventListener('mindspace:credits-updated', handleCreditsUpdate);
     };
   }, [organization.orgId, k]);
 
@@ -119,7 +127,7 @@ export function ReportPage() {
       value: b.total,
       display: `${b.total} booked`,
       sub: b.statusMasked
-        ? `Status withheld — fewer than ${k} bookings in this format`
+        ? `Status withheld, fewer than ${k} bookings in this format`
         : `${b.requested} requested · ${b.confirmed} confirmed · ${b.cancelled} cancelled`,
     };
   });
@@ -143,7 +151,7 @@ export function ReportPage() {
             Your programme, in numbers
           </h1>
           <p className="max-w-2xl text-xs sm:text-sm text-[#56685A] leading-relaxed mt-1">
-            Headcounts and rates only — never a name, never an individual score.
+            Headcounts and rates only, never a name, never an individual score.
           </p>
         </div>
         <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#B7D3BC] bg-[#EAF3EB] px-3 py-1 text-[11px] font-medium text-[#2F7F4C]">
@@ -188,13 +196,13 @@ export function ReportPage() {
         />
         <StatTile
           label="Showing elevated signs"
-          value={scored ? pctLabel(elevatedShare) : '—'}
+          value={scored ? pctLabel(elevatedShare) : '–'}
           sub={scored ? `${elevated} of ${scored} assessments scored moderate or high` : 'Not enough responses yet'}
           upIsGood={false}
         />
         <StatTile
           label="Most-taken assessment"
-          value={topDomain && topDomain.total > 0 ? shortDomain(topDomain.type) : '—'}
+          value={topDomain && topDomain.total > 0 ? shortDomain(topDomain.type) : '–'}
           sub={
             topDomain && topDomain.total > 0
               ? `${formatCount(topDomain.total)} taken of ${formatCount(liveStats.totalAssessments)} overall`
@@ -210,7 +218,7 @@ export function ReportPage() {
         />
         <StatTile
           label="Tara credits remaining"
-          value={credits.live ? formatCount(credits.creditsRemaining) : '—'}
+          value={credits.live ? formatCount(credits.creditsRemaining) : '–'}
           sub={
             credits.live
               ? `${formatCount(credits.creditsUsed)} of ${formatCount(credits.totalCredits)} used · ${credits.planName} plan`
@@ -246,7 +254,7 @@ export function ReportPage() {
       {/* ── Breakdown by domain ───────────────────────────────────────────── */}
       <ChartCard
         title="Assessments, by domain"
-        caption="How many people have taken each assessment. The low/moderate/high split is withheld for a domain fewer than 5 people have tried — the number taken is always shown."
+        caption="How many people have taken each assessment. The low/moderate/high split is withheld for a domain fewer than 5 people have tried; the number taken is always shown."
         table={{
           columns: ['Assessment', 'Taken', 'Low', 'Moderate', 'High'],
           rows: ASSESSMENT_TYPES.map((type) => {
@@ -268,7 +276,7 @@ export function ReportPage() {
       {/* ── Bookings ──────────────────────────────────────────────────────── */}
       <ChartCard
         title="Sessions booked, by format"
-        caption="How people are choosing to get support. The requested/confirmed/cancelled split is withheld for a format fewer than 5 people have booked — the number booked is always shown."
+        caption="How people are choosing to get support. The requested/confirmed/cancelled split is withheld for a format fewer than 5 people have booked; the number booked is always shown."
         table={{
           columns: ['Format', 'Booked', 'Requested', 'Confirmed', 'Cancelled'],
           rows: BOOKING_FORMATS.map((format) => {
@@ -328,7 +336,7 @@ function NotLiveNote({ live }: { live: boolean }) {
     <p className="flex items-center gap-1.5 text-[11px] text-[#9E6B38]">
       <ShieldCheck className="h-3 w-3 shrink-0" aria-hidden />
       <span>
-        Not set up yet — run{' '}
+        Not set up yet. Run{' '}
         <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-employee-analytics.sql</code> in your
         Supabase project to turn this on.
       </span>
@@ -374,7 +382,7 @@ function DomainSeverityRow({ type, breakdown, k }: { type: AssessmentType; break
       {breakdown.levelMasked ? (
         <div className="flex items-center gap-1.5 h-11 rounded-lg border border-dashed border-[#D9D2C5] px-3 text-[11px] text-[#78897B]">
           <ShieldCheck className="h-3 w-3 shrink-0" aria-hidden />
-          <span>Severity split withheld — fewer than {k} people have taken this.</span>
+          <span>Severity split withheld, fewer than {k} people have taken this.</span>
         </div>
       ) : breakdown.total === 0 ? (
         <p className="text-[11px] text-[#9AA79C] italic py-2">No responses yet.</p>

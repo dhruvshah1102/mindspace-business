@@ -159,8 +159,7 @@ export function LandingPage() {
               </h1>
 
               <p className="mt-4 sm:mt-5 text-xs sm:text-base leading-relaxed text-[#56685A] max-w-xl">
-                Give employees their own private account for unlimited assessments, Tara, and 1:1 confidential
-                therapy at ₹500/session — and give HR a plain-English executive report, aggregate-only.
+                Unlimited assessments, Tara, and ₹500 therapy sessions for employees, plus a plain-English, aggregate-only report for HR.
               </p>
 
               {/* Dual Action CTAs */}
@@ -263,8 +262,7 @@ export function LandingPage() {
                 </div>
                 <h3 className="font-serif text-xl font-normal text-[#233226]">Unlimited Assessments</h3>
                 <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                  5-minute clinical assessments for stress, anxiety, and burnout, from an employee's own private
-                  account. Individual scores are never shared with HR.
+                  5-minute assessments for stress, anxiety, and burnout. Individual scores never shared with HR.
                 </p>
               </div>
               <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#405445] mt-6 pt-4 border-t border-[#EAE4D9]">
@@ -280,7 +278,7 @@ export function LandingPage() {
                 </div>
                 <h3 className="font-serif text-xl font-normal text-[#233226]">1:1 Private Therapy</h3>
                 <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                  Confidential video counseling with licensed psychologists. Pay-as-you-use at just ₹500 per session with 0 monthly retainer.
+                  Confidential video sessions with licensed psychologists. ₹500/session, no retainer.
                 </p>
               </div>
               <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#9E6B38] mt-6 pt-4 border-t border-[#EAE4D9]">
@@ -296,7 +294,7 @@ export function LandingPage() {
                 </div>
                 <h3 className="font-serif text-xl font-normal text-[#233226]">AI Executive Reports</h3>
                 <p className="mt-2 text-xs sm:text-sm leading-relaxed text-[#56685A]">
-                  Words over raw numbers. Plain-English briefings written by occupational AI, complete with root causes and complimentary company rituals.
+                  Plain-English briefings with root causes, not raw scores.
                 </p>
               </div>
               <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#405445] mt-6 pt-4 border-t border-[#EAE4D9]">
@@ -323,7 +321,7 @@ export function LandingPage() {
               </h2>
 
               <p className="text-xs sm:text-sm text-[#56685A] leading-relaxed">
-                When employees need support, they can book a private 1:1 session right from their own account. Your organization only pays when employees actually use the service.
+                Employees book private sessions from their own account. You only pay for what's used.
               </p>
 
               <div className="grid grid-cols-2 gap-3 mt-2">
@@ -343,7 +341,7 @@ export function LandingPage() {
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">OCCUPATIONAL PSYCHOLOGY</p>
                 <p className="font-serif text-lg sm:text-xl font-normal mt-2 leading-snug">
-                  “Support is not a dramatic crisis measure — it is a practical habit that protects performance.”
+                  “Support is not a dramatic crisis measure. It is a practical habit that protects performance.”
                 </p>
               </div>
 
@@ -463,7 +461,7 @@ export function LandingPage() {
       {/* Clean Footer */}
       <footer className="w-full border-t border-[#EAE4D9]/80 bg-[#FAF7F2] py-6">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-4 sm:px-6 text-xs text-[#78897B]">
-          <p>© 2026 MindSpace. Empathetic Intelligence.</p>
+          <p>© 2026 MindSpace</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-[#233226] transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-[#233226] transition-colors">Terms of Service</a>

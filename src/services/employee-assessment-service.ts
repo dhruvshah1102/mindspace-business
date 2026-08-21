@@ -53,7 +53,7 @@ export async function saveMyAssessment(
   },
 ): Promise<void> {
   if (!isSupabaseConfigured || !supabase) {
-    throw new Error('Assessments cannot be saved right now — please try again in a moment.');
+    throw new Error('Assessments cannot be saved right now. Please try again in a moment.');
   }
 
   const { error } = await supabase.from('assessment_records').insert({

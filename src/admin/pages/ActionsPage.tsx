@@ -103,7 +103,7 @@ export function ActionsPage() {
       {/* ── Effort mix ───────────────────────────────────────────────────── */}
       <ChartCard
         title="How much lift each change needs"
-        caption="If most of the bar sits at the light end, this cycle's fixes are mostly scheduling and habit — not headcount or budget."
+        caption="If most of the bar sits at the light end, this cycle's fixes are mostly scheduling and habit, not headcount or budget."
         table={{
           columns: ['Effort', 'Changes', 'Share'],
           rows: effortSegments.map((s) => [s.label, s.count, pctLabel(s.share)]),
@@ -205,7 +205,7 @@ export function ActionsPage() {
       {/* ── Real signal: what employees are asking for next ───────────────── */}
       <ChartCard
         title="Workshop requests from employees"
-        caption="What employees have asked for, in their own words — topic counts only. HR never sees who submitted a request, just how many came in per topic. Use this to plan the next session yourself, or bring it to MindSpace to run."
+        caption="Topic counts only, HR never sees who asked. Use it to plan the next session, or bring it to MindSpace."
         figure={
           workshopRequests?.live ? (
             <span className="text-[11px] text-[#78897B]">
@@ -221,7 +221,7 @@ export function ActionsPage() {
       >
         {!workshopRequests?.live ? (
           <p className="text-[11px] text-[#9AA79C] italic py-2">
-            Not set up yet — run <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-credits-workshops.sql</code>{' '}
+            Not set up yet. Run <code className="rounded bg-[#F3EEE5] px-1 py-0.5">supabase/schema-credits-workshops.sql</code>{' '}
             in your Supabase project to turn this on.
           </p>
         ) : workshopRequests.byTopic.length === 0 ? (

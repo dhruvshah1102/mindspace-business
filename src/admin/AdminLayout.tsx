@@ -2,16 +2,14 @@ import { useEffect, useState, type ComponentType } from 'react';
 import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
 import {
   AlertTriangle,
-  Compass,
   HeartHandshake,
-  Layers,
   LayoutDashboard,
   LineChart,
   LogOut,
   Smile,
-  TrendingUp,
   Menu,
   X,
+  CreditCard,
 } from 'lucide-react';
 import { useAuth } from '@/app/AuthContext';
 import { useTenant } from '@/app/TenantContext';
@@ -34,10 +32,8 @@ const REPORT_NAV: NavEntry[] = [
   { to: '/admin/actions', label: 'Actions', icon: HeartHandshake },
 ];
 
-const DETAIL_NAV: NavEntry[] = [
-  { to: '/admin/data/heatmap', label: 'Cohort Heatmap', icon: Layers },
-  { to: '/admin/data/explorer', label: 'Item Explorer', icon: Compass },
-  { to: '/admin/data/drivers', label: 'Driver Analysis', icon: TrendingUp },
+const SETTING_NAV: NavEntry[] = [
+  { to: '/admin/profile', label: 'HR Profile & Plans', icon: CreditCard },
 ];
 
 export function AdminLayout() {
@@ -80,19 +76,22 @@ function AdminLayoutContent() {
       <nav className="flex-1 overflow-y-auto px-3 flex flex-col gap-6 pt-4">
         <NavGroup title="Business Impact" items={IMPACT_NAV} />
         <NavGroup title="Reports" items={REPORT_NAV} />
-        <NavGroup title="Deep analytics" items={DETAIL_NAV} />
+        <NavGroup title="Administration" items={SETTING_NAV} />
       </nav>
 
       {/* Footer: profile */}
       <div className="border-t border-[#EAE4D9] px-3 py-3 flex flex-col gap-1">
-        <div className="flex items-center gap-2.5 rounded-xl px-2.5 py-2 pt-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#405445] text-xs font-semibold text-white shadow-xs">
-            {user?.name ? user.name.slice(0, 1) : 'P'}
-          </span>
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-semibold text-[#233226] truncate">{user?.name ?? 'Priya Raghavan'}</p>
-            <p className="text-[11px] text-[#78897B] truncate">{user?.email ?? 'hr@mindspace.example'}</p>
-          </div>
+        {/* Profile Card */}
+        <div className="flex items-center gap-2.5 rounded-xl px-2 py-2 hover:bg-[#FAF7F2] transition-colors">
+          <Link to="/admin/profile" className="flex items-center gap-2.5 min-w-0 flex-1">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#405445] text-xs font-semibold text-white shadow-xs">
+              {user?.name ? user.name.slice(0, 1) : 'P'}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-semibold text-[#233226] truncate">{user?.name ?? 'Priya Raghavan'}</p>
+              <p className="text-[11px] text-[#78897B] truncate">{user?.email ?? 'hr@mindspace.example'}</p>
+            </div>
+          </Link>
           <button
             onClick={() => signOut()}
             title="Sign out"
