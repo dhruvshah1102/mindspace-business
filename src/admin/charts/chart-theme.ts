@@ -36,8 +36,9 @@ export const CHART_INK = {
  */
 export const ORDINAL_RAMP = ['#8FA894', '#6E8874', '#4F6B57', '#2C3A30'] as const;
 
-/** The one hue every nominal-category magnitude bar uses. */
-export const MAGNITUDE_HUE = '#4F6B57';
+/** The one hue every nominal-category magnitude bar uses — the same brand
+ * green as everywhere else in the app (#2D6A4F). */
+export const MAGNITUDE_HUE = '#2D6A4F';
 /** Its de-emphasised twin, for the "everything else" bars in an emphasis chart. */
 export const MAGNITUDE_MUTED = '#C3D0C6';
 

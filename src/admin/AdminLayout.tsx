@@ -60,12 +60,7 @@ function AdminLayoutContent() {
       {/* Brand */}
       <div className="flex flex-col gap-2.5 px-5 pt-6 pb-5 border-b border-[#EAE4D9]/60">
         <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#405445] text-xs font-bold text-white shadow-xs">
-            M
-          </div>
-          <span className="font-serif text-base font-medium tracking-tight text-[#233226] truncate">
-            MindSpace
-          </span>
+          <img src="/mindspace-wordmark.png" alt="MindSpace" className="h-6 w-auto object-contain" />
         </Link>
         <div className="flex items-center">
           <AccentureLogo variant="badge" badgeClassName="bg-black px-2.5 py-1 text-xs rounded-md shadow-xs border border-neutral-800" />
@@ -84,7 +79,7 @@ function AdminLayoutContent() {
         {/* Profile Card */}
         <div className="flex items-center gap-2.5 rounded-xl px-2 py-2 hover:bg-[#FAF7F2] transition-colors">
           <Link to="/admin/profile" className="flex items-center gap-2.5 min-w-0 flex-1">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#405445] text-xs font-semibold text-white shadow-xs">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#2D6A4F] text-xs font-semibold text-white shadow-xs">
               {user?.name ? user.name.slice(0, 1) : 'P'}
             </span>
             <div className="min-w-0 flex-1">
@@ -110,9 +105,7 @@ function AdminLayoutContent() {
       {/* Mobile top bar */}
       <div className="md:hidden sticky top-0 z-40 flex h-14 items-center justify-between border-b border-[#EAE4D9]/80 bg-[#FAF7F2]/95 backdrop-blur-md px-4">
         <Link to="/" className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-          <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#405445] text-xs font-bold text-white shadow-xs">
-            M
-          </div>
+          <img src="/mindspace-wordmark.png" alt="MindSpace" className="h-5 w-auto object-contain" />
           <span className="text-[#9AA79C] font-light text-xs">×</span>
           <AccentureLogo variant="badge" badgeClassName="bg-black px-2 py-0.5 text-xs rounded-md shadow-xs border border-neutral-800" />
         </Link>
@@ -179,7 +172,7 @@ function NavGroup({ title, items }: { title: string; items: NavEntry[] }) {
           className={({ isActive }) =>
             cn(
               'flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-xs font-medium transition-colors',
-              isActive ? 'bg-[#405445] text-white font-semibold' : 'text-[#3E4F42] hover:bg-[#F3EFE8]',
+              isActive ? 'bg-[#2D6A4F] text-white font-semibold' : 'text-[#3E4F42] hover:bg-[#F3EFE8]',
             )
           }
         >

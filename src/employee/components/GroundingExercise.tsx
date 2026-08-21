@@ -29,7 +29,7 @@ const GROUNDING_STEPS: Step[] = [
     title: '5 Things You Can SEE',
     instruction: 'Look around you right now. Spot 5 specific items in your environment.',
     icon: Eye,
-    accent: 'from-emerald-500 to-teal-600',
+    accent: 'bg-[#E6F3F1] text-[#2C8C82]',
     prompt: 'Name 5 things you can visually see (e.g., a shadow, a pen, light reflection, a plant, a coffee mug).',
     examples: ['Desk lamp', 'Plant on shelf', 'Sunlight on floor', 'A blue book', 'Window frame'],
   },
@@ -39,7 +39,7 @@ const GROUNDING_STEPS: Step[] = [
     title: '4 Things You Can FEEL / TOUCH',
     instruction: 'Pay attention to physical contact and textures against your body.',
     icon: Hand,
-    accent: 'from-teal-500 to-cyan-600',
+    accent: 'bg-[#E8F0EA] text-[#2D6A4F]',
     prompt: 'Feel 4 physical sensations (e.g., feet on the floor, texture of your sleeve, back against the chair, cool air on hands).',
     examples: ['Feet firm on floor', 'Fabric of shirt', 'Smooth desk surface', 'Cool air on skin'],
   },
@@ -49,7 +49,7 @@ const GROUNDING_STEPS: Step[] = [
     title: '3 Things You Can HEAR',
     instruction: 'Listen carefully beyond immediate room sounds.',
     icon: Volume2,
-    accent: 'from-sky-500 to-indigo-600',
+    accent: 'bg-[#E7EFFA] text-[#3B6FA6]',
     prompt: 'Identify 3 sounds in your space (e.g., air conditioning hum, distant traffic, your own steady breath, clock tick).',
     examples: ['Hum of laptop fan', 'Distant birds or street', 'Sound of breathing'],
   },
@@ -59,7 +59,7 @@ const GROUNDING_STEPS: Step[] = [
     title: '2 Things You Can SMELL',
     instruction: 'Take a gentle breath in through your nose.',
     icon: Flower2,
-    accent: 'from-purple-500 to-pink-600',
+    accent: 'bg-[#F1EAFB] text-[#7C5FA6]',
     prompt: 'Notice 2 scents around you (e.g., fresh air, coffee, hand lotion, linen). If you smell nothing, imagine your favorite calming scent.',
     examples: ['A cup of tea or coffee', 'Fresh air / gentle lotion'],
   },
@@ -69,7 +69,7 @@ const GROUNDING_STEPS: Step[] = [
     title: '1 Thing You Can TASTE or FEEL GRATEFUL FOR',
     instruction: 'Notice the lingering taste in your mouth, or anchor yourself in one genuine positive truth.',
     icon: Heart,
-    accent: 'from-rose-500 to-amber-600',
+    accent: 'bg-[#FBEAF0] text-[#B5507B]',
     prompt: 'Acknowledge 1 comforting taste (water, mint) or tell yourself: "I am safe in this present moment."',
     examples: ['Sip of cool water', '"I am safe and this feeling will pass"'],
   },
@@ -101,13 +101,13 @@ export function GroundingExercise() {
   return (
     <div className="flex flex-col gap-6 w-full">
       {/* Intro explanation */}
-      <div className="rounded-2xl bg-white border border-[#EAE4D9] p-5 shadow-xs flex flex-col gap-2">
+      <div className="rounded-2xl bg-white border border-[#EAE4D9] p-5 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E8F0EA] text-xs font-bold text-[#4F6B57]">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E8F0EA] text-xs font-bold text-[#2D6A4F]">
               5-4-3-2-1
             </span>
-            <h3 className="font-serif text-lg font-normal text-[#233226]">Sensory Grounding Protocol</h3>
+            <h3 className="text-lg font-semibold text-[#233226]">Sensory Grounding Protocol</h3>
           </div>
           <span className="text-xs text-[#78897B] font-medium">
             {completedSteps.length} of 5 Anchors
@@ -133,7 +133,7 @@ export function GroundingExercise() {
               className={cn(
                 'flex flex-col items-center gap-1.5 rounded-2xl p-2.5 sm:p-3 border transition-all cursor-pointer text-center',
                 isCurrent
-                  ? 'border-[#4F6B57] bg-[#FAF7F2] ring-2 ring-[#4F6B57]/30 shadow-xs'
+                  ? 'border-[#2D6A4F] bg-[#FAF7F2] ring-2 ring-[#2D6A4F]/30'
                   : isDone
                   ? 'border-[#C5DBC8] bg-[#F4F8F5] text-[#243327]'
                   : 'border-[#EAE4D9] bg-white opacity-70 hover:opacity-100'
@@ -143,7 +143,7 @@ export function GroundingExercise() {
                 className={cn(
                   'flex h-8 w-8 items-center justify-center rounded-xl text-xs font-bold transition-transform',
                   isDone
-                    ? 'bg-[#4F6B57] text-white'
+                    ? 'bg-[#2D6A4F] text-white'
                     : isCurrent
                     ? 'bg-[#243327] text-white scale-105'
                     : 'bg-[#F3EFE8] text-[#78897B]'
@@ -161,12 +161,12 @@ export function GroundingExercise() {
 
       {/* Active Step Card */}
       {!isCompleted ? (
-        <div className="rounded-[28px] bg-white border border-[#EAE4D9] p-6 sm:p-8 shadow-xs flex flex-col gap-6">
+        <div className="rounded-2xl bg-white border border-[#EAE4D9] p-6 sm:p-8 flex flex-col gap-6">
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3.5">
               <div
                 className={cn(
-                  'flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-xs',
+                  'flex h-12 w-12 items-center justify-center rounded-2xl',
                   currentStep.accent
                 )}
               >
@@ -176,10 +176,10 @@ export function GroundingExercise() {
                 })()}
               </div>
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F6B57]">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#2D6A4F]">
                   Step {5 - currentStepIndex} of 5
                 </span>
-                <h4 className="font-serif text-xl sm:text-2xl font-normal text-[#233226]">
+                <h4 className="text-xl sm:text-2xl font-semibold text-[#233226]">
                   {currentStep.title}
                 </h4>
               </div>
@@ -204,7 +204,7 @@ export function GroundingExercise() {
               {currentStep.examples.map((ex) => (
                 <span
                   key={ex}
-                  className="rounded-lg bg-white px-2.5 py-1 text-xs font-medium text-[#4F6B57] border border-[#D9D2C5]"
+                  className="rounded-lg bg-white px-2.5 py-1 text-xs font-medium text-[#2D6A4F] border border-[#D9D2C5]"
                 >
                   {ex}
                 </span>
@@ -227,7 +227,7 @@ export function GroundingExercise() {
                 }))
               }
               placeholder="e.g., I see the sunlight through the glass, the green plant, my wooden coaster..."
-              className="w-full rounded-xl border border-[#D9D2C5] bg-white p-3 text-xs sm:text-sm text-[#243327] placeholder:text-[#9AA79C] focus:border-[#4F6B57] focus:outline-none"
+              className="w-full rounded-xl border border-[#D9D2C5] bg-white p-3 text-xs sm:text-sm text-[#243327] placeholder:text-[#9AA79C] focus:border-[#2D6A4F] focus:outline-none"
             />
           </div>
 
@@ -245,7 +245,7 @@ export function GroundingExercise() {
             <button
               type="button"
               onClick={handleCompleteCurrentStep}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#4F6B57] hover:bg-[#3E5545] text-white px-5 py-2.5 text-xs sm:text-sm font-semibold shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2D6A4F] hover:bg-[#234F3B] text-white px-5 py-2.5 text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
             >
               <span>Done & Next Anchor</span>
               <CheckCircle2 className="h-4 w-4" />
@@ -254,13 +254,13 @@ export function GroundingExercise() {
         </div>
       ) : (
         /* Complete Success Screen */
-        <div className="rounded-[28px] bg-gradient-to-br from-[#FAF7F2] to-[#EAE4D9]/60 border border-[#C5DBC8] p-8 sm:p-10 shadow-xs flex flex-col items-center text-center gap-5">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#4F6B57] text-white shadow-md">
+        <div className="rounded-2xl bg-[#F4F8F5] border border-[#C5DBC8] p-8 sm:p-10 flex flex-col items-center text-center gap-5">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#2D6A4F] text-white">
             <Sparkles className="h-8 w-8" />
           </div>
 
           <div className="flex flex-col gap-2 max-w-lg">
-            <h4 className="font-serif text-2xl sm:text-3xl font-normal text-[#233226]">
+            <h4 className="text-2xl sm:text-3xl font-semibold text-[#233226]">
               You are here. You are safe.
             </h4>
             <p className="text-xs sm:text-sm text-[#56685A] leading-relaxed">
@@ -272,7 +272,7 @@ export function GroundingExercise() {
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-[#F3EFE8] text-[#243327] border border-[#D9D2C5] px-4 py-2 text-xs font-semibold shadow-2xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-white hover:bg-[#F3EFE8] text-[#243327] border border-[#D9D2C5] px-4 py-2 text-xs font-semibold transition-colors cursor-pointer"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               <span>Repeat Grounding</span>

@@ -78,7 +78,7 @@ export function AdminProfilePage() {
         <button
           type="button"
           onClick={() => setIsPaymentModalOpen(true)}
-          className="inline-flex items-center gap-2 rounded-xl bg-[#405445] hover:bg-[#324336] text-white px-4 py-2.5 text-xs font-semibold shadow-xs transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 rounded-xl bg-[#2D6A4F] hover:bg-[#234F3B] text-white px-4 py-2.5 text-xs font-semibold shadow-xs transition-all cursor-pointer"
         >
           <Zap className="h-4 w-4 text-amber-300" />
           <span>Change Plan / Purchase Credits</span>
@@ -89,12 +89,12 @@ export function AdminProfilePage() {
       <section className="rounded-[28px] bg-white p-6 sm:p-8 border border-[#EAE4D9] shadow-xs flex flex-col gap-6">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#EAE4D9]">
           <div className="flex items-center gap-3.5">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#405445] text-white shadow-xs">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2D6A4F] text-white shadow-xs">
               <Zap className="h-6 w-6 text-amber-300" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F6B57]">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#2D6A4F]">
                   Active Subscription
                 </span>
                 <span className="rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-bold">
@@ -112,7 +112,7 @@ export function AdminProfilePage() {
             onClick={() => setIsPaymentModalOpen(true)}
             className="inline-flex items-center gap-1.5 self-start md:self-center rounded-xl bg-[#FAF7F2] hover:bg-[#F3EFE8] text-[#243327] border border-[#D9D2C5] px-4 py-2 text-xs font-semibold shadow-2xs transition-colors cursor-pointer"
           >
-            <CreditCard className="h-3.5 w-3.5 text-[#4F6B57]" />
+            <CreditCard className="h-3.5 w-3.5 text-[#2D6A4F]" />
             <span>Manage Plan & Billing</span>
           </button>
         </div>
@@ -126,13 +126,13 @@ export function AdminProfilePage() {
                 Credits: <strong>{creditsRemaining.toLocaleString()}</strong> remaining of{' '}
                 <strong>{totalCredits.toLocaleString()}</strong> ({creditsUsed.toLocaleString()} used)
               </span>
-              <span className="font-bold text-[#4F6B57]">{remainingLabel} Available</span>
+              <span className="font-bold text-[#2D6A4F]">{remainingLabel} Available</span>
             </div>
 
             {/* Custom Remaining Capacity Bar */}
             <div className="h-3.5 w-full rounded-full bg-[#EAE4D9] overflow-hidden p-0.5">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-[#405445] to-[#5E7A67] transition-all duration-500"
+                className="h-full rounded-full bg-gradient-to-r from-[#2D6A4F] to-[#5E7A67] transition-all duration-500"
                 style={{ width: `${Math.min(100, Math.max(2, remainingPercent))}%` }}
               />
             </div>
@@ -186,13 +186,13 @@ export function AdminProfilePage() {
                 className={cn(
                   'relative rounded-[28px] p-6 border flex flex-col justify-between transition-all shadow-xs',
                   isCurrent
-                    ? 'border-[#405445] bg-[#F4F8F5] ring-2 ring-[#405445]/30'
+                    ? 'border-[#2D6A4F] bg-[#F4F8F5] ring-2 ring-[#2D6A4F]/30'
                     : 'border-[#EAE4D9] bg-white hover:shadow-md'
                 )}
               >
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F6B57]">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#2D6A4F]">
                       {plan.tier}
                     </span>
                     {isCurrent ? (
@@ -221,7 +221,7 @@ export function AdminProfilePage() {
                   <ul className="flex flex-col gap-1.5 text-xs text-[#243327] pt-1">
                     {plan.features.map((feat, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-[#4F6B57] shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-3.5 w-3.5 text-[#2D6A4F] shrink-0 mt-0.5" />
                         <span className="text-[11px] sm:text-xs leading-snug">{feat}</span>
                       </li>
                     ))}
@@ -235,7 +235,7 @@ export function AdminProfilePage() {
                     className={cn(
                       'w-full py-2.5 rounded-xl text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer',
                       isCurrent
-                        ? 'bg-[#405445] text-white'
+                        ? 'bg-[#2D6A4F] text-white'
                         : 'bg-[#FAF7F2] hover:bg-[#F3EFE8] text-[#243327] border border-[#D9D2C5]'
                     )}
                   >
@@ -260,7 +260,7 @@ export function AdminProfilePage() {
         {/* Admin Account Details (7 cols) */}
         <div className="lg:col-span-7 rounded-[28px] bg-white p-6 sm:p-7 border border-[#EAE4D9] shadow-xs flex flex-col gap-4">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#405445] text-white text-sm font-semibold shadow-xs">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#2D6A4F] text-white text-sm font-semibold shadow-xs">
               {user?.name ? user.name.slice(0, 1) : 'P'}
             </div>
             <div>
@@ -286,7 +286,7 @@ export function AdminProfilePage() {
         {/* Privacy Policy Guarantee (5 cols) */}
         <div className="lg:col-span-5 rounded-[28px] bg-[#FAF7F2] p-6 sm:p-7 border border-[#EAE4D9] shadow-xs flex flex-col justify-between gap-4">
           <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#4F6B57]">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#2D6A4F]">
               <ShieldCheck className="h-4 w-4" />
               <span>Strict k-Anonymity (k=5)</span>
             </div>
@@ -310,7 +310,7 @@ export function AdminProfilePage() {
             </h3>
             <p className="text-xs text-[#78897B]">Download receipts and GST tax invoices.</p>
           </div>
-          <span className="text-xs font-medium text-[#4F6B57] bg-[#E8F0EA] px-3 py-1 rounded-full">
+          <span className="text-xs font-medium text-[#2D6A4F] bg-[#E8F0EA] px-3 py-1 rounded-full">
             Paid in Full
           </span>
         </div>
@@ -342,7 +342,7 @@ export function AdminProfilePage() {
                   <button
                     type="button"
                     onClick={() => alert('Downloading invoice INV-2026-0801.pdf')}
-                    className="inline-flex items-center gap-1 text-[#4F6B57] hover:underline cursor-pointer"
+                    className="inline-flex items-center gap-1 text-[#2D6A4F] hover:underline cursor-pointer"
                   >
                     <Download className="h-3 w-3" />
                     <span>PDF</span>
@@ -363,7 +363,7 @@ export function AdminProfilePage() {
                   <button
                     type="button"
                     onClick={() => alert('Downloading invoice INV-2026-0701.pdf')}
-                    className="inline-flex items-center gap-1 text-[#4F6B57] hover:underline cursor-pointer"
+                    className="inline-flex items-center gap-1 text-[#2D6A4F] hover:underline cursor-pointer"
                   >
                     <Download className="h-3 w-3" />
                     <span>PDF</span>

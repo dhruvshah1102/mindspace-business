@@ -13,12 +13,12 @@ export interface GeneratedInsight {
 }
 
 const DOMAIN_LABELS: Record<AssessmentType, string> = {
-  anxiety: 'anxiety',
-  depression: 'depression',
-  stress: 'stress',
-  ptsd: 'PTSD symptoms',
-  relationship: 'relationship strain',
-  ocd: 'OCD symptoms',
+  workload: 'workload and burnout',
+  work_anxiety: 'work-related anxiety',
+  work_mood: 'work mood and engagement',
+  manager_relationship: 'manager and team relationship',
+  work_life_balance: 'work-life balance',
+  career_growth: 'career growth and recognition',
 };
 
 function labelSlice(sliceKey: string): string {

@@ -44,17 +44,12 @@ export function EmployeeLoginPage() {
 
       <header className="relative w-full max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#405445] text-xs font-bold text-white shadow-xs">
-            M
-          </div>
-          <span className="font-serif text-xl font-medium tracking-tight text-[#233226]">
-            MindSpace
-          </span>
+          <img src="/mindspace-wordmark.png" alt="MindSpace" className="h-8 w-auto object-contain" />
           <span className="text-[#9AA79C] font-light text-sm">×</span>
           <AccentureLogo variant="badge" badgeClassName="bg-black px-2.5 py-1 text-xs rounded-md shadow-xs border border-neutral-800" />
         </Link>
 
-        <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E8F0EA] px-3.5 py-1 text-xs font-semibold text-[#4F6B57]">
+        <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E8F0EA] px-3.5 py-1 text-xs font-semibold text-[#2D6A4F]">
           <Sparkles className="h-3.5 w-3.5" />
           Accenture Employee Portal
         </span>
@@ -69,14 +64,14 @@ export function EmployeeLoginPage() {
           </div>
 
           <h1 className="font-serif text-4xl sm:text-5xl lg:text-[3.65rem] font-normal leading-[1.12] tracking-tight text-[#233226]">
-            A space that's just yours at <span className="text-[#4F6B57] italic">Accenture</span>.
+            A space that's just yours at <span className="text-[#2D6A4F] italic">Accenture</span>.
           </h1>
 
           <p className="text-sm sm:text-base leading-relaxed text-[#56685A] max-w-xl">
             Talk to Tara anytime, take unlimited assessments, and book licensed therapists, fully covered by Accenture.
           </p>
 
-          <div className="border-l-2 border-[#4F6B57]/40 pl-4 py-1 max-w-lg">
+          <div className="border-l-2 border-[#2D6A4F]/40 pl-4 py-1 max-w-lg">
             <p className="font-serif italic text-sm sm:text-base text-[#233226] leading-snug">
               "Your wellbeing data is strictly confidential."
             </p>
@@ -86,7 +81,7 @@ export function EmployeeLoginPage() {
           </div>
 
           <div className="flex items-center gap-2 pt-2 text-xs text-[#56685A]">
-            <ShieldCheck className="h-4 w-4 shrink-0 text-[#4F6B57]" />
+            <ShieldCheck className="h-4 w-4 shrink-0 text-[#2D6A4F]" />
             <span>Single Sign-On with Google Workspace. Protected by end-to-end k-anonymity.</span>
           </div>
         </div>

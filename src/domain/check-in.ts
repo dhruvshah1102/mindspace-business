@@ -75,7 +75,7 @@ export const FEELING_CHIPS: { theme: Theme; label: string }[] = [
 /** The three domains the workplace check-in runs. The full six-domain suite
  * exists in the clinical product; asking 60 questions at a coffee-break kiosk
  * gets abandoned halfway, and a half-finished check-in is worse than none. */
-export const CHECK_IN_DOMAINS: AssessmentType[] = ['stress', 'anxiety', 'depression'];
+export const CHECK_IN_DOMAINS: AssessmentType[] = ['workload', 'work_anxiety', 'work_mood'];
 
 export function newCheckInId(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID();

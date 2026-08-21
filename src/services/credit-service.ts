@@ -26,7 +26,7 @@ export const CREDIT_PLANS: CreditPlan[] = [
     description: 'Essential AI voice companion & clinical assessments for teams.',
     features: [
       '5,000 Tara AI Voice & Chat sessions',
-      'Unlimited GAD-7, PHQ-9 & Burnout check-ins',
+      'Unlimited workload, mood & burnout check-ins',
       'Aggregated k-anonymity HR sentiment reports',
       'Accenture EAP & 24/7 Crisis helpline routing',
       'Standard business support',

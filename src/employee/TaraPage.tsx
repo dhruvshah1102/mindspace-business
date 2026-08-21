@@ -40,7 +40,7 @@ export function TaraPage() {
     <div className="flex flex-col items-center gap-10 pt-8 sm:pt-16 pb-12 text-center">
       <header className="flex flex-col items-center gap-2">
         <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226]">
-          This space is <span className="text-[#4F6B57]">yours</span> now!
+          This space is <span className="text-[#2D6A4F]">yours</span> now!
         </h1>
         <p className="text-sm italic text-[#9AA79C]">No judgement. No drama. No noise.</p>
       </header>
@@ -57,7 +57,7 @@ export function TaraPage() {
             'shadow-[0_0_0_10px_rgba(79,107,87,0.06),0_20px_40px_-16px_rgba(35,50,38,0.35)]',
             callActive
               ? 'bg-gradient-to-b from-[#E05A4E] to-[#B0392E]'
-              : 'bg-gradient-to-b from-[#6B8B72] to-[#3F5646] hover:from-[#75957C] hover:to-[#465E4D]',
+              : 'bg-gradient-to-b from-[#6B8B72] to-[#234F3B] hover:from-[#75957C] hover:to-[#465E4D]',
           )}
         >
           {callActive && <span className="absolute inset-0 rounded-full bg-[#DC2626]/25 animate-ping" aria-hidden />}

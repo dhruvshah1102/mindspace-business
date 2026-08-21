@@ -139,8 +139,8 @@ function generateSignal(
   const items = meta.questions.map((q) => {
     // sleep/energy/concentration items run hotter for departments whose theme profile includes them
     const isHotItem =
-      (domain === 'depression' && [1, 3, 4, 6, 7].includes(q.id) && (profile.themes.includes('sleep') || profile.themes.includes('workload'))) ||
-      (domain === 'anxiety' && q.id === 5 && profile.themes.includes('long_hours'));
+      (domain === 'work_mood' && [1, 3, 4, 6, 7].includes(q.id) && (profile.themes.includes('sleep') || profile.themes.includes('workload'))) ||
+      (domain === 'work_anxiety' && q.id === 5 && profile.themes.includes('long_hours'));
     const itemSeverity = clamp(weekSeverity + (isHotItem ? 0.12 : 0), 0.03, 0.97);
     const opt = scoreForOption(itemSeverity);
     return { qid: q.id, score: opt.score };
@@ -209,7 +209,7 @@ function main() {
     legalName: 'MindSpace Technologies Pvt Ltd',
     primaryDomain: 'mindspace',
     branding: {
-      primary: '#4F6B57',
+      primary: '#2D6A4F',
       accent: '#A9CBAE',
       surface: '#FAF7F0',
       appName: 'MindSpace',

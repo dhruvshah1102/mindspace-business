@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useReport } from '@/admin/ReportContext';
-import { ReportSkeleton } from '@/admin/widgets/PageHeading';
+import { ReportSkeleton, NotEnoughAssessmentData } from '@/admin/widgets/PageHeading';
 import { PeopleGrid } from '@/admin/widgets/PeopleGrid';
 import { ChartCard } from '@/admin/charts/ChartCard';
 import { StatTile } from '@/admin/charts/StatTile';
@@ -21,10 +21,11 @@ const TIER_LABEL_INK: Record<MoodTier, 'light' | 'dark'> = {
 };
 
 export function FeelingsPage() {
-  const { report, snapshot, loading } = useReport();
+  const { report, snapshot, loading, notEnoughData } = useReport();
   const trend = useMemo(() => getWellbeingTrend(), []);
 
-  if (loading || !report || !snapshot) return <ReportSkeleton />;
+  if (loading) return <ReportSkeleton />;
+  if (notEnoughData || !report || !snapshot) return <NotEnoughAssessmentData />;
 
   const responses = report.meta.responses;
   const underStrain = report.howPeopleFeel

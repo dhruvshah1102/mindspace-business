@@ -75,7 +75,7 @@ export function BookSessionPage() {
 
       {/* Pricing — one-on-one sessions with a therapist, fixed price */}
       <section className="rounded-[24px] bg-white p-6 sm:p-7 border border-[#EAE4D9] shadow-xs flex flex-col sm:flex-row sm:items-center gap-5">
-        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F0EA] text-[#4F6B57]">
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#E8F0EA] text-[#2D6A4F]">
           <UserRound className="h-5 w-5" />
         </span>
         <div className="flex-1">
@@ -116,7 +116,7 @@ export function BookSessionPage() {
             value={slot}
             onChange={(e) => setSlot(e.target.value)}
             min={new Date().toISOString().slice(0, 16)}
-            className="rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] px-4 py-2.5 text-xs sm:text-sm text-[#233226] focus:outline-none focus:ring-2 focus:ring-[#4F6B57]/40 focus:border-[#4F6B57]"
+            className="rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] px-4 py-2.5 text-xs sm:text-sm text-[#233226] focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/40 focus:border-[#2D6A4F]"
           />
         </div>
 
@@ -132,7 +132,7 @@ export function BookSessionPage() {
           className={cn(
             'inline-flex items-center justify-center gap-2 self-start rounded-full px-7 py-3 text-xs sm:text-sm font-semibold transition-all',
             slot && !submitting
-              ? 'bg-[#4F6B57] hover:bg-[#3F5646] text-white shadow-xs hover:scale-105 cursor-pointer'
+              ? 'bg-[#2D6A4F] hover:bg-[#234F3B] text-white shadow-xs hover:scale-105 cursor-pointer'
               : 'bg-[#EAE4D9] text-[#8C9B8F] cursor-not-allowed',
           )}
         >

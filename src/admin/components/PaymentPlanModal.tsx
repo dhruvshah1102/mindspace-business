@@ -106,7 +106,7 @@ export function PaymentPlanModal({
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-[#EAE4D9] bg-[#FAF7F2]/80">
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#405445] text-white shadow-xs">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#2D6A4F] text-white shadow-xs">
               <Zap className="h-5 w-5 text-amber-300" />
             </div>
             <div>
@@ -114,7 +114,7 @@ export function PaymentPlanModal({
                 <h2 className="font-serif text-xl sm:text-2xl font-normal text-[#233226]">
                   {step === 'select' ? 'Choose Your Credit Plan' : 'Confirm & Complete Payment'}
                 </h2>
-                <span className="rounded-full bg-[#E8F0EA] px-2.5 py-0.5 text-[10px] font-bold text-[#4F6B57]">
+                <span className="rounded-full bg-[#E8F0EA] px-2.5 py-0.5 text-[10px] font-bold text-[#2D6A4F]">
                   HR BILLING
                 </span>
               </div>
@@ -152,7 +152,7 @@ export function PaymentPlanModal({
                     onClick={() => setCurrency('INR')}
                     className={cn(
                       'px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer',
-                      currency === 'INR' ? 'bg-[#405445] text-white shadow-2xs' : 'text-[#78897B] hover:text-[#233226]'
+                      currency === 'INR' ? 'bg-[#2D6A4F] text-white shadow-2xs' : 'text-[#78897B] hover:text-[#233226]'
                     )}
                   >
                     ₹ INR
@@ -162,7 +162,7 @@ export function PaymentPlanModal({
                     onClick={() => setCurrency('USD')}
                     className={cn(
                       'px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer',
-                      currency === 'USD' ? 'bg-[#405445] text-white shadow-2xs' : 'text-[#78897B] hover:text-[#233226]'
+                      currency === 'USD' ? 'bg-[#2D6A4F] text-white shadow-2xs' : 'text-[#78897B] hover:text-[#233226]'
                     )}
                   >
                     $ USD
@@ -187,13 +187,13 @@ export function PaymentPlanModal({
                       className={cn(
                         'relative rounded-[24px] p-5 sm:p-6 border flex flex-col justify-between transition-all cursor-pointer shadow-xs hover:shadow-md',
                         isSelected
-                          ? 'border-[#405445] bg-[#F4F8F5] ring-2 ring-[#405445]/40 scale-[1.02]'
+                          ? 'border-[#2D6A4F] bg-[#F4F8F5] ring-2 ring-[#2D6A4F]/40 scale-[1.02]'
                           : 'border-[#EAE4D9] bg-white hover:bg-[#FAF7F2]'
                       )}
                     >
                       {/* Top Badges */}
                       <div className="flex items-center justify-between gap-2 mb-3">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F6B57]">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#2D6A4F]">
                           {plan.tier}
                         </span>
                         {isCurrent ? (
@@ -230,7 +230,7 @@ export function PaymentPlanModal({
                           <ul className="flex flex-col gap-1.5 text-xs text-[#243327]">
                             {plan.features.map((feat, idx) => (
                               <li key={idx} className="flex items-start gap-2">
-                                <Check className="h-3.5 w-3.5 text-[#4F6B57] shrink-0 mt-0.5" />
+                                <Check className="h-3.5 w-3.5 text-[#2D6A4F] shrink-0 mt-0.5" />
                                 <span className="leading-tight text-[11px] sm:text-xs">{feat}</span>
                               </li>
                             ))}
@@ -244,7 +244,7 @@ export function PaymentPlanModal({
                           className={cn(
                             'w-full py-2.5 rounded-xl text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5',
                             isSelected
-                              ? 'bg-[#405445] text-white'
+                              ? 'bg-[#2D6A4F] text-white'
                               : 'bg-white border border-[#D9D2C5] text-[#243327] hover:bg-[#EAE4D9]'
                           )}
                         >
@@ -294,11 +294,11 @@ export function PaymentPlanModal({
                         className={cn(
                           'flex flex-col items-center gap-1.5 p-3 rounded-2xl border text-center transition-all cursor-pointer',
                           isCurrentMethod
-                            ? 'border-[#405445] bg-[#F4F8F5] ring-2 ring-[#405445]/30 shadow-xs'
+                            ? 'border-[#2D6A4F] bg-[#F4F8F5] ring-2 ring-[#2D6A4F]/30 shadow-xs'
                             : 'border-[#EAE4D9] bg-white hover:bg-[#FAF7F2]'
                         )}
                       >
-                        <Icon className={cn('h-5 w-5', isCurrentMethod ? 'text-[#405445]' : 'text-[#78897B]')} />
+                        <Icon className={cn('h-5 w-5', isCurrentMethod ? 'text-[#2D6A4F]' : 'text-[#78897B]')} />
                         <span className="text-xs font-semibold text-[#243327]">{m.label}</span>
                       </button>
                     );
@@ -314,7 +314,7 @@ export function PaymentPlanModal({
                         type="text"
                         value={cardDetails.name}
                         onChange={(e) => setCardDetails({ ...cardDetails, name: e.target.value })}
-                        className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#405445] focus:outline-none"
+                        className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#2D6A4F] focus:outline-none"
                       />
                     </div>
                     <div className="flex flex-col gap-1">
@@ -324,7 +324,7 @@ export function PaymentPlanModal({
                           type="text"
                           value={cardDetails.number}
                           onChange={(e) => setCardDetails({ ...cardDetails, number: e.target.value })}
-                          className="w-full rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#405445] focus:outline-none pr-10"
+                          className="w-full rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#2D6A4F] focus:outline-none pr-10"
                         />
                         <Lock className="absolute right-3 top-2.5 h-3.5 w-3.5 text-[#78897B]" />
                       </div>
@@ -336,7 +336,7 @@ export function PaymentPlanModal({
                           type="text"
                           value={cardDetails.expiry}
                           onChange={(e) => setCardDetails({ ...cardDetails, expiry: e.target.value })}
-                          className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#405445] focus:outline-none"
+                          className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#2D6A4F] focus:outline-none"
                         />
                       </div>
                       <div className="flex flex-col gap-1">
@@ -345,7 +345,7 @@ export function PaymentPlanModal({
                           type="password"
                           value={cardDetails.cvv}
                           onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
-                          className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#405445] focus:outline-none"
+                          className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#2D6A4F] focus:outline-none"
                         />
                       </div>
                     </div>
@@ -361,7 +361,7 @@ export function PaymentPlanModal({
                         type="text"
                         defaultValue="accenture.wellbeing@okaxis"
                         placeholder="e.g. orgname@okhdfcbank"
-                        className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#405445] focus:outline-none"
+                        className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#2D6A4F] focus:outline-none"
                       />
                     </div>
                     <p className="text-[11px] text-[#78897B]">
@@ -379,7 +379,7 @@ export function PaymentPlanModal({
                         type="text"
                         value={poNumber}
                         onChange={(e) => setPoNumber(e.target.value)}
-                        className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#405445] focus:outline-none"
+                        className="rounded-xl border border-[#D9D2C5] bg-white px-3 py-2 text-xs text-[#243327] focus:border-[#2D6A4F] focus:outline-none"
                       />
                     </div>
                     <p className="text-[11px] text-[#78897B]">
@@ -389,7 +389,7 @@ export function PaymentPlanModal({
                 )}
 
                 <div className="flex items-center gap-2 text-xs text-[#78897B] pt-1">
-                  <ShieldCheck className="h-4 w-4 text-[#4F6B57]" />
+                  <ShieldCheck className="h-4 w-4 text-[#2D6A4F]" />
                   <span>256-Bit SSL Encrypted Corporate Checkout · Instant Activation</span>
                 </div>
               </div>
@@ -407,7 +407,7 @@ export function PaymentPlanModal({
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Total Allocated Credits:</span>
-                    <strong className="text-[#4F6B57]">{selectedPlan.credits.toLocaleString()}</strong>
+                    <strong className="text-[#2D6A4F]">{selectedPlan.credits.toLocaleString()}</strong>
                   </div>
                   <div className="flex items-center justify-between">
                     <span>Billing Interval:</span>
@@ -441,7 +441,7 @@ export function PaymentPlanModal({
                     type="button"
                     onClick={handleConfirmPayment}
                     disabled={isProcessing}
-                    className="w-full py-3 rounded-xl bg-[#405445] hover:bg-[#324336] disabled:opacity-50 text-white font-semibold text-xs sm:text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3 rounded-xl bg-[#2D6A4F] hover:bg-[#234F3B] disabled:opacity-50 text-white font-semibold text-xs sm:text-sm shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     {isProcessing ? (
                       <>
@@ -489,7 +489,7 @@ export function PaymentPlanModal({
                 type="button"
                 onClick={handleProceedToCheckout}
                 disabled={isCurrentPlan}
-                className="px-5 py-2.5 rounded-xl bg-[#405445] hover:bg-[#324336] disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-[#2D6A4F] hover:bg-[#234F3B] disabled:opacity-40 disabled:cursor-not-allowed text-white text-xs font-semibold shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Continue to Checkout</span>
                 <ChevronRight className="h-4 w-4" />

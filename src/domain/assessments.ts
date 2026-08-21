@@ -1,6 +1,12 @@
 /**
- * Ported verbatim from mindspace-private- (reference repo) so scoring stays
- * identical between the consumer product and this one.
+ * Six employee-focused assessment domains. Each is framed around the job,
+ * not generic life circumstances, so the questions map directly onto the
+ * pressures taxonomy the rest of the app already reports on (see
+ * domain/themes.ts and the THEME_PLAIN/THEME_ROOT tables in
+ * domain/wellbeing-report.ts): workload, manager relationship, work-life
+ * balance, career growth. Scoring style (4-point frequency scale, 0-50)
+ * carries over from the original clinical-scale version so history and
+ * severity bands stay comparable.
  */
 
 export interface AssessmentQuestion {
@@ -13,7 +19,13 @@ export interface AssessmentQuestion {
   }[];
 }
 
-export type AssessmentType = 'anxiety' | 'depression' | 'stress' | 'ptsd' | 'relationship' | 'ocd';
+export type AssessmentType =
+  | 'workload'
+  | 'work_anxiety'
+  | 'work_mood'
+  | 'manager_relationship'
+  | 'work_life_balance'
+  | 'career_growth';
 
 export type AssessmentLevel = 'Low' | 'Moderate' | 'High';
 
@@ -31,82 +43,82 @@ const STANDARD_OPTIONS = [
   { value: 'almost_everyday' as const, label: 'Almost everyday', score: 5 },
 ];
 
-export const ANXIETY_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
-  { id: 1, text: 'Are you feeling nervous, anxious, or on edge?', options: STANDARD_OPTIONS },
-  { id: 2, text: 'Are you not being able to stop or control worrying?', options: STANDARD_OPTIONS },
-  { id: 3, text: 'Are you worrying too much about different things?', options: STANDARD_OPTIONS },
-  { id: 4, text: 'Are you having trouble relaxing?', options: STANDARD_OPTIONS },
-  { id: 5, text: 'Are you becoming so restless that it is hard to sit still?', options: STANDARD_OPTIONS },
-  { id: 6, text: 'Are you becoming easily annoyed or irritable?', options: STANDARD_OPTIONS },
-  { id: 7, text: 'Are you feeling afraid as if something awful might happen?', options: STANDARD_OPTIONS },
-  { id: 8, text: 'Are you experiencing any difficulty in breathing?', options: STANDARD_OPTIONS },
-  { id: 9, text: 'Are you having a dry mouth or difficulty in swallowing?', options: STANDARD_OPTIONS },
-  { id: 10, text: 'How often are you experiencing trembling or jitters?', options: STANDARD_OPTIONS },
+export const WORKLOAD_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
+  { id: 1, text: 'Do you feel emotionally drained by the end of your workday?', options: STANDARD_OPTIONS },
+  { id: 2, text: 'Is your workload more than you can realistically get done in your working hours?', options: STANDARD_OPTIONS },
+  { id: 3, text: 'Do you find yourself working late or through breaks just to keep up?', options: STANDARD_OPTIONS },
+  { id: 4, text: 'Do you feel a sense of dread before checking your work messages or inbox?', options: STANDARD_OPTIONS },
+  { id: 5, text: 'Are you skipping meals or breaks because of work demands?', options: STANDARD_OPTIONS },
+  { id: 6, text: 'Do you feel less effective at your job than you used to?', options: STANDARD_OPTIONS },
+  { id: 7, text: 'Do you find yourself becoming cynical or checked out about your work?', options: STANDARD_OPTIONS },
+  { id: 8, text: 'Are you feeling physically exhausted or run down because of work?', options: STANDARD_OPTIONS },
+  { id: 9, text: 'Do you struggle to switch off from work once your day is done?', options: STANDARD_OPTIONS },
+  { id: 10, text: 'Do you feel like you have little control over your workload or priorities?', options: STANDARD_OPTIONS },
 ];
 
-export const DEPRESSION_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
-  { id: 1, text: 'Little interest or pleasure in doing things', options: STANDARD_OPTIONS },
-  { id: 2, text: 'Feeling down, depressed, or hopeless', options: STANDARD_OPTIONS },
-  { id: 3, text: 'Trouble sleeping', options: STANDARD_OPTIONS },
-  { id: 4, text: 'Feeling tired or having little energy', options: STANDARD_OPTIONS },
-  { id: 5, text: 'Poor appetite or overeating', options: STANDARD_OPTIONS },
-  { id: 6, text: 'Feeling bad about yourself - or that you are a failure or have let yourself or your family down', options: STANDARD_OPTIONS },
-  { id: 7, text: 'Trouble concentrating on things, such as reading the newspaper or watching television', options: STANDARD_OPTIONS },
-  { id: 8, text: 'Feeling like crying', options: STANDARD_OPTIONS },
-  { id: 9, text: 'Thoughts that you would be better off dead, or of hurting yourself', options: STANDARD_OPTIONS },
-  { id: 10, text: 'Difficulty in doing your daily activities', options: STANDARD_OPTIONS },
+export const WORK_ANXIETY_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
+  { id: 1, text: 'Do you feel nervous, anxious, or on edge about your job or workload?', options: STANDARD_OPTIONS },
+  { id: 2, text: 'Do you find it hard to stop worrying about deadlines or unfinished tasks?', options: STANDARD_OPTIONS },
+  { id: 3, text: 'Are you worrying too much about how your work is being judged by others?', options: STANDARD_OPTIONS },
+  { id: 4, text: 'Do you have trouble relaxing, even outside work hours, because of job stress?', options: STANDARD_OPTIONS },
+  { id: 5, text: 'Do you feel restless or unable to sit still before a big meeting or deadline?', options: STANDARD_OPTIONS },
+  { id: 6, text: 'Are you becoming easily annoyed or irritable because of pressure at work?', options: STANDARD_OPTIONS },
+  { id: 7, text: "Do you feel afraid something will go wrong with a project you're responsible for?", options: STANDARD_OPTIONS },
+  { id: 8, text: 'Do you notice physical tension, like a tight chest or shallow breathing, when thinking about work?', options: STANDARD_OPTIONS },
+  { id: 9, text: 'Do you get a racing heart or dry mouth before presentations or performance reviews?', options: STANDARD_OPTIONS },
+  { id: 10, text: 'How often do you feel shaky or on edge during a typical workday?', options: STANDARD_OPTIONS },
 ];
 
-export const STRESS_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
-  { id: 1, text: 'Do you find yourself eating unhealthy foods or eating when you are not hungry, as a response to stress or difficult feelings?', options: STANDARD_OPTIONS },
-  { id: 2, text: 'Are you finding yourself sweating excessively when you are not exercising?', options: STANDARD_OPTIONS },
-  { id: 3, text: 'Are you having trouble sleeping?', options: STANDARD_OPTIONS },
-  { id: 4, text: 'Are you experiencing any digestive problems, such as indigestion, irritable bowel syndrome, or ulcers?', options: STANDARD_OPTIONS },
-  { id: 5, text: 'Are you suffering from burnout, anxiety disorders, or depression?', options: STANDARD_OPTIONS },
-  { id: 6, text: 'Are you taking care of yourself?', options: STANDARD_OPTIONS },
-  { id: 7, text: 'Do you have a supportive social network, and take time for relationships in your life?', options: STANDARD_OPTIONS },
-  { id: 8, text: 'Are you following regular exercise?', options: STANDARD_OPTIONS },
-  { id: 9, text: 'Do you find yourself smoking and/or drinking to excess as a way to deal with stress?', options: STANDARD_OPTIONS },
-  { id: 10, text: 'Do you often find yourself with tension headaches?', options: STANDARD_OPTIONS },
+export const WORK_MOOD_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
+  { id: 1, text: 'Have you lost interest or enthusiasm in work you used to enjoy?', options: STANDARD_OPTIONS },
+  { id: 2, text: 'Do you feel down, discouraged, or low most days at work?', options: STANDARD_OPTIONS },
+  { id: 3, text: 'Is work affecting your sleep, either falling asleep or staying asleep?', options: STANDARD_OPTIONS },
+  { id: 4, text: 'Do you feel tired or low on energy during your workday?', options: STANDARD_OPTIONS },
+  { id: 5, text: 'Has your appetite changed noticeably because of work stress?', options: STANDARD_OPTIONS },
+  { id: 6, text: "Do you feel like you're falling short or letting your team down?", options: STANDARD_OPTIONS },
+  { id: 7, text: 'Do you find it hard to concentrate on tasks or meetings?', options: STANDARD_OPTIONS },
+  { id: 8, text: 'Do you feel overwhelmed or close to tears during the workday?', options: STANDARD_OPTIONS },
+  { id: 9, text: 'Do you dread going into work, or think about not going at all?', options: STANDARD_OPTIONS },
+  { id: 10, text: 'Is it hard to get through your daily tasks because of how you feel?', options: STANDARD_OPTIONS },
 ];
 
-export const PTSD_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
-  { id: 1, text: 'Do you get flashbacks of your trauma?', options: STANDARD_OPTIONS },
-  { id: 2, text: 'Do you get nightmares?', options: STANDARD_OPTIONS },
-  { id: 3, text: 'Do you experience physical sensations such as pain, sweat, nausea, or trembling?', options: STANDARD_OPTIONS },
-  { id: 4, text: "Do you experience extreme alertness that sometimes and other times it's hard to concentrate?", options: STANDARD_OPTIONS },
-  { id: 5, text: 'Disturbed or lack of sleep?', options: STANDARD_OPTIONS },
-  { id: 6, text: 'Easily irritable or angry?', options: STANDARD_OPTIONS },
-  { id: 7, text: 'Are you trying to avoid your feelings or memories?', options: STANDARD_OPTIONS },
-  { id: 8, text: 'Trying to keep yourself busy in order to avoid remembrance of the trauma?', options: STANDARD_OPTIONS },
-  { id: 9, text: 'Avoiding anything (people or situation) that reminds you of the trauma?', options: STANDARD_OPTIONS },
-  { id: 10, text: 'Being unable to remember details of what happened?', options: STANDARD_OPTIONS },
+export const MANAGER_RELATIONSHIP_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
+  { id: 1, text: 'Do you feel your manager gives you clear priorities and direction?', options: STANDARD_OPTIONS },
+  { id: 2, text: 'Is it hard to get support from your manager when you need it?', options: STANDARD_OPTIONS },
+  { id: 3, text: 'Do you feel comfortable raising concerns with your manager?', options: STANDARD_OPTIONS },
+  { id: 4, text: 'Do you feel recognized or appreciated by your manager for your work?', options: STANDARD_OPTIONS },
+  { id: 5, text: 'Is there friction or tension with a colleague that affects your day?', options: STANDARD_OPTIONS },
+  { id: 6, text: 'Do you feel like a valued part of your team?', options: STANDARD_OPTIONS },
+  { id: 7, text: 'Do you worry about how your manager perceives your performance?', options: STANDARD_OPTIONS },
+  { id: 8, text: 'Do you feel your manager trusts you to do your job without micromanaging?', options: STANDARD_OPTIONS },
+  { id: 9, text: 'Is it difficult to get honest feedback from your manager or team?', options: STANDARD_OPTIONS },
+  { id: 10, text: 'Do you feel left out of decisions that affect your own work?', options: STANDARD_OPTIONS },
 ];
 
-export const RELATIONSHIP_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
-  { id: 1, text: 'Finds it hard to count on others', options: STANDARD_OPTIONS },
-  { id: 2, text: 'It is important to feel independent', options: STANDARD_OPTIONS },
-  { id: 3, text: 'Finds it easy to get emotionally close to others', options: STANDARD_OPTIONS },
-  { id: 4, text: 'Worries about being hurt', options: STANDARD_OPTIONS },
-  { id: 5, text: 'Comfortable without close relationships', options: STANDARD_OPTIONS },
-  { id: 6, text: 'Wants to be completely close to others', options: STANDARD_OPTIONS },
-  { id: 7, text: 'Worries about being alone', options: STANDARD_OPTIONS },
-  { id: 8, text: 'Comfortable depending on others', options: STANDARD_OPTIONS },
-  { id: 9, text: 'Difficult to trust others completely', options: STANDARD_OPTIONS },
-  { id: 10, text: 'Comfortable having others depend on them', options: STANDARD_OPTIONS },
+export const WORK_LIFE_BALANCE_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
+  { id: 1, text: 'Is work spilling into your evenings, weekends, or personal time?', options: STANDARD_OPTIONS },
+  { id: 2, text: 'Do you feel guilty taking time off or stepping away from work?', options: STANDARD_OPTIONS },
+  { id: 3, text: 'Are you finding it hard to fully switch off after work hours?', options: STANDARD_OPTIONS },
+  { id: 4, text: 'Do work messages or notifications interrupt your personal time?', options: STANDARD_OPTIONS },
+  { id: 5, text: 'Do you have enough energy left for your life outside of work?', options: STANDARD_OPTIONS },
+  { id: 6, text: 'Is your commute or work schedule cutting into time you need for yourself?', options: STANDARD_OPTIONS },
+  { id: 7, text: "Do you feel you're missing out on personal or family commitments because of work?", options: STANDARD_OPTIONS },
+  { id: 8, text: 'Are you skipping exercise, hobbies, or rest because of work demands?', options: STANDARD_OPTIONS },
+  { id: 9, text: 'Do you feel your working hours are respected by your team or manager?', options: STANDARD_OPTIONS },
+  { id: 10, text: 'Do you struggle to take a proper lunch break or pause during the day?', options: STANDARD_OPTIONS },
 ];
 
-export const OCD_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
-  { id: 1, text: 'Do you have unwanted ideas, images, or impulses, that seem silly, nasty, or horrible?', options: STANDARD_OPTIONS },
-  { id: 2, text: 'Do you worry excessively about dirt, germs, or chemicals?', options: STANDARD_OPTIONS },
-  { id: 3, text: 'Are you constantly worried that something bad will happen because you forgot something important like locking the door or turning off appliances?', options: STANDARD_OPTIONS },
-  { id: 4, text: 'Do you experience shortness of breath?', options: STANDARD_OPTIONS },
-  { id: 5, text: "Are you afraid you will act or speak aggressively when you really don't want to?", options: STANDARD_OPTIONS },
-  { id: 6, text: 'Do you have to check things over and over or repeat actions many times to be sure they are done properly?', options: STANDARD_OPTIONS },
-  { id: 7, text: 'Do you experience "jelly" legs?', options: STANDARD_OPTIONS },
-  { id: 8, text: 'Are there things you feel you must do excessively or thoughts you must think repeatedly to feel comfortable or ease anxiety?', options: STANDARD_OPTIONS },
-  { id: 9, text: 'Do you wash yourself or things around you excessively?', options: STANDARD_OPTIONS },
-  { id: 10, text: 'Do you avoid situations or people you worry about hurting by aggressive words or actions?', options: STANDARD_OPTIONS },
+export const CAREER_GROWTH_ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
+  { id: 1, text: 'Do you feel your work goes unnoticed or unacknowledged?', options: STANDARD_OPTIONS },
+  { id: 2, text: 'Is it unclear what you need to do to grow or get promoted here?', options: STANDARD_OPTIONS },
+  { id: 3, text: 'Do you feel stuck or stagnant in your current role?', options: STANDARD_OPTIONS },
+  { id: 4, text: 'Do you feel you lack opportunities to learn new skills at work?', options: STANDARD_OPTIONS },
+  { id: 5, text: 'Do you feel underpaid for the work you do?', options: STANDARD_OPTIONS },
+  { id: 6, text: "Do you doubt whether you're good enough for your role?", options: STANDARD_OPTIONS },
+  { id: 7, text: "Is there a lack of feedback on how you're doing at work?", options: STANDARD_OPTIONS },
+  { id: 8, text: 'Do you worry about job security or the stability of your role?', options: STANDARD_OPTIONS },
+  { id: 9, text: 'Do you feel your contributions go unvalued by leadership?', options: STANDARD_OPTIONS },
+  { id: 10, text: "Do you feel there's no path forward for you at this company?", options: STANDARD_OPTIONS },
 ];
 
 export interface AssessmentMetadata {
@@ -119,39 +131,46 @@ export interface AssessmentMetadata {
 }
 
 export const ASSESSMENT_METADATA: Record<AssessmentType, AssessmentMetadata> = {
-  anxiety: {
-    id: 'anxiety', title: 'Anxiety Assessment', description: 'Evaluate anxiety levels and patterns',
-    questions: ANXIETY_ASSESSMENT_QUESTIONS, maxScore: 50,
+  workload: {
+    id: 'workload', title: 'Workload & Burnout', description: 'How manageable your workload feels, and whether you’re running on empty',
+    questions: WORKLOAD_ASSESSMENT_QUESTIONS, maxScore: 50,
     levelRanges: { low: 15, moderate: 35, high: 50 },
   },
-  depression: {
-    id: 'depression', title: 'Depression Assessment', description: 'Assess symptoms of depression and mood patterns',
-    questions: DEPRESSION_ASSESSMENT_QUESTIONS, maxScore: 50,
+  work_anxiety: {
+    id: 'work_anxiety', title: 'Work-Related Anxiety', description: 'How much worry and tension your job is carrying day to day',
+    questions: WORK_ANXIETY_ASSESSMENT_QUESTIONS, maxScore: 50,
     levelRanges: { low: 15, moderate: 35, high: 50 },
   },
-  stress: {
-    id: 'stress', title: 'Stress Assessment', description: 'Evaluate stress levels',
-    questions: STRESS_ASSESSMENT_QUESTIONS, maxScore: 50,
+  work_mood: {
+    id: 'work_mood', title: 'Work Mood & Engagement', description: 'How engaged and motivated you feel in your role right now',
+    questions: WORK_MOOD_ASSESSMENT_QUESTIONS, maxScore: 50,
     levelRanges: { low: 15, moderate: 35, high: 50 },
   },
-  ptsd: {
-    id: 'ptsd', title: 'PTSD Assessment', description: 'Screen for post-traumatic stress disorder symptoms',
-    questions: PTSD_ASSESSMENT_QUESTIONS, maxScore: 50,
+  manager_relationship: {
+    id: 'manager_relationship', title: 'Manager & Team Relationship', description: 'How supported and heard you feel by your manager and team',
+    questions: MANAGER_RELATIONSHIP_ASSESSMENT_QUESTIONS, maxScore: 50,
     levelRanges: { low: 15, moderate: 35, high: 50 },
   },
-  relationship: {
-    id: 'relationship', title: 'Relationship Assessment', description: 'Assess relationship patterns and communication styles',
-    questions: RELATIONSHIP_ASSESSMENT_QUESTIONS, maxScore: 50,
+  work_life_balance: {
+    id: 'work_life_balance', title: 'Work-Life Balance', description: 'Whether work is leaving room for the rest of your life',
+    questions: WORK_LIFE_BALANCE_ASSESSMENT_QUESTIONS, maxScore: 50,
     levelRanges: { low: 15, moderate: 35, high: 50 },
   },
-  ocd: {
-    id: 'ocd', title: 'OCD Assessment', description: 'Evaluate obsessive-compulsive disorder symptoms',
-    questions: OCD_ASSESSMENT_QUESTIONS, maxScore: 50,
-    levelRanges: { low: 20, moderate: 36, high: 50 },
+  career_growth: {
+    id: 'career_growth', title: 'Career Growth & Recognition', description: 'Whether you feel seen, valued, and able to grow here',
+    questions: CAREER_GROWTH_ASSESSMENT_QUESTIONS, maxScore: 50,
+    levelRanges: { low: 15, moderate: 35, high: 50 },
   },
 };
 
-export const ASSESSMENT_TYPES: AssessmentType[] = ['anxiety', 'depression', 'stress', 'ptsd', 'relationship', 'ocd'];
+export const ASSESSMENT_TYPES: AssessmentType[] = [
+  'workload',
+  'work_anxiety',
+  'work_mood',
+  'manager_relationship',
+  'work_life_balance',
+  'career_growth',
+];
 
 export function calculateAssessmentScore(
   answers: Record<number, string>,

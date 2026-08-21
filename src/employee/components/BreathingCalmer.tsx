@@ -115,11 +115,11 @@ export function BreathingCalmer() {
               className={cn(
                 'flex flex-col items-start p-3.5 rounded-2xl border text-left transition-all cursor-pointer',
                 isSelected
-                  ? 'border-[#4F6B57] bg-[#FAF7F2] ring-2 ring-[#4F6B57]/30 shadow-xs'
+                  ? 'border-[#2D6A4F] bg-[#FAF7F2] ring-2 ring-[#2D6A4F]/30'
                   : 'border-[#EAE4D9] bg-white hover:bg-[#FAF7F2]/60'
               )}
             >
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#4F6B57]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#2D6A4F]">
                 {p.tag}
               </span>
               <span className="text-xs sm:text-sm font-semibold text-[#243327] mt-0.5">
@@ -131,14 +131,14 @@ export function BreathingCalmer() {
       </div>
 
       {/* Main Breathing Circle Stage */}
-      <div className="rounded-[28px] bg-gradient-to-b from-[#FAF7F2] to-[#EAE4D9]/50 border border-[#EAE4D9] p-8 sm:p-12 shadow-xs flex flex-col items-center justify-center text-center gap-8 relative overflow-hidden">
+      <div className="rounded-2xl bg-[#F3EFE8] border border-[#EAE4D9] p-6 sm:p-12 flex flex-col items-center justify-center text-center gap-8 relative overflow-hidden">
         {/* Animated breathing orb */}
-        <div className="relative flex h-64 w-64 items-center justify-center">
+        <div className="relative flex h-48 w-48 sm:h-64 sm:w-64 items-center justify-center">
           {/* Outer glow waves */}
           <div
             className={cn(
-              'absolute inset-0 rounded-full bg-[#4F6B57]/10 transition-all duration-1000 ease-in-out',
-              isActive && isExpanding && 'scale-125 opacity-100 bg-[#4F6B57]/20',
+              'absolute inset-0 rounded-full bg-[#2D6A4F]/10 transition-all duration-1000 ease-in-out',
+              isActive && isExpanding && 'scale-125 opacity-100 bg-[#2D6A4F]/20',
               isActive && isHolding && 'scale-115 opacity-80 bg-[#735A88]/20',
               isActive && !isExpanding && !isHolding && 'scale-90 opacity-40'
             )}
@@ -147,9 +147,9 @@ export function BreathingCalmer() {
           {/* Main circle */}
           <div
             className={cn(
-              'relative flex h-48 w-48 flex-col items-center justify-center rounded-full shadow-lg border transition-all duration-1000 ease-in-out',
+              'relative flex h-36 w-36 sm:h-48 sm:w-48 flex-col items-center justify-center rounded-full shadow-lg border transition-all duration-1000 ease-in-out',
               isActive && isExpanding
-                ? 'scale-110 bg-[#4F6B57] border-[#3E5545] text-white'
+                ? 'scale-110 bg-[#2D6A4F] border-[#234F3B] text-white'
                 : isActive && isHolding
                 ? 'scale-105 bg-[#59446B] border-[#443353] text-white'
                 : isActive
@@ -160,7 +160,7 @@ export function BreathingCalmer() {
             <span className="text-[11px] uppercase tracking-widest font-medium opacity-80">
               {isActive ? currentPhase.name : 'Paced Breath'}
             </span>
-            <span className="font-serif text-4xl sm:text-5xl font-medium mt-1">
+            <span className="text-4xl sm:text-5xl font-semibold mt-1">
               {isActive ? timeLeft : 'Ready'}
             </span>
             {isActive && (
@@ -177,7 +177,7 @@ export function BreathingCalmer() {
             {pattern.description}
           </p>
           {completedCycles > 0 && (
-            <span className="text-xs font-semibold text-[#4F6B57] bg-[#E8F0EA] px-3 py-0.5 rounded-full">
+            <span className="text-xs font-semibold text-[#2D6A4F] bg-[#E8F0EA] px-3 py-0.5 rounded-full">
               {completedCycles} full {completedCycles === 1 ? 'cycle' : 'cycles'} completed
             </span>
           )}
@@ -189,10 +189,10 @@ export function BreathingCalmer() {
             type="button"
             onClick={handleToggle}
             className={cn(
-              'inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold shadow-md transition-all cursor-pointer',
+              'inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-colors cursor-pointer',
               isActive
                 ? 'bg-[#243327] hover:bg-[#1A261D] text-white'
-                : 'bg-[#4F6B57] hover:bg-[#3E5545] text-white'
+                : 'bg-[#2D6A4F] hover:bg-[#234F3B] text-white'
             )}
           >
             {isActive ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}

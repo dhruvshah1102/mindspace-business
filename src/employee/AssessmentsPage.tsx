@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Flower2, Smile, Layers, ShieldAlert, Users, RefreshCw, type LucideIcon } from 'lucide-react';
+import { Flower2, Smile, Layers, Scale, Users, TrendingUp, type LucideIcon } from 'lucide-react';
 import { ASSESSMENT_METADATA, ASSESSMENT_TYPES, type AssessmentType } from '@/domain/assessments';
 import { useEmployeeAuth } from '@/app/EmployeeAuthContext';
 import { listMyAssessments, type EmployeeAssessmentRecord } from '@/services/employee-assessment-service';
 
 const TYPE_ICON: Record<AssessmentType, LucideIcon> = {
-  anxiety: Flower2,
-  depression: Smile,
-  stress: Layers,
-  ptsd: ShieldAlert,
-  relationship: Users,
-  ocd: RefreshCw,
+  workload: Layers,
+  work_anxiety: Flower2,
+  work_mood: Smile,
+  manager_relationship: Users,
+  work_life_balance: Scale,
+  career_growth: TrendingUp,
 };
 
 export function AssessmentsPage() {
@@ -34,8 +34,13 @@ export function AssessmentsPage() {
   }, [user]);
 
   const latestByType = useMemo(() => {
+    // Ignore records saved under a domain name that's since been retired
+    // (e.g. from before an assessment redesign) — they'd otherwise inflate
+    // "completed" past the current 6 domains.
+    const currentDomains: Set<string> = new Set(ASSESSMENT_TYPES);
     const map = new Map<AssessmentType, EmployeeAssessmentRecord>();
     for (const record of history) {
+      if (!currentDomains.has(record.domain)) continue;
       if (!map.has(record.domain)) map.set(record.domain, record);
     }
     return map;
@@ -65,7 +70,7 @@ export function AssessmentsPage() {
           </div>
           <div className="h-1.5 w-full rounded-full bg-[#EAE4D9] overflow-hidden">
             <div
-              className="h-full rounded-full bg-[#4F6B57] transition-all duration-300"
+              className="h-full rounded-full bg-[#2D6A4F] transition-all duration-300"
               style={{ width: `${overallProgress}%` }}
             />
           </div>
@@ -76,7 +81,7 @@ export function AssessmentsPage() {
         </p>
       </div>
 
-      <div className="flex flex-col gap-4 max-h-[calc(100vh-26rem)] md:max-h-[calc(100vh-14rem)] overflow-y-auto pr-2 pb-2">
+      <div className="flex flex-col gap-4 md:max-h-[calc(100vh-14rem)] md:overflow-y-auto md:pr-2 md:pb-2">
         {ASSESSMENT_TYPES.map((type) => {
           const meta = ASSESSMENT_METADATA[type];
           const latest = latestByType.get(type);
@@ -88,7 +93,7 @@ export function AssessmentsPage() {
             <div key={type} className="rounded-[24px] bg-white p-6 shadow-[0_1px_3px_rgba(35,50,38,0.08),0_8px_24px_-12px_rgba(35,50,38,0.12)] flex flex-col gap-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-4">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F3EEE5] text-[#4F6B57]">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F3EEE5] text-[#2D6A4F]">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div>
@@ -99,7 +104,7 @@ export function AssessmentsPage() {
 
                 <Link
                   to={`/app/assessments/${type}`}
-                  className="shrink-0 inline-flex items-center justify-center rounded-full px-5 py-2 text-xs font-semibold shadow-xs transition-all hover:scale-[1.02] cursor-pointer bg-[#4F6B57] hover:bg-[#3F5646] text-white"
+                  className="shrink-0 inline-flex items-center justify-center rounded-full px-5 py-2 text-xs font-semibold shadow-xs transition-all hover:scale-[1.02] cursor-pointer bg-[#2D6A4F] hover:bg-[#234F3B] text-white"
                 >
                   {completed ? 'Completed' : 'Start'}
                 </Link>
@@ -114,7 +119,7 @@ export function AssessmentsPage() {
                 </div>
                 <div className="h-1.5 w-full rounded-full bg-[#EAE4D9] overflow-hidden">
                   <div
-                    className="h-full rounded-full bg-[#4F6B57] transition-all duration-300"
+                    className="h-full rounded-full bg-[#2D6A4F] transition-all duration-300"
                     style={{ width: `${progress}%` }}
                   />
                 </div>

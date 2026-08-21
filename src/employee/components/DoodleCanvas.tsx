@@ -8,8 +8,6 @@ import {
   Moon,
   Brush,
   BookOpen,
-  ChevronLeft,
-  ChevronRight,
   Eye,
   EyeOff,
   Maximize2,
@@ -45,9 +43,15 @@ const PALETTE = [
   { name: 'Pure Chalk', color: '#FFFFFF' },
 ];
 
-const CATEGORIES = ['All', 'Nature', 'Zen', 'Cozy', 'Celestial', 'Creatures'] as const;
+// A small curated set, not the full library — this is a quick calming break, not a doodle app.
+const FEATURED_DOODLE_IDS = [1, 2, 3, 4, 12];
+const FEATURED_DOODLES = DOODLE_REFERENCES_23.filter((d) => FEATURED_DOODLE_IDS.includes(d.id));
 
-export function DoodleCanvas() {
+interface DoodleCanvasProps {
+  initialDoodleId?: number;
+}
+
+export function DoodleCanvas({ initialDoodleId }: DoodleCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -59,9 +63,10 @@ export function DoodleCanvas() {
   const [history, setHistory] = useState<Stroke[]>([]);
   const [currentStroke, setCurrentStroke] = useState<Point[]>([]);
 
-  // 23 Doodle Image Library State
-  const [selectedDoodleId, setSelectedDoodleId] = useState<number>(1);
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  // Doodle Reference State
+  const [selectedDoodleId, setSelectedDoodleId] = useState<number>(
+    initialDoodleId && FEATURED_DOODLE_IDS.includes(initialDoodleId) ? initialDoodleId : FEATURED_DOODLE_IDS[0]
+  );
   const [traceGuide, setTraceGuide] = useState(false);
   const [traceOpacity, setTraceOpacity] = useState(0.35);
   const [zoomModalOpen, setZoomModalOpen] = useState(false);
@@ -71,12 +76,14 @@ export function DoodleCanvas() {
 
   // Current selected reference
   const currentDoodle =
-    DOODLE_REFERENCES_23.find((d) => d.id === selectedDoodleId) || DOODLE_REFERENCES_23[0];
+    FEATURED_DOODLES.find((d) => d.id === selectedDoodleId) || FEATURED_DOODLES[0];
 
-  // Filtered doodle list
-  const filteredDoodles = DOODLE_REFERENCES_23.filter((d) => {
-    return selectedCategory === 'All' || d.category === selectedCategory;
-  });
+  // Jump to a newly recommended reference picture when it changes (only if it's one of the featured 5)
+  useEffect(() => {
+    if (initialDoodleId && FEATURED_DOODLE_IDS.includes(initialDoodleId)) {
+      setSelectedDoodleId(initialDoodleId);
+    }
+  }, [initialDoodleId]);
 
   // Responsive canvas size
   useEffect(() => {
@@ -262,35 +269,23 @@ export function DoodleCanvas() {
     link.click();
   };
 
-  const handleSelectPrevious = () => {
-    const idx = DOODLE_REFERENCES_23.findIndex((d) => d.id === selectedDoodleId);
-    const prevIdx = (idx - 1 + DOODLE_REFERENCES_23.length) % DOODLE_REFERENCES_23.length;
-    setSelectedDoodleId(DOODLE_REFERENCES_23[prevIdx].id);
-  };
-
-  const handleSelectNext = () => {
-    const idx = DOODLE_REFERENCES_23.findIndex((d) => d.id === selectedDoodleId);
-    const nextIdx = (idx + 1) % DOODLE_REFERENCES_23.length;
-    setSelectedDoodleId(DOODLE_REFERENCES_23[nextIdx].id);
-  };
-
   return (
     <div className="flex flex-col gap-6 w-full">
       {/* Top Banner Guide */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl bg-[#F4F8F5] border border-[#D5E5D8] p-4">
         <div className="flex items-start gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#4F6B57] text-white">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#2D6A4F] text-white">
             <ImageIcon className="h-5 w-5" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F6B57]">
-                23 Doodle Reference Pictures
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#2D6A4F]">
+                Doodle Reference Pictures
               </span>
-              <span className="text-xs text-[#78897B]">• Picture #{currentDoodle.id}: {currentDoodle.title}</span>
+              <span className="text-xs text-[#78897B]">• Now drawing: {currentDoodle.title}</span>
             </div>
             <p className="text-xs sm:text-sm font-medium text-[#243327] mt-0.5">
-              Look at any of the 23 doodle pictures on the right and draw along, or enable the trace overlay.
+              Pick one of the {FEATURED_DOODLES.length} pictures below and draw along, or enable the trace overlay.
             </p>
           </div>
         </div>
@@ -301,9 +296,9 @@ export function DoodleCanvas() {
             type="button"
             onClick={() => setTraceGuide((t) => !t)}
             className={cn(
-              'inline-flex items-center justify-center gap-2 shrink-0 rounded-xl px-3.5 py-2 text-xs font-semibold shadow-2xs transition-all cursor-pointer border',
+              'inline-flex items-center justify-center gap-2 shrink-0 rounded-xl px-3.5 py-2 text-xs font-semibold transition-colors cursor-pointer border',
               traceGuide
-                ? 'bg-[#4F6B57] text-white border-[#3E5545]'
+                ? 'bg-[#2D6A4F] text-white border-[#234F3B]'
                 : 'bg-white text-[#243327] border-[#D9D2C5] hover:bg-[#F3EFE8]'
             )}
           >
@@ -313,97 +308,150 @@ export function DoodleCanvas() {
         </div>
       </div>
 
-      {/* Main 2-Column Grid (Canvas on Left/Center, 23 Doodle Image Cards on Right) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        {/* Left / Center Area: Canvas & Drawing Controls (Col 1-7) */}
-        <div className="lg:col-span-7 flex flex-col gap-4">
-          <div
-            ref={containerRef}
-            className={cn(
-              'relative w-full rounded-[28px] border overflow-hidden shadow-sm flex flex-col transition-colors',
-              darkCanvas ? 'bg-[#1A211D] border-[#2E3C32]' : 'bg-[#FAF7F2] border-[#EAE4D9]'
-            )}
-          >
-            {/* Canvas Toolbar Header */}
-            <div
-              className={cn(
-                'flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b text-xs transition-colors',
-                darkCanvas ? 'bg-[#151B17] border-[#2E3C32] text-white/90' : 'bg-white/80 border-[#EAE4D9] text-[#243327]'
-              )}
-            >
-              {/* Brushes */}
-              <div className="flex items-center gap-1.5">
-                <span className="text-[11px] font-semibold text-[#78897B] mr-1 hidden sm:inline">Brush:</span>
-                {[
-                  { id: 'pen', label: 'Pen' },
-                  { id: 'marker', label: 'Marker' },
-                  { id: 'glow', label: 'Neon' },
-                  { id: 'watercolor', label: 'Watercolor' },
-                  { id: 'eraser', label: 'Eraser' },
-                ].map((b) => (
-                  <button
-                    key={b.id}
-                    type="button"
-                    onClick={() => setBrushType(b.id as any)}
-                    className={cn(
-                      'rounded-lg px-2.5 py-1 text-xs font-medium transition-all cursor-pointer',
-                      brushType === b.id
-                        ? 'bg-[#4F6B57] text-white shadow-2xs'
-                        : darkCanvas
-                        ? 'text-white/70 hover:bg-white/10'
-                        : 'text-[#56685A] hover:bg-[#F3EFE8]'
-                    )}
-                  >
-                    {b.label}
-                  </button>
-                ))}
-              </div>
+      {/* Canvas Card: toolbar + colors + actions all pinned above the canvas, so nothing ever requires scrolling to reach */}
+      <div
+        ref={containerRef}
+        className={cn(
+          'relative w-full rounded-2xl border overflow-hidden flex flex-col transition-colors',
+          darkCanvas ? 'bg-[#1A211D] border-[#2E3C32]' : 'bg-[#FAF7F2] border-[#EAE4D9]'
+        )}
+      >
+        {/* Toolbar Row 1: Brushes, Size, Dark Mode */}
+        <div
+          className={cn(
+            'flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b text-xs transition-colors',
+            darkCanvas ? 'bg-[#151B17] border-[#2E3C32] text-white/90' : 'bg-white/80 border-[#EAE4D9] text-[#243327]'
+          )}
+        >
+          {/* Brushes */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-[11px] font-semibold text-[#78897B] mr-1 hidden sm:inline">Brush:</span>
+            {[
+              { id: 'pen', label: 'Pen' },
+              { id: 'marker', label: 'Marker' },
+              { id: 'glow', label: 'Neon' },
+              { id: 'watercolor', label: 'Watercolor' },
+              { id: 'eraser', label: 'Eraser' },
+            ].map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => setBrushType(b.id as any)}
+                className={cn(
+                  'rounded-lg px-2.5 py-1 text-xs font-medium transition-all cursor-pointer',
+                  brushType === b.id
+                    ? 'bg-[#2D6A4F] text-white'
+                    : darkCanvas
+                    ? 'text-white/70 hover:bg-white/10'
+                    : 'text-[#56685A] hover:bg-[#F3EFE8]'
+                )}
+              >
+                {b.label}
+              </button>
+            ))}
+          </div>
 
-              {/* Size Slider & Dark Mode */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-medium text-[#78897B]">Size:</span>
-                  <input
-                    type="range"
-                    min="2"
-                    max="24"
-                    value={brushSize}
-                    onChange={(e) => setBrushSize(Number(e.target.value))}
-                    className="w-16 sm:w-20 accent-[#4F6B57] cursor-pointer"
-                  />
-                  <span className="text-[11px] font-mono text-[#78897B] w-4">{brushSize}</span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setDarkCanvas((d) => !d)}
-                  title={darkCanvas ? 'Switch to Light canvas' : 'Switch to Dark canvas'}
-                  className={cn(
-                    'flex h-8 w-8 items-center justify-center rounded-lg border transition-colors cursor-pointer',
-                    darkCanvas ? 'border-white/20 bg-white/10 text-white' : 'border-[#D9D2C5] bg-white text-[#243327] hover:bg-[#F3EFE8]'
-                  )}
-                >
-                  {darkCanvas ? <Sun className="h-4 w-4 text-amber-300" /> : <Moon className="h-4 w-4" />}
-                </button>
-              </div>
+          {/* Size Slider & Dark Mode */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-medium text-[#78897B]">Size:</span>
+              <input
+                type="range"
+                min="2"
+                max="24"
+                value={brushSize}
+                onChange={(e) => setBrushSize(Number(e.target.value))}
+                className="w-16 sm:w-20 accent-[#2D6A4F] cursor-pointer"
+              />
+              <span className="text-[11px] font-mono text-[#78897B] w-4">{brushSize}</span>
             </div>
 
-            {/* The HTML5 Canvas Container */}
-            <div className="relative w-full touch-none select-none flex items-center justify-center">
-              {/* Optional Trace Guide Overlay with Real Image */}
-              {traceGuide && (
-                <div
-                  className="pointer-events-none absolute inset-0 flex items-center justify-center z-0 transition-opacity p-6"
-                  style={{ opacity: traceOpacity }}
-                >
-                  <img
-                    src={currentDoodle.imageUrl}
-                    alt={currentDoodle.title}
-                    className="h-full w-full object-contain max-h-[380px] drop-shadow-sm"
-                  />
-                </div>
+            <button
+              type="button"
+              onClick={() => setDarkCanvas((d) => !d)}
+              title={darkCanvas ? 'Switch to Light canvas' : 'Switch to Dark canvas'}
+              className={cn(
+                'flex h-8 w-8 items-center justify-center rounded-lg border transition-colors cursor-pointer',
+                darkCanvas ? 'border-white/20 bg-white/10 text-white' : 'border-[#D9D2C5] bg-white text-[#243327] hover:bg-[#F3EFE8]'
               )}
+            >
+              {darkCanvas ? <Sun className="h-4 w-4 text-amber-300" /> : <Moon className="h-4 w-4" />}
+            </button>
+          </div>
+        </div>
 
+        {/* Toolbar Row 2: Colors & Actions (Undo, Clear, Save) — pinned above the canvas, not below it */}
+        <div
+          className={cn(
+            'flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-b text-xs transition-colors',
+            darkCanvas ? 'bg-[#151B17] border-[#2E3C32]' : 'bg-white/90 border-[#EAE4D9]'
+          )}
+        >
+          {/* Colors */}
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <span className="text-[11px] font-semibold text-[#78897B] mr-1 hidden sm:inline">Color:</span>
+            {PALETTE.map((item) => {
+              const isSelected = selectedColor === item.color && brushType !== 'eraser';
+              return (
+                <button
+                  key={item.name}
+                  type="button"
+                  onClick={() => {
+                    setSelectedColor(item.color);
+                    if (brushType === 'eraser') setBrushType('pen');
+                  }}
+                  title={item.name}
+                  className={cn(
+                    'h-7 w-7 rounded-full transition-transform cursor-pointer flex items-center justify-center',
+                    isSelected ? 'ring-2 ring-offset-2 ring-[#2D6A4F] scale-110' : 'hover:scale-105'
+                  )}
+                  style={{ backgroundColor: item.color, border: item.color === '#FFFFFF' ? '1px solid #D9D2C5' : 'none' }}
+                />
+              );
+            })}
+          </div>
+
+          {/* Action buttons (Undo, Clear, Save) */}
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleUndo}
+              disabled={history.length === 0}
+              className={cn(
+                'inline-flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed',
+                darkCanvas ? 'bg-white/10 text-white hover:bg-white/15' : 'bg-[#FAF7F2] text-[#243327] hover:bg-[#EAE4D9] border border-[#D9D2C5]'
+              )}
+            >
+              <Undo2 className="h-3.5 w-3.5" />
+              <span>Undo</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleClear}
+              disabled={history.length === 0}
+              className={cn(
+                'inline-flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed',
+                darkCanvas ? 'bg-white/10 text-white hover:bg-rose-900/40' : 'bg-[#FAF7F2] text-[#243327] hover:bg-rose-50 hover:text-rose-700 border border-[#D9D2C5]'
+              )}
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              <span>Clear</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleDownload}
+              className="inline-flex items-center gap-1.5 rounded-xl bg-[#2D6A4F] hover:bg-[#234F3B] text-white px-3.5 py-1.5 text-xs font-semibold transition-colors cursor-pointer"
+            >
+              <Download className="h-3.5 w-3.5" />
+              <span>Save</span>
+            </button>
+          </div>
+        </div>
+
+        {/* The HTML5 Canvas Container */}
+        <div className="relative w-full touch-none select-none flex items-center justify-center">
               <canvas
                 ref={canvasRef}
                 width={dimensions.width}
@@ -416,12 +464,28 @@ export function DoodleCanvas() {
                 style={{ maxHeight: '520px' }}
               />
 
+              {/* Optional Trace Guide Overlay with Real Image — must sit ABOVE the canvas (which always paints an
+                  opaque background on redraw) so it's actually visible; pointer-events-none lets clicks/drags
+                  pass through to the canvas underneath. */}
+              {traceGuide && (
+                <div
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center z-20 transition-opacity p-6"
+                  style={{ opacity: traceOpacity }}
+                >
+                  <img
+                    src={currentDoodle.imageUrl}
+                    alt={currentDoodle.title}
+                    className="h-full w-full object-contain max-h-[380px] drop-shadow-sm"
+                  />
+                </div>
+              )}
+
               {history.length === 0 && !isDrawing && !traceGuide && (
                 <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center p-6 gap-2 z-10">
                   <div
                     className={cn(
-                      'flex h-11 w-11 items-center justify-center rounded-full shadow-xs',
-                      darkCanvas ? 'bg-white/10 text-white/80' : 'bg-white/80 text-[#4F6B57]'
+                      'flex h-11 w-11 items-center justify-center rounded-full',
+                      darkCanvas ? 'bg-white/10 text-white/80' : 'bg-white/80 text-[#2D6A4F]'
                     )}
                   >
                     <Brush className="h-5 w-5" />
@@ -432,7 +496,7 @@ export function DoodleCanvas() {
                       darkCanvas ? 'text-white/75' : 'text-[#56685A]'
                     )}
                   >
-                    Look at the picture on the right and draw <strong>"{currentDoodle.title}"</strong>…
+                    Look at the reference below and draw <strong>"{currentDoodle.title}"</strong>…
                   </p>
                   <p
                     className={cn(
@@ -463,240 +527,60 @@ export function DoodleCanvas() {
                     step="0.05"
                     value={traceOpacity}
                     onChange={(e) => setTraceOpacity(Number(e.target.value))}
-                    className="w-28 accent-[#4F6B57] cursor-pointer"
+                    className="w-28 accent-[#2D6A4F] cursor-pointer"
                   />
                   <span className="text-[11px] font-mono">{Math.round(traceOpacity * 100)}%</span>
                 </div>
               </div>
             )}
+      </div>
 
-            {/* Canvas Bottom Color Palette & Action Buttons */}
-            <div
-              className={cn(
-                'flex flex-wrap items-center justify-between gap-3 px-4 py-3 border-t text-xs transition-colors',
-                darkCanvas ? 'bg-[#151B17] border-[#2E3C32]' : 'bg-white/90 border-[#EAE4D9]'
-              )}
-            >
-              {/* Colors */}
-              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                <span className="text-[11px] font-semibold text-[#78897B] mr-1 hidden sm:inline">Color:</span>
-                {PALETTE.map((item) => {
-                  const isSelected = selectedColor === item.color && brushType !== 'eraser';
-                  return (
-                    <button
-                      key={item.name}
-                      type="button"
-                      onClick={() => {
-                        setSelectedColor(item.color);
-                        if (brushType === 'eraser') setBrushType('pen');
-                      }}
-                      title={item.name}
-                      className={cn(
-                        'h-7 w-7 rounded-full transition-all cursor-pointer flex items-center justify-center shadow-2xs',
-                        isSelected ? 'ring-2 ring-offset-2 ring-[#4F6B57] scale-110' : 'hover:scale-105'
-                      )}
-                      style={{ backgroundColor: item.color, border: item.color === '#FFFFFF' ? '1px solid #D9D2C5' : 'none' }}
-                    />
-                  );
-                })}
-              </div>
-
-              {/* Action buttons (Undo, Clear, Save) */}
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleUndo}
-                  disabled={history.length === 0}
-                  className={cn(
-                    'inline-flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed',
-                    darkCanvas ? 'bg-white/10 text-white hover:bg-white/15' : 'bg-[#FAF7F2] text-[#243327] hover:bg-[#EAE4D9] border border-[#D9D2C5]'
-                  )}
-                >
-                  <Undo2 className="h-3.5 w-3.5" />
-                  <span>Undo</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  disabled={history.length === 0}
-                  className={cn(
-                    'inline-flex items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed',
-                    darkCanvas ? 'bg-white/10 text-white hover:bg-rose-900/40' : 'bg-[#FAF7F2] text-[#243327] hover:bg-rose-50 hover:text-rose-700 border border-[#D9D2C5]'
-                  )}
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                  <span>Clear</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleDownload}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-[#4F6B57] hover:bg-[#3E5545] text-white px-3.5 py-1.5 text-xs font-semibold shadow-xs transition-all cursor-pointer"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  <span>Save</span>
-                </button>
-              </div>
-            </div>
-          </div>
+      {/* Doodle Picker — the only reference UI; pick a picture, or tap the corner icon to see drawing steps */}
+      <div className="rounded-2xl bg-white border border-[#EAE4D9] p-4 sm:p-5 flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <BookOpen className="h-4 w-4 text-[#2D6A4F]" />
+          <h4 className="text-base font-semibold text-[#233226]">Pick a Picture</h4>
         </div>
 
-        {/* Right Area: Active Reference Image Viewer & 23 Doodle Image Cards (Col 8-12) */}
-        <div className="lg:col-span-5 flex flex-col gap-5">
-          {/* Active Doodle Card with Real Illustrated Picture */}
-          <div className="rounded-[28px] bg-white border border-[#EAE4D9] p-5 shadow-xs flex flex-col gap-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="rounded-full bg-[#E8F0EA] px-2.5 py-0.5 text-[10px] font-bold text-[#4F6B57]">
-                  {currentDoodle.category}
-                </span>
-                <span className="text-xs text-[#78897B]">• Picture #{currentDoodle.id} of 23</span>
-              </div>
-
-              {/* Prev / Next Nav */}
-              <div className="flex items-center gap-1.5">
-                <button
-                  type="button"
-                  onClick={handleSelectPrevious}
-                  title="Previous Picture"
-                  className="flex h-8 w-8 items-center justify-center rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] text-[#243327] hover:bg-[#EAE4D9] cursor-pointer shadow-2xs"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleSelectNext}
-                  title="Next Picture"
-                  className="flex h-8 w-8 items-center justify-center rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] text-[#243327] hover:bg-[#EAE4D9] cursor-pointer shadow-2xs"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Main Picture Frame */}
-            <div className="relative group rounded-2xl overflow-hidden border border-[#EAE4D9] bg-[#FAF7F2] p-4 flex items-center justify-center">
-              <img
-                src={currentDoodle.imageUrl}
-                alt={currentDoodle.title}
-                className="h-48 w-48 object-contain transition-transform duration-300 group-hover:scale-105"
-              />
-
-              {/* Enlarge zoom button overlay */}
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+          {FEATURED_DOODLES.map((doodle) => {
+            const isSelected = selectedDoodleId === doodle.id;
+            return (
               <button
+                key={doodle.id}
                 type="button"
-                onClick={() => setZoomModalOpen(true)}
-                title="Enlarge Picture"
-                className="absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-xl bg-white/90 hover:bg-white text-[#243327] border border-[#D9D2C5] shadow-xs cursor-pointer opacity-90 group-hover:opacity-100 transition-opacity"
+                onClick={() => setSelectedDoodleId(doodle.id)}
+                className={cn(
+                  'flex flex-col items-center p-2.5 rounded-2xl border text-center transition-colors cursor-pointer group relative',
+                  isSelected
+                    ? 'border-[#2D6A4F] bg-[#F4F8F5] ring-2 ring-[#2D6A4F]/30'
+                    : 'border-[#EAE4D9] bg-white hover:bg-[#FAF7F2] hover:border-[#2D6A4F]/30'
+                )}
               >
-                <Maximize2 className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div>
-              <h3 className="font-serif text-xl font-normal text-[#233226]">
-                {currentDoodle.title}
-              </h3>
-              <p className="text-xs text-[#56685A] mt-0.5 italic">
-                "{currentDoodle.tagline}"
-              </p>
-            </div>
-
-            {/* Quick Drawing Steps */}
-            <div className="rounded-2xl bg-[#FAF7F2] border border-[#EAE4D9] p-3.5 flex flex-col gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#4F6B57]">
-                Step-by-Step Drawing Guide:
-              </span>
-              <ul className="flex flex-col gap-1.5 text-xs text-[#243327]">
-                {currentDoodle.instructions.map((step, i) => (
-                  <li key={i} className="flex items-start gap-2">
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#4F6B57] text-[10px] font-bold text-white mt-0.5">
-                      {i + 1}
-                    </span>
-                    <span className="leading-snug">{step}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* 23 Doodle Picture Cards Gallery */}
-          <div className="rounded-[28px] bg-white border border-[#EAE4D9] p-5 shadow-xs flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-[#4F6B57]" />
-                  <h4 className="font-serif text-base font-normal text-[#233226]">
-                    All 23 Doodle Pictures
-                  </h4>
+                {/* Picture Thumbnail */}
+                <div className="relative h-16 w-16 flex items-center justify-center p-1.5 rounded-xl bg-white border border-[#EAE4D9]">
+                  <img src={doodle.imageUrl} alt={doodle.title} className="h-full w-full object-contain" />
+                  <span
+                    role="button"
+                    tabIndex={0}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedDoodleId(doodle.id);
+                      setZoomModalOpen(true);
+                    }}
+                    title="View drawing steps"
+                    className="absolute -top-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-[#D9D2C5] text-[#243327] opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    <Maximize2 className="h-3 w-3" />
+                  </span>
                 </div>
-                <span className="text-xs text-[#78897B] font-medium">
-                  {filteredDoodles.length} pictures
+
+                <span className="mt-1.5 text-[11px] font-semibold text-[#243327] truncate w-full">
+                  {doodle.title}
                 </span>
-              </div>
-
-              {/* Category Filter Pills */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-                {CATEGORIES.map((cat) => (
-                  <button
-                    key={cat}
-                    type="button"
-                    onClick={() => setSelectedCategory(cat)}
-                    className={cn(
-                      'rounded-lg px-2.5 py-1 text-[11px] font-semibold whitespace-nowrap transition-colors cursor-pointer',
-                      selectedCategory === cat
-                        ? 'bg-[#4F6B57] text-white shadow-2xs'
-                        : 'bg-[#FAF7F2] text-[#56685A] hover:bg-[#EAE4D9]'
-                    )}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Visual Image Cards Grid (2 cols) */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-3 max-h-[420px] overflow-y-auto pr-1">
-              {filteredDoodles.map((doodle) => {
-                const isSelected = selectedDoodleId === doodle.id;
-                return (
-                  <button
-                    key={doodle.id}
-                    type="button"
-                    onClick={() => setSelectedDoodleId(doodle.id)}
-                    className={cn(
-                      'flex flex-col items-center p-3 rounded-2xl border text-center transition-all cursor-pointer group relative',
-                      isSelected
-                        ? 'border-[#4F6B57] bg-[#F4F8F5] ring-2 ring-[#4F6B57]/30 shadow-xs scale-102'
-                        : 'border-[#EAE4D9] bg-white hover:bg-[#FAF7F2] hover:border-[#4F6B57]/30'
-                    )}
-                  >
-                    {/* Picture Thumbnail */}
-                    <div className="relative h-20 w-20 flex items-center justify-center p-1 rounded-xl bg-white border border-[#EAE4D9] shadow-2xs">
-                      <img
-                        src={doodle.imageUrl}
-                        alt={doodle.title}
-                        className="h-full w-full object-contain"
-                      />
-                      <span className="absolute top-1 left-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#243327] text-[9px] font-bold text-white">
-                        {doodle.id}
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col w-full mt-2">
-                      <span className="text-xs font-semibold text-[#243327] truncate">
-                        {doodle.title}
-                      </span>
-                      <span className="text-[10px] text-[#78897B] truncate">
-                        {doodle.category}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -709,7 +593,7 @@ export function DoodleCanvas() {
           onClick={() => setZoomModalOpen(false)}
         >
           <div
-            className="relative max-w-lg w-full rounded-[32px] bg-white p-6 sm:p-8 border border-[#EAE4D9] shadow-2xl flex flex-col items-center text-center gap-4 animate-scale-up"
+            className="relative max-w-lg w-full max-h-[90vh] overflow-y-auto rounded-3xl bg-white p-5 sm:p-8 border border-[#EAE4D9] shadow-2xl flex flex-col items-center text-center gap-4 animate-scale-up"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -720,11 +604,11 @@ export function DoodleCanvas() {
               <X className="h-4 w-4" />
             </button>
 
-            <span className="rounded-full bg-[#E8F0EA] px-3 py-1 text-xs font-bold text-[#4F6B57]">
-              Picture #{currentDoodle.id} • {currentDoodle.category}
+            <span className="rounded-full bg-[#E8F0EA] px-3 py-1 text-xs font-bold text-[#2D6A4F]">
+              {currentDoodle.category}
             </span>
 
-            <div className="h-64 w-64 rounded-2xl bg-[#FAF7F2] border border-[#EAE4D9] p-4 flex items-center justify-center shadow-inner">
+            <div className="h-48 w-48 sm:h-64 sm:w-64 rounded-2xl bg-[#FAF7F2] border border-[#EAE4D9] p-4 flex items-center justify-center shadow-inner">
               <img
                 src={currentDoodle.imageUrl}
                 alt={currentDoodle.title}
@@ -733,7 +617,7 @@ export function DoodleCanvas() {
             </div>
 
             <div>
-              <h3 className="font-serif text-2xl font-normal text-[#233226]">
+              <h3 className="text-2xl font-semibold text-[#233226]">
                 {currentDoodle.title}
               </h3>
               <p className="text-xs text-[#56685A] mt-1 italic">
@@ -742,13 +626,13 @@ export function DoodleCanvas() {
             </div>
 
             <div className="w-full text-left rounded-2xl bg-[#FAF7F2] border border-[#EAE4D9] p-4">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#4F6B57]">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#2D6A4F]">
                 Instructions:
               </span>
               <ul className="flex flex-col gap-1 text-xs text-[#243327] mt-1.5">
                 {currentDoodle.instructions.map((step, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#4F6B57] text-[10px] font-bold text-white mt-0.5">
+                    <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#2D6A4F] text-[10px] font-bold text-white mt-0.5">
                       {i + 1}
                     </span>
                     <span>{step}</span>
@@ -763,7 +647,7 @@ export function DoodleCanvas() {
                 setTraceGuide(true);
                 setZoomModalOpen(false);
               }}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#4F6B57] hover:bg-[#3E5545] text-white px-5 py-2.5 text-xs font-semibold shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#2D6A4F] hover:bg-[#234F3B] text-white px-5 py-2.5 text-xs font-semibold transition-colors cursor-pointer"
             >
               <Layers className="h-4 w-4" />
               <span>Overlay Picture on Canvas</span>

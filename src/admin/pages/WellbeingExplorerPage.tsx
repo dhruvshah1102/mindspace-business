@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 export function WellbeingExplorerPage() {
   const rollup = getOverallRollup();
-  const [selected, setSelected] = useState<AssessmentType>('depression');
+  const [selected, setSelected] = useState<AssessmentType>('work_mood');
 
   const meta = ASSESSMENT_METADATA[selected];
   const domainStats = rollup.byDomain[selected];

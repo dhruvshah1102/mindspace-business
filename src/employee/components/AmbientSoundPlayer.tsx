@@ -159,13 +159,13 @@ export function AmbientSoundPlayer() {
 
   return (
     <div className="flex flex-col gap-5 w-full">
-      <div className="rounded-2xl bg-white border border-[#EAE4D9] p-5 shadow-xs flex flex-col gap-2">
+      <div className="rounded-2xl bg-white border border-[#EAE4D9] p-5 flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E8F0EA] text-[#4F6B57]">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E8F0EA] text-[#2D6A4F]">
               <Volume2 className="h-4 w-4" />
             </div>
-            <h3 className="font-serif text-lg font-normal text-[#233226]">Ambient Calming Soundscapes</h3>
+            <h3 className="text-lg font-semibold text-[#233226]">Ambient Calming Soundscapes</h3>
           </div>
           {isPlaying && (
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 text-emerald-800 px-3 py-0.5 text-xs font-semibold">
@@ -192,7 +192,7 @@ export function AmbientSoundPlayer() {
               className={cn(
                 'flex items-center justify-between p-4 rounded-2xl border transition-all cursor-pointer text-left',
                 isSelected
-                  ? 'border-[#4F6B57] bg-[#FAF7F2] ring-2 ring-[#4F6B57]/30 shadow-xs'
+                  ? 'border-[#2D6A4F] bg-[#FAF7F2] ring-2 ring-[#2D6A4F]/30'
                   : 'border-[#EAE4D9] bg-white hover:bg-[#FAF7F2]/70'
               )}
             >
@@ -200,7 +200,7 @@ export function AmbientSoundPlayer() {
                 <div
                   className={cn(
                     'flex h-10 w-10 items-center justify-center rounded-xl transition-colors',
-                    isSelected ? 'bg-[#4F6B57] text-white' : 'bg-[#FAF7F2] text-[#4F6B57] border border-[#EAE4D9]'
+                    isSelected ? 'bg-[#2D6A4F] text-white' : 'bg-[#FAF7F2] text-[#2D6A4F] border border-[#EAE4D9]'
                   )}
                 >
                   <Icon className="h-5 w-5" />
@@ -214,7 +214,7 @@ export function AmbientSoundPlayer() {
               <div
                 className={cn(
                   'flex h-8 w-8 items-center justify-center rounded-full transition-all',
-                  isSelected ? 'bg-[#4F6B57] text-white' : 'bg-[#F3EFE8] text-[#78897B]'
+                  isSelected ? 'bg-[#2D6A4F] text-white' : 'bg-[#F3EFE8] text-[#78897B]'
                 )}
               >
                 {isSelected ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 ml-0.5" />}
@@ -228,7 +228,7 @@ export function AmbientSoundPlayer() {
       {isPlaying && (
         <div className="rounded-2xl bg-white border border-[#EAE4D9] p-4 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-xs font-semibold text-[#56685A]">
-            <Volume2 className="h-4 w-4 text-[#4F6B57]" />
+            <Volume2 className="h-4 w-4 text-[#2D6A4F]" />
             <span>Volume</span>
           </div>
           <input
@@ -238,7 +238,7 @@ export function AmbientSoundPlayer() {
             step="0.05"
             value={volume}
             onChange={(e) => setVolume(Number(e.target.value))}
-            className="w-48 accent-[#4F6B57] cursor-pointer"
+            className="w-48 accent-[#2D6A4F] cursor-pointer"
           />
           <button
             type="button"

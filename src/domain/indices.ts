@@ -32,14 +32,17 @@ export type ByDomainMeans = Partial<Record<AssessmentType, DomainMeanInput>>;
 export type ByDomainBands = Partial<Record<AssessmentType, BandShareInput>>;
 export type ByItemMeans = Partial<Record<ItemKey, number>>;
 
-/** OWI weights — implementation.md §6. */
+/** OWI weights — implementation.md §6. The three core domains (workload,
+ * work anxiety, work mood) carry most of the weight, same as the original
+ * depression/anxiety/stress split; the remaining three share what PTSD/OCD/
+ * relationship used to. */
 const OWI_WEIGHTS: Record<AssessmentType, number> = {
-  depression: 0.25,
-  anxiety: 0.25,
-  stress: 0.25,
-  ptsd: 0.1,
-  ocd: 0.075,
-  relationship: 0.075,
+  workload: 0.25,
+  work_anxiety: 0.25,
+  work_mood: 0.25,
+  manager_relationship: 0.0834,
+  work_life_balance: 0.0833,
+  career_growth: 0.0833,
 };
 
 /**
@@ -64,9 +67,9 @@ export function computeOWI(byDomain: ByDomainMeans): number | null {
  *  - Cynicism: interest/pleasure item
  *  - Efficacy loss: concentration + "failure" item
  */
-const EXHAUSTION_ITEMS: ItemKey[] = ['depression:3', 'depression:4', 'stress:3', 'ptsd:5'];
-const CYNICISM_ITEMS: ItemKey[] = ['depression:1'];
-const EFFICACY_ITEMS: ItemKey[] = ['depression:7', 'depression:6'];
+const EXHAUSTION_ITEMS: ItemKey[] = ['work_mood:3', 'work_mood:4', 'workload:8', 'workload:1'];
+const CYNICISM_ITEMS: ItemKey[] = ['work_mood:1', 'workload:7'];
+const EFFICACY_ITEMS: ItemKey[] = ['work_mood:7', 'work_mood:6'];
 
 export function computeBurnoutComposite(byItem: ByItemMeans): number | null {
   const exhaustion = meanSeverityOf(byItem, EXHAUSTION_ITEMS);
@@ -79,7 +82,7 @@ export function computeBurnoutComposite(byItem: ByItemMeans): number | null {
 }
 
 /** Focus Capacity Index (productivity proxy): concentration + energy + restlessness, inverted. */
-const FOCUS_ITEMS: ItemKey[] = ['depression:7', 'depression:4', 'anxiety:5'];
+const FOCUS_ITEMS: ItemKey[] = ['work_mood:7', 'work_mood:4', 'work_anxiety:5'];
 
 export function computeFocusCapacityIndex(byItem: ByItemMeans): number | null {
   const severity = meanSeverityOf(byItem, FOCUS_ITEMS);
@@ -88,14 +91,14 @@ export function computeFocusCapacityIndex(byItem: ByItemMeans): number | null {
 
 /**
  * Absence Risk Index, 0–100, higher = better (lower risk):
- * weighted composite of High-band depression share, High-band stress share,
+ * weighted composite of High-band work-mood share, High-band workload share,
  * sleep item severity, energy item severity.
  */
 export function computeAbsenceRiskIndex(byDomain: ByDomainBands, byItem: ByItemMeans): number | null {
-  const depHigh = byDomain.depression?.high;
-  const stressHigh = byDomain.stress?.high;
-  const sleepSeverity = meanSeverityOf(byItem, ['depression:3']);
-  const energySeverity = meanSeverityOf(byItem, ['depression:4']);
+  const depHigh = byDomain.work_mood?.high;
+  const stressHigh = byDomain.workload?.high;
+  const sleepSeverity = meanSeverityOf(byItem, ['work_mood:3']);
+  const energySeverity = meanSeverityOf(byItem, ['work_mood:4']);
 
   const weighted: { value: number; weight: number }[] = [];
   if (depHigh !== undefined) weighted.push({ value: depHigh * 100, weight: 0.3 });

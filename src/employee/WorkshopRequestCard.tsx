@@ -48,7 +48,7 @@ export function WorkshopRequestCard() {
             HR sees a count per topic, never who asked.
           </p>
         </div>
-        <span className="text-xs font-medium text-[#4F6B57] bg-[#E8F0EA] px-3 py-1 rounded-full shrink-0">
+        <span className="text-xs font-medium text-[#2D6A4F] bg-[#E8F0EA] px-3 py-1 rounded-full shrink-0">
           Anonymous
         </span>
       </div>
@@ -63,7 +63,7 @@ export function WorkshopRequestCard() {
             <button
               type="button"
               onClick={() => setSent(false)}
-              className="mt-2 text-xs font-semibold text-[#4F6B57] hover:underline cursor-pointer"
+              className="mt-2 text-xs font-semibold text-[#2D6A4F] hover:underline cursor-pointer"
             >
               Request another
             </button>
@@ -80,7 +80,7 @@ export function WorkshopRequestCard() {
               required
               value={topic}
               onChange={(e) => setTopic(e.target.value as WorkshopTopic)}
-              className="rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] px-4 py-2.5 text-xs sm:text-sm text-[#233226] focus:outline-none focus:ring-2 focus:ring-[#4F6B57]/40 focus:border-[#4F6B57]"
+              className="rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] px-4 py-2.5 text-xs sm:text-sm text-[#233226] focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/40 focus:border-[#2D6A4F]"
             >
               <option value="" disabled>
                 Choose a topic…
@@ -104,7 +104,7 @@ export function WorkshopRequestCard() {
               onChange={(e) => setDetails(e.target.value)}
               maxLength={280}
               placeholder="e.g. something for new managers on setting boundaries"
-              className="resize-none rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] px-4 py-2.5 text-xs sm:text-sm text-[#233226] focus:outline-none focus:ring-2 focus:ring-[#4F6B57]/40 focus:border-[#4F6B57]"
+              className="resize-none rounded-xl border border-[#D9D2C5] bg-[#FAF7F2] px-4 py-2.5 text-xs sm:text-sm text-[#233226] focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/40 focus:border-[#2D6A4F]"
             />
           </div>
 
@@ -120,7 +120,7 @@ export function WorkshopRequestCard() {
             className={cn(
               'inline-flex items-center justify-center gap-2 self-start rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all',
               topic && !submitting
-                ? 'bg-[#4F6B57] hover:bg-[#3F5646] text-white shadow-xs hover:scale-105 cursor-pointer'
+                ? 'bg-[#2D6A4F] hover:bg-[#234F3B] text-white shadow-xs hover:scale-105 cursor-pointer'
                 : 'bg-[#EAE4D9] text-[#8C9B8F] cursor-not-allowed',
             )}
           >

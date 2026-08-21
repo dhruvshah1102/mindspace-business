@@ -13,6 +13,8 @@ import { ASSESSMENT_TYPES, ASSESSMENT_METADATA, type AssessmentType } from '@/do
 import { DEFAULT_K_ANONYMITY } from '@/domain/cohorts';
 import { getOrgEmployeeStats, type OrgEmployeeStats } from '@/services/org-stats-service';
 import { getOrgCreditBalance, type OrgCreditBalance } from '@/services/credit-service';
+import { getOrgDailyMoodSummary, type DailyMoodSummary } from '@/services/mood-checkin-service';
+import { MOOD_LABELS } from '@/domain/mood';
 import {
   getOrgAssessmentBreakdown,
   getOrgBookingBreakdown,
@@ -28,7 +30,7 @@ import {
 const BOOKING_FORMATS: BookingFormat[] = ['group', '1:1'];
 const FORMAT_LABEL: Record<BookingFormat, string> = { group: 'Group sessions', '1:1': '1:1 sessions' };
 
-/** Short name for a tile value — "Anxiety Assessment" is too long for a KPI. */
+/** Short name for a tile value, in case a domain title ever grows an " Assessment" suffix. */
 function shortDomain(type: AssessmentType): string {
   return ASSESSMENT_METADATA[type].title.replace(' Assessment', '');
 }
@@ -50,6 +52,7 @@ export function ReportPage() {
   const [bookings, setBookings] = useState<OrgBookingBreakdown | null>(null);
   const [trend, setTrend] = useState<OrgWeeklyTrend | null>(null);
   const [credits, setCredits] = useState<OrgCreditBalance | null>(null);
+  const [moodToday, setMoodToday] = useState<DailyMoodSummary | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -59,13 +62,15 @@ export function ReportPage() {
       getOrgBookingBreakdown(organization.orgId, k),
       getOrgWeeklyTrend(organization.orgId, 8),
       getOrgCreditBalance(organization.orgId),
-    ]).then(([stats, assessmentBreakdown, bookingBreakdown, weeklyTrend, creditBalance]) => {
+      getOrgDailyMoodSummary(organization.orgId, k),
+    ]).then(([stats, assessmentBreakdown, bookingBreakdown, weeklyTrend, creditBalance, dailyMood]) => {
       if (cancelled) return;
       setLiveStats(stats);
       setAssessments(assessmentBreakdown);
       setBookings(bookingBreakdown);
       setTrend(weeklyTrend);
       setCredits(creditBalance);
+      setMoodToday(dailyMood);
     });
 
     const handleCreditsUpdate = (e: any) => {
@@ -80,7 +85,7 @@ export function ReportPage() {
     };
   }, [organization.orgId, k]);
 
-  if (!liveStats || !assessments || !bookings || !trend || !credits) return <ReportSkeleton />;
+  if (!liveStats || !assessments || !bookings || !trend || !credits || !moodToday) return <ReportSkeleton />;
 
   // ── Week-over-week movement, for the tile sparklines and deltas ────────────
   const weeks = trend.weeks;
@@ -131,6 +136,13 @@ export function ReportPage() {
         : `${b.requested} requested · ${b.confirmed} confirmed · ${b.cancelled} cancelled`,
     };
   });
+
+  const moodRows = moodToday.byMood.map((m) => ({
+    label: MOOD_LABELS[m.mood],
+    value: m.n,
+    display: `${m.n} people`,
+  }));
+  const moodMasked = moodToday.total > 0 && moodToday.byMood.length === 0;
 
   const weeklyData = weeks.map((w) => ({
     label: w.label,
@@ -227,6 +239,34 @@ export function ReportPage() {
           upIsGood
         />
       </section>
+
+      {/* ── Today's mood pulse — how many checked in today, and how they feel ── */}
+      <ChartCard
+        title="Today's mood pulse"
+        caption="Whoever picked a mood on their Hub today, counted once each. The breakdown is withheld until at least 5 people have checked in today; the count itself is always real."
+        figure={
+          <span className="text-[11px] text-[#78897B]">
+            {formatCount(moodToday.total)} checked in today
+          </span>
+        }
+        table={
+          moodRows.length > 0
+            ? { columns: ['Mood', 'People'], rows: moodRows.map((r) => [r.label, r.value]) }
+            : undefined
+        }
+      >
+        <NotLiveNote live={moodToday.live} />
+        {moodToday.live && moodToday.total === 0 && (
+          <p className="text-[11px] text-[#9AA79C] italic py-2">Nobody has checked in yet today.</p>
+        )}
+        {moodToday.live && moodMasked && (
+          <div className="flex items-center gap-1.5 h-11 rounded-lg border border-dashed border-[#D9D2C5] px-3 text-[11px] text-[#78897B]">
+            <ShieldCheck className="h-3 w-3 shrink-0" aria-hidden />
+            <span>Mood breakdown withheld, fewer than {k} people have checked in today.</span>
+          </div>
+        )}
+        {moodToday.live && moodRows.length > 0 && <RankedBarChart data={moodRows} />}
+      </ChartCard>
 
       {/* ── Overall severity mix — the one headline shape ────────────────── */}
       <ChartCard

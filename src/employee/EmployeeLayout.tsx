@@ -40,14 +40,7 @@ export function EmployeeLayout() {
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6">
           <Link to="/app/home" className="flex items-center gap-3 hover:opacity-95 transition-opacity">
             {/* MindSpace brand symbol */}
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#405445] text-xs font-bold text-white shadow-xs">
-                M
-              </div>
-              <span className="hidden sm:inline font-serif text-lg font-medium tracking-tight text-[#233226]">
-                MindSpace
-              </span>
-            </div>
+            <img src="/mindspace-wordmark.png" alt="MindSpace" className="h-7 w-auto object-contain" />
 
             <span className="text-[#9AA79C] font-light text-sm">×</span>
 
@@ -60,7 +53,7 @@ export function EmployeeLayout() {
 
           {/* Right side profile / badge */}
           <div className="flex items-center gap-3">
-            <span className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-[#E8F0EA] px-3 py-1 text-[11px] font-semibold text-[#4F6B57]">
+            <span className="hidden md:inline-flex items-center gap-1.5 rounded-full bg-[#E8F0EA] px-3 py-1 text-[11px] font-semibold text-[#2D6A4F]">
               <Sparkles className="h-3 w-3" />
               Accenture Wellbeing
             </span>
@@ -69,7 +62,7 @@ export function EmployeeLayout() {
               {user?.avatarUrl ? (
                 <img src={user.avatarUrl} alt="" className="h-8 w-8 rounded-full object-cover border border-[#D9D2C5]" />
               ) : (
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#405445] text-xs font-semibold text-white shadow-xs">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#2D6A4F] text-xs font-semibold text-white shadow-xs">
                   {user?.name ? user.name.slice(0, 1) : 'A'}
                 </span>
               )}
@@ -83,10 +76,14 @@ export function EmployeeLayout() {
         <Outlet />
       </main>
 
-      {/* Bottom nav — full-width tab bar on mobile, floating pill dock on larger screens */}
+      {/* Bottom nav — solid, opaque dark dock on purpose: a translucent/blurred
+          bar lets busy page content behind it compete for attention, so this
+          is the one element on the page that's never see-through and always
+          reads first. Full-width tab bar on mobile, floating pill dock on
+          larger screens. */}
       <nav
         aria-label="Employee navigation"
-        className="fixed inset-x-0 bottom-0 z-40 flex h-16 items-center justify-around border-t border-[#EAE4D9] bg-white px-1 pb-[env(safe-area-inset-bottom)] sm:inset-x-0 sm:bottom-5 sm:mx-auto sm:h-auto sm:w-fit sm:justify-center sm:gap-1 sm:rounded-full sm:border sm:border-[#EAE4D9] sm:bg-white/95 sm:px-2.5 sm:py-2 sm:pb-2 sm:shadow-[0_14px_32px_-12px_rgba(44,58,48,.28)] sm:backdrop-blur-md"
+        className="fixed inset-x-0 bottom-0 z-40 flex h-[70px] items-center justify-around bg-[#2D6A4F] px-1 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_24px_-8px_rgba(20,35,25,0.35)] sm:inset-x-0 sm:bottom-6 sm:mx-auto sm:h-auto sm:w-fit sm:justify-center sm:gap-1 sm:rounded-full sm:border sm:border-[#234F3B] sm:bg-[#2D6A4F] sm:px-3 sm:py-2.5 sm:pb-2.5 sm:shadow-[0_24px_48px_-12px_rgba(15,25,20,0.55)]"
       >
         {NAV.map((item) => (
           <NavLink
@@ -94,10 +91,10 @@ export function EmployeeLayout() {
             to={item.to}
             className={({ isActive }) =>
               cn(
-                'flex flex-1 flex-col items-center justify-center gap-0.5 rounded-2xl py-1.5 text-[10px] font-medium transition-colors sm:flex-none sm:flex-row sm:gap-2 sm:px-4 sm:py-2 sm:text-xs',
+                'flex flex-1 flex-col items-center justify-center gap-1 rounded-2xl py-2 text-[10px] font-semibold transition-colors sm:flex-none sm:flex-row sm:gap-2 sm:px-4 sm:py-2.5 sm:text-xs',
                 isActive
-                  ? 'text-[#4F6B57] sm:bg-[#405445] sm:text-white'
-                  : 'text-[#78897B] hover:text-[#233226] sm:hover:bg-[#F3EFE8]',
+                  ? 'text-white bg-white/15 sm:bg-white sm:text-[#2D6A4F]'
+                  : 'text-white/55 hover:text-white/85 sm:hover:bg-white/10',
               )
             }
           >

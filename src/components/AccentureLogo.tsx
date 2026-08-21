@@ -71,11 +71,8 @@ export const AccentureLogo: FC<AccentureLogoProps> = ({
         badgeClassName
       )}
     >
-      <div className="flex items-center gap-2">
-        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#405445] text-[10px] font-bold text-white shadow-xs">
-          M
-        </div>
-        <span className="font-serif text-sm font-semibold tracking-tight text-white">MindSpace</span>
+      <div className="flex items-center rounded-md bg-white px-2 py-1">
+        <img src="/mindspace-wordmark.png" alt="MindSpace" className="h-4 w-auto object-contain" />
       </div>
       <span className="text-neutral-500 font-light text-xs">×</span>
       <div className="flex items-center">

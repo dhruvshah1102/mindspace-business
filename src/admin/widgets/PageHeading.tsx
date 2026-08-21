@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { ClipboardList } from 'lucide-react';
 
 export function PageHeading({
   eyebrow,
@@ -38,6 +39,27 @@ export function ReportSkeleton() {
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="h-32 rounded-2xl bg-ds-tint" />
         <div className="h-32 rounded-2xl bg-ds-tint" />
+      </div>
+    </div>
+  );
+}
+
+/** Shown once loading has finished and nobody has completed a real
+ * assessment yet. An honest empty state, not a report written from zero
+ * responses — same principle as the Overview page's "Not set up yet" tiles. */
+export function NotEnoughAssessmentData() {
+  return (
+    <div className="flex flex-col items-center gap-4 rounded-[28px] border border-dashed border-[#D9D2C5] bg-[#FAF7F2] px-6 py-16 text-center">
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white border border-[#EAE4D9] text-[#2D6A4F]">
+        <ClipboardList className="h-5 w-5" />
+      </span>
+      <div className="flex flex-col gap-1.5 max-w-sm">
+        <p className="font-serif text-lg text-[#233226]">No assessment results yet</p>
+        <p className="text-xs sm:text-sm text-[#78897B] leading-relaxed">
+          This page fills in once employees start taking the workplace assessments at{' '}
+          <code className="rounded bg-white px-1 py-0.5 border border-[#EAE4D9]">/app/assessments</code>. The Overview
+          page's counts already update live; this narrative view needs enough responses to say something real.
+        </p>
       </div>
     </div>
   );

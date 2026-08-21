@@ -12,7 +12,7 @@ export function RequireEmployeeAuth({ children }: { children: ReactNode }) {
   if (!ready) {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-[#FAF7F2]">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#D9D2C5] border-t-[#4F6B57]" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#D9D2C5] border-t-[#2D6A4F]" />
       </div>
     );
   }

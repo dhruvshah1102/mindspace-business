@@ -1,6 +1,6 @@
 import { Lightbulb } from 'lucide-react';
 import { useReport } from '@/admin/ReportContext';
-import { ReportSkeleton } from '@/admin/widgets/PageHeading';
+import { ReportSkeleton, NotEnoughAssessmentData } from '@/admin/widgets/PageHeading';
 import { MagnitudeBar } from '@/admin/widgets/ProportionBar';
 import { ChartCard } from '@/admin/charts/ChartCard';
 import { StatTile } from '@/admin/charts/StatTile';
@@ -13,8 +13,9 @@ type Severity = 'low' | 'moderate' | 'high';
 const SEVERITY_ORDER: Severity[] = ['high', 'moderate', 'low'];
 
 export function PressuresPage() {
-  const { report, loading } = useReport();
-  if (loading || !report) return <ReportSkeleton />;
+  const { report, loading, notEnoughData } = useReport();
+  if (loading) return <ReportSkeleton />;
+  if (notEnoughData || !report) return <NotEnoughAssessmentData />;
 
   const pressures = report.whatsWeighing;
   const top = pressures[0];
@@ -129,7 +130,7 @@ export function PressuresPage() {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F3EEE5] text-[11px] font-bold text-[#405445]">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#F3EEE5] text-[11px] font-bold text-[#2D6A4F]">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <h2 className="font-serif text-lg font-normal text-[#233226] truncate">{p.title}</h2>

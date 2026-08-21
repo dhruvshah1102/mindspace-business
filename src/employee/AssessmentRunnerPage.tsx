@@ -31,7 +31,7 @@ export function AssessmentRunnerPage() {
   const [error, setError] = useState<string | null>(null);
 
   const valid = !!type && ASSESSMENT_TYPES.includes(type as AssessmentType);
-  const domain = valid ? (type as AssessmentType) : 'anxiety';
+  const domain = valid ? (type as AssessmentType) : 'workload';
   const meta = ASSESSMENT_METADATA[domain];
 
   const question = meta.questions[step];
@@ -98,7 +98,7 @@ export function AssessmentRunnerPage() {
     return (
       <section className="flex flex-col gap-8 max-w-2xl">
         <div className="flex flex-col items-start gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#4F6B57] text-white shadow-xs">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2D6A4F] text-white shadow-xs">
             <Heart className="h-6 w-6" />
           </div>
           <h1 className="font-serif text-3xl sm:text-4xl font-normal tracking-tight text-[#233226]">{meta.title}: done</h1>
@@ -123,7 +123,7 @@ export function AssessmentRunnerPage() {
         <div className="flex items-center gap-3">
           <Link
             to="/app/assessments"
-            className="inline-flex items-center gap-2 rounded-full bg-[#4F6B57] hover:bg-[#3F5646] text-white px-6 py-2.5 text-xs sm:text-sm font-semibold shadow-xs transition-all hover:scale-105"
+            className="inline-flex items-center gap-2 rounded-full bg-[#2D6A4F] hover:bg-[#234F3B] text-white px-6 py-2.5 text-xs sm:text-sm font-semibold shadow-xs transition-all hover:scale-105"
           >
             <span>Back to assessments</span>
           </Link>
@@ -146,10 +146,10 @@ export function AssessmentRunnerPage() {
           <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#78897B]">
             Question <span className="text-[#233226]">{step + 1}</span> of {meta.questions.length}
           </p>
-          <p className="text-3xl font-semibold text-[#4F6B57] tabular-nums">{progress}%</p>
+          <p className="text-3xl font-semibold text-[#2D6A4F] tabular-nums">{progress}%</p>
           <div className="h-1.5 w-full rounded-full bg-[#EAE4D9] overflow-hidden mt-1">
             <div
-              className="h-full rounded-full bg-[#4F6B57] transition-all duration-300"
+              className="h-full rounded-full bg-[#2D6A4F] transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -169,7 +169,7 @@ export function AssessmentRunnerPage() {
             'inline-flex w-fit items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold transition-colors',
             step === 0
               ? 'border-[#EAE4D9] text-[#B7BEB9] cursor-not-allowed'
-              : 'border-[#D9D2C5] text-[#56685A] hover:border-[#4F6B57] hover:text-[#233226] cursor-pointer',
+              : 'border-[#D9D2C5] text-[#56685A] hover:border-[#2D6A4F] hover:text-[#233226] cursor-pointer',
           )}
         >
           <ArrowLeft className="h-3.5 w-3.5" />
@@ -198,20 +198,20 @@ export function AssessmentRunnerPage() {
                 className={cn(
                   'flex items-center gap-4 rounded-2xl border px-5 py-4 text-left text-sm font-medium transition-all cursor-pointer',
                   selected
-                    ? 'border-[#4F6B57] bg-[#F3EFE8]'
+                    ? 'border-[#2D6A4F] bg-[#F3EFE8]'
                     : 'border-[#EAE4D9] bg-white hover:border-[#D9D2C5] hover:bg-[#FAF7F2]',
                 )}
               >
                 <span
                   className={cn(
                     'flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold border',
-                    selected ? 'bg-[#4F6B57] text-white border-[#4F6B57]' : 'bg-[#F3EEE5] text-[#4F6B57] border-[#EAE4D9]',
+                    selected ? 'bg-[#2D6A4F] text-white border-[#2D6A4F]' : 'bg-[#F3EEE5] text-[#2D6A4F] border-[#EAE4D9]',
                   )}
                 >
                   {i + 1}
                 </span>
                 <span className="text-[#233226]">{opt.label}</span>
-                {submitting && selected && <Loader2 className="ml-auto h-4 w-4 animate-spin text-[#4F6B57]" />}
+                {submitting && selected && <Loader2 className="ml-auto h-4 w-4 animate-spin text-[#2D6A4F]" />}
               </button>
             );
           })}

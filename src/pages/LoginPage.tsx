@@ -57,17 +57,12 @@ export function LoginPage() {
       {/* Top Header Logo */}
       <header className="relative w-full max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#405445] text-xs font-bold text-white shadow-xs">
-            M
-          </div>
-          <span className="font-serif text-xl font-medium tracking-tight text-[#233226]">
-            MindSpace
-          </span>
+          <img src="/mindspace-wordmark.png" alt="MindSpace" className="h-8 w-auto object-contain" />
           <span className="text-[#9AA79C] font-light text-sm">×</span>
           <AccentureLogo variant="badge" badgeClassName="bg-black px-2.5 py-1 text-xs rounded-md shadow-xs border border-neutral-800" />
         </Link>
 
-        <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E8F0EA] px-3.5 py-1 text-xs font-semibold text-[#4F6B57]">
+        <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-[#E8F0EA] px-3.5 py-1 text-xs font-semibold text-[#2D6A4F]">
           <Sparkles className="h-3.5 w-3.5" />
           Accenture People Console
         </span>
@@ -92,7 +87,7 @@ export function LoginPage() {
           </p>
 
           {/* Quote Callout with Left Border Accent */}
-          <div className="border-l-2 border-[#405445]/40 pl-4 py-1 max-w-lg">
+          <div className="border-l-2 border-[#2D6A4F]/40 pl-4 py-1 max-w-lg">
             <p className="font-serif italic text-sm sm:text-base text-[#233226] leading-snug">
               “Operations is running late three nights a week and it's showing up as sleep loss.”
             </p>
@@ -102,7 +97,7 @@ export function LoginPage() {
           </div>
 
           <div className="flex items-center gap-2 pt-2 text-xs text-[#56685A]">
-            <ShieldCheck className="h-4 w-4 shrink-0 text-[#405445]" />
+            <ShieldCheck className="h-4 w-4 shrink-0 text-[#2D6A4F]" />
             <span>Aggregate-only by default. You will never see who said what. That's the point.</span>
           </div>
         </div>
@@ -135,7 +130,7 @@ export function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="hr@mindspace.example"
-                    className="w-full rounded-xl bg-[#FAF7F2] border border-[#D9D2C5] px-4 py-3.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#405445] focus:outline-none focus:ring-2 focus:ring-[#405445]/30 transition-all"
+                    className="w-full rounded-xl bg-[#FAF7F2] border border-[#D9D2C5] px-4 py-3.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#2D6A4F] focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 transition-all"
                   />
                 </div>
 
@@ -152,7 +147,7 @@ export function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full rounded-xl bg-[#FAF7F2] border border-[#D9D2C5] px-4 py-3.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#405445] focus:outline-none focus:ring-2 focus:ring-[#405445]/30 pr-10 transition-all"
+                      className="w-full rounded-xl bg-[#FAF7F2] border border-[#D9D2C5] px-4 py-3.5 text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:border-[#2D6A4F] focus:outline-none focus:ring-2 focus:ring-[#2D6A4F]/30 pr-10 transition-all"
                     />
                     <button
                       type="button"
@@ -174,7 +169,7 @@ export function LoginPage() {
                 <button
                   type="submit"
                   disabled={busy}
-                  className="mt-2 w-full rounded-xl bg-[#405445] hover:bg-[#334437] text-white py-3.5 px-4 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors disabled:opacity-60 cursor-pointer"
+                  className="mt-2 w-full rounded-xl bg-[#2D6A4F] hover:bg-[#234F3B] text-white py-3.5 px-4 text-xs sm:text-sm font-semibold flex items-center justify-center gap-2 shadow-xs transition-colors disabled:opacity-60 cursor-pointer"
                 >
                   {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Lock className="h-4 w-4" />}
                   <span>Sign in</span>

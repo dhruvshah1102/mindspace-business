@@ -1,5 +1,6 @@
 import { useId } from 'react';
 import type { MoodTier } from '@/domain/snapshot';
+import { TIER_VAR } from '@/admin/charts/chart-theme';
 
 interface Segment {
   tier: MoodTier;
@@ -8,12 +9,10 @@ interface Segment {
   share: number;
 }
 
-const DOT_COLORS: Record<MoodTier, string> = {
-  thriving: '#405445',   // Eucalyptus Green (Doing well)
-  steady: '#7D9A83',     // Sage Green (Holding steady)
-  strained: '#D97724',   // Amber/Orange (Running on empty)
-  struggling: '#7C3426', // Deep Rust (Needs real support)
-};
+/** Same tier tokens as every other tier display in the app (StackedShareBar,
+ * FeelingsPage) — this used to be its own hardcoded palette that had quietly
+ * drifted from the real --tier-* custom properties. */
+const DOT_COLORS: Record<MoodTier, string> = TIER_VAR;
 
 /**
  * 100 circular dots arranged in a clean 10x10 matrix.

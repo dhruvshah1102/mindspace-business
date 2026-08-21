@@ -19,7 +19,7 @@ export function CohortHeatmapPage() {
   const { organization } = useTenant();
   const rollup = getOverallRollup();
   const [dimension, setDimension] = useState<(typeof DIMENSIONS)[number]['key']>('department');
-  const [sortDomain, setSortDomain] = useState<AssessmentType>('depression');
+  const [sortDomain, setSortDomain] = useState<AssessmentType>('work_mood');
 
   const rows = useMemo(() => {
     const prefix = `${dimension}:`;

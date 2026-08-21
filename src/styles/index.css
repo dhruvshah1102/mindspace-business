@@ -11,8 +11,8 @@
     --ds-tint: #EDE7DA;
     --ds-soft: #C7D6C9;
     --ds-mid: #8FA894;
-    --ds-deep: #4F6B57;
-    --ds-deep-hover: #3A5243;
+    --ds-deep: #2D6A4F;
+    --ds-deep-hover: #234F3B;
     --ds-base: #2C3A30;
     --ds-dark: #1F2B23;
     --ds-mint: #A9CBAE;
@@ -28,7 +28,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 137 14% 20%;
 
-    --primary: 137 15% 36%;
+    --primary: 153 40% 30%;
     --primary-foreground: 0 0% 100%;
     --primary-glow: 129 25% 73%;
 
@@ -52,7 +52,7 @@
 
     --border: 41 28% 86%;
     --input: 41 35% 89%;
-    --ring: 137 15% 36%;
+    --ring: 153 40% 30%;
 
     --gradient-primary: linear-gradient(172deg, #9FB79A 0%, #7F9C7C 26%, #6A8A6A 46%, #567557 64%, #46644A 82%, #3A5540 100%);
 
@@ -60,12 +60,12 @@
 
     --sidebar-background: 42 50% 96%;
     --sidebar-foreground: 137 14% 20%;
-    --sidebar-primary: 137 15% 36%;
+    --sidebar-primary: 153 40% 30%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 41 35% 89%;
     --sidebar-accent-foreground: 137 14% 20%;
     --sidebar-border: 41 28% 86%;
-    --sidebar-ring: 137 15% 36%;
+    --sidebar-ring: 153 40% 30%;
 
     /* Severity bands — categorical, always reinforced with a text label
        (the ochre alone is below 3:1 contrast on cream). Colorblind-validated. */
@@ -123,7 +123,7 @@
 
     --primary: 129 25% 73%;
     --primary-foreground: 137 18% 11%;
-    --primary-glow: 137 15% 36%;
+    --primary-glow: 153 40% 30%;
 
     --secondary: 137 14% 18%;
     --secondary-foreground: 137 20% 92%;
@@ -131,7 +131,7 @@
     --muted: 137 14% 18%;
     --muted-foreground: 132 10% 64%;
 
-    --accent: 137 15% 36%;
+    --accent: 153 40% 30%;
     --accent-foreground: 137 20% 92%;
 
     --border: 137 12% 22%;
