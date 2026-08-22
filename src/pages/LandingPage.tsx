@@ -77,7 +77,7 @@ const STEPS = [
   {
     n: '01',
     title: 'Employee checks in weekly',
-    body: 'A 5-minute assessment covering workload, anxiety, and burnout — answered from their own account.',
+    body: 'A 5-minute assessment covering workload, anxiety, and burnout, answered from their own account.',
   },
   {
     n: '02',
@@ -154,7 +154,7 @@ function HeroOverviewPanel() {
         <div>
           <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">Executive Verdict</p>
           <p className="text-xs sm:text-sm text-white/90 leading-relaxed mt-1">
-            Overall engagement is high this month, but Operations is carrying visible strain from workload — worth a targeted check-in.
+            Overall engagement is high this month, but Operations is carrying visible strain from workload, worth a targeted check-in.
           </p>
         </div>
       </div>
@@ -257,7 +257,7 @@ function HeroTeamsPanel() {
         <div>
           <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">Anonymity Check</p>
           <p className="text-xs sm:text-sm text-white/90 leading-relaxed mt-1">
-            All 4 teams have crossed the k ≥ 5 threshold — every score below is safe to report.
+            All 4 teams have crossed the k ≥ 5 threshold, every score below is safe to report.
           </p>
         </div>
       </div>
@@ -306,7 +306,7 @@ function HeroTherapyPanel() {
         <div>
           <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">What this means</p>
           <p className="text-xs sm:text-sm text-white/90 leading-relaxed mt-1">
-            Employees are booking sessions steadily without a crisis trigger — usage is proactive, not reactive.
+            Employees are booking sessions steadily without a crisis trigger. Usage is proactive, not reactive.
           </p>
         </div>
       </div>
@@ -349,7 +349,7 @@ function HeroPrivacyPanel() {
         <div>
           <p className="text-[10px] font-bold uppercase tracking-wider text-white/50">Why it matters</p>
           <p className="text-xs sm:text-sm text-white/90 leading-relaxed mt-1">
-            Aggregate-only isn’t a setting you can turn off — it’s how the platform is built.
+            Aggregate-only isn’t a setting you can turn off. It’s how the platform is built.
           </p>
         </div>
       </div>
@@ -478,7 +478,7 @@ export function LandingPage() {
           </h1>
 
           <p className="mt-5 sm:mt-6 text-sm sm:text-lg leading-relaxed text-[#56685A] max-w-2xl mx-auto">
-            MindSpace turns anonymous weekly check-ins into a plain-English executive report —
+            MindSpace turns anonymous weekly check-ins into a plain-English executive report,
             while employees get unlimited assessments, an AI companion, and ₹500 therapy sessions.
           </p>
 
@@ -608,7 +608,7 @@ export function LandingPage() {
                 </div>
                 <h3 className="font-sans text-xl sm:text-2xl font-semibold text-[#233226]">Always-on employee support</h3>
                 <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-[#56685A] max-w-sm">
-                  Unlimited 5-minute assessments for workload, anxiety, and burnout — plus Tara, an AI companion
+                  Unlimited 5-minute assessments for workload, anxiety, and burnout, plus Tara, an AI companion
                   employees can talk to anytime. Individual answers are never shared with HR.
                 </p>
               </div>
@@ -620,7 +620,7 @@ export function LandingPage() {
                 <div className="flex-1">
                   <p className="text-[11px] font-semibold text-[#233226]">Tara · AI Companion</p>
                   <p className="text-[11px] text-[#78897B] mt-0.5 leading-relaxed">
-                    “It sounds like this week has been heavier than usual — want to walk through what’s on your plate?”
+                    “It sounds like this week has been heavier than usual. Want to walk through what’s on your plate?”
                   </p>
                 </div>
               </div>
@@ -694,7 +694,7 @@ export function LandingPage() {
               </h2>
 
               <p className="text-xs sm:text-sm text-[#56685A] leading-relaxed max-w-lg">
-                Employees book private sessions from their own account. You only pay for what’s used — no
+                Employees book private sessions from their own account. You only pay for what’s used, no
                 retainer, no minimum commitment.
               </p>
 
